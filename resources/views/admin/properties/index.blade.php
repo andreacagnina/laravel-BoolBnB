@@ -4,6 +4,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="content">
+                    <h2>
+                        //PER LA VISTA PROPRIETARI SI POTREBBE REALIZZARE UNA TABELLA</h2>
                     <ul>
                         @if (count($properties) != 0)
                             @foreach ($properties as $property)
