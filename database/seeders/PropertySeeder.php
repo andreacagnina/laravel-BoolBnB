@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
+use App\Models\Property;
 
 class PropertySeeder extends Seeder
 {
@@ -15,21 +16,28 @@ class PropertySeeder extends Seeder
      */
     public function run()
     {
-        $jsonFiles = ['user_id_1.json', 'user_id_2.json'];
-        $currentTimestamp = Carbon::now();
+        $properties = config('db_properties.properties');
 
-        foreach ($jsonFiles as $file) {
-            $jsonPath = config_path($file);
-            $jsonData = json_decode(file_get_contents($jsonPath), true);
-
-            // Aggiunge timestamp
-            foreach ($jsonData as &$property) {
-                $property['created_at'] = $currentTimestamp;
-                $property['updated_at'] = $currentTimestamp;
-            }
-
-            // Inserisce i dati nella tabella
-            DB::table('properties')->insert($jsonData);
+        foreach ($properties as $property) {
+            $NewProperty = new Property();
+            $NewProperty->title = $property['title'];
+            $NewProperty->slug = Str::slug($property['title'], '-');
+            $NewProperty->description = $property['description'];
+            $NewProperty->num_rooms = $property['num_rooms'];
+            $NewProperty->num_beds = $property['num_beds'];
+            $NewProperty->num_baths = $property['num_baths'];
+            $NewProperty->mq = $property['mq'];
+            $NewProperty->zip = $property['zip'];
+            $NewProperty->city = $property['city'];
+            $NewProperty->address = $property['address'];
+            $NewProperty->lat = $property['lat'];
+            $NewProperty->long = $property['long'];
+            $NewProperty->price = $property['price'];
+            $NewProperty->type = $property['type'];
+            $NewProperty->floor = $property['floor'];
+            $NewProperty->available = $property['available'];
+            $NewProperty->user_id = $property['user_id'];
+            $NewProperty->save();
         }
     }
 }
