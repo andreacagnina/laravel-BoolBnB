@@ -31,6 +31,7 @@ return new class extends Migration
             $table->enum('type', ['mansion', 'ski-in/out', 'tree-house', 'apartment', 'dome', 'cave', 'cabin', 'lake', 'beach', 'castle'])->default('apartment');
             $table->tinyInteger('floor');
             $table->boolean('available')->default(true);
+            $table->boolean('sponsored')->default(false);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

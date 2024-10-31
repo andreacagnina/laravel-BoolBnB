@@ -6,6 +6,7 @@ use App\Models\Property;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePropertyRequest;
 use App\Http\Requests\UpdatePropertyRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyController extends Controller
 {
@@ -16,7 +17,11 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        //
+        $userId = Auth::id();
+
+        $properties = Property::where('user_id', $userId)->get();
+
+        return view('admin.properties.index', compact('properties'));
     }
 
     /**
