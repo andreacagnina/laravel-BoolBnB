@@ -5,6 +5,7 @@
             <div class="col-12">
                 <div class="content">
                     <h1>Welcome in BoolBnB</h1>
+                    <h2>//PER LA VISTA UTENTE SI POTREBBERO REALIZZARE DELLE CARDS</h2>
                 </div>
             </div>
         </div>
