@@ -5,6 +5,7 @@ return [
 
             'title' => 'Luxury Mansion with Garden',
             'slug' => 'luxury-mansion-garden',
+            'cover_image' => '',
             'description' => 'A luxurious mansion with a sprawling garden and exquisite interior design.',
             'num_rooms' => 8,
             'num_beds' => 8,
@@ -25,6 +26,7 @@ return [
         [
             'title' => 'Modern City Apartment',
             'slug' => 'modern-city-apartment',
+            'cover_image' => '',
             'description' => 'A modern city apartment, fully furnished and close to public transport.',
             'num_rooms' => 4,
             'num_beds' => 4,
@@ -45,6 +47,7 @@ return [
         [
             'title' => 'Lakefront Property with Dock',
             'slug' => 'lakefront-property-dock',
+            'cover_image' => '',
             'description' => 'A beautiful lakefront property with stunning water views and private dock.',
             'num_rooms' => 3,
             'num_beds' => 3,
@@ -65,6 +68,7 @@ return [
         [
             'title' => 'Luxurious Garden Mansion',
             'slug' => 'luxurious-garden-mansion',
+            'cover_image' => '',
             'description' => 'A luxurious mansion with a sprawling garden and exquisite interior design.',
             'num_rooms' => 7,
             'num_beds' => 7,
@@ -85,6 +89,7 @@ return [
         [
             'title' => 'Ski Lodge with Slope Access',
             'slug' => 'ski-lodge-slope-access',
+            'cover_image' => '',
             'description' => 'A cozy ski lodge with direct access to the slopes, perfect for winter sports enthusiasts.',
             'num_rooms' => 3,
             'num_beds' => 3,
@@ -105,6 +110,7 @@ return [
         [
             'title' => 'Nature Treehouse Getaway',
             'slug' => 'nature-treehouse-getaway',
+            'cover_image' => '',
             'description' => 'A unique treehouse surrounded by nature, offering a tranquil getaway experience.',
             'num_rooms' => 1,
             'num_beds' => 1,
@@ -125,6 +131,7 @@ return [
         [
             'title' => 'Stylish City Apartment',
             'slug' => 'stylish-city-apartment',
+            'cover_image' => '',
             'description' => 'A modern city apartment, fully furnished and close to public transport.',
             'num_rooms' => 4,
             'num_beds' => 4,
@@ -145,6 +152,7 @@ return [
         [
             'title' => 'Panoramic Geodesic Dome',
             'slug' => 'panoramic-geodesic-dome',
+            'cover_image' => '',
             'description' => 'A geodesic dome with large windows, providing a panoramic view of the countryside.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -165,6 +173,7 @@ return [
         [
             'title' => 'Rustic Cave Dwelling',
             'slug' => 'rustic-cave-dwelling',
+            'cover_image' => '',
             'description' => 'A converted cave dwelling with a rustic charm and modern amenities.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -185,6 +194,7 @@ return [
         [
             'title' => 'Mountain Forest Cabin',
             'slug' => 'mountain-forest-cabin',
+            'cover_image' => '',
             'description' => 'A cozy cabin in the mountains, ideal for a peaceful retreat surrounded by forest.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -206,6 +216,7 @@ return [
         [
             'title' => 'Waterfront Lake Villa',
             'slug' => 'waterfront-lake-villa',
+            'cover_image' => '',
             'description' => 'A beautiful lakefront property with stunning water views and private dock.',
             'num_rooms' => 3,
             'num_beds' => 3,
@@ -226,6 +237,7 @@ return [
         [
             'title' => 'Seaside Beachfront Villa',
             'slug' => 'seaside-beachfront-villa',
+            'cover_image' => '',
             'description' => 'A beachfront villa with direct access to the sandy shores, perfect for summer holidays.',
             'num_rooms' => 6,
             'num_beds' => 6,
@@ -246,6 +258,7 @@ return [
         [
             'title' => 'Ancient Venetian Castle',
             'slug' => 'ancient-venetian-castle',
+            'cover_image' => '',
             'description' => 'An ancient castle with historical architecture, ideal for hosting grand events.',
             'num_rooms' => 15,
             'num_beds' => 15,
@@ -266,6 +279,7 @@ return [
         [
             'title' => 'Garden Mansion in Rome',
             'slug' => 'garden-mansion-rome',
+            'cover_image' => '',
             'description' => 'A luxurious mansion with a sprawling garden and exquisite interior design.',
             'num_rooms' => 8,
             'num_beds' => 8,
@@ -286,6 +300,7 @@ return [
         [
             'title' => 'Mountain Chalet Lodge',
             'slug' => 'mountain-chalet-lodge',
+            'cover_image' => '',
             'description' => 'A cozy ski lodge with direct access to the slopes, perfect for winter sports enthusiasts.',
             'num_rooms' => 4,
             'num_beds' => 4,
@@ -306,6 +321,7 @@ return [
         [
             'title' => 'Forest Treehouse Retreat',
             'slug' => 'forest-treehouse-retreat',
+            'cover_image' => '',
             'description' => 'A unique treehouse surrounded by nature, offering a tranquil getaway experience.',
             'num_rooms' => 1,
             'num_beds' => 1,
@@ -326,6 +342,7 @@ return [
         [
             'title' => 'Central Florence Apartment',
             'slug' => 'central-florence-apartment',
+            'cover_image' => '',
             'description' => 'A modern city apartment, fully furnished and close to public transport.',
             'num_rooms' => 3,
             'num_beds' => 3,
@@ -346,6 +363,7 @@ return [
         [
             'title' => 'Geodesic Dome Home',
             'slug' => 'geodesic-dome-home',
+            'cover_image' => '',
             'description' => 'A geodesic dome with large windows, providing a panoramic view of the countryside.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -366,6 +384,7 @@ return [
         [
             'title' => 'Traditional Cave House',
             'slug' => 'traditional-cave-house',
+            'cover_image' => '',
             'description' => 'A converted cave dwelling with a rustic charm and modern amenities.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -386,6 +405,7 @@ return [
         [
             'title' => 'Secluded Forest Cabin',
             'slug' => 'secluded-forest-cabin',
+            'cover_image' => '',
             'description' => 'A cozy cabin in the mountains, ideal for a peaceful retreat surrounded by forest.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -406,6 +426,7 @@ return [
         [
             'title' => 'Lakefront Villa with Dock',
             'slug' => 'lakefront-villa-dock',
+            'cover_image' => '',
             'description' => 'A beautiful lakefront property with stunning water views and private dock.',
             'num_rooms' => 3,
             'num_beds' => 3,
@@ -426,6 +447,7 @@ return [
         [
             'title' => 'Exclusive Beach Villa',
             'slug' => 'exclusive-beach-villa',
+            'cover_image' => '',
             'description' => 'A beachfront villa with direct access to the sandy shores, perfect for summer holidays.',
             'num_rooms' => 6,
             'num_beds' => 6,
@@ -446,6 +468,7 @@ return [
         [
             'title' => 'Historic Venetian Castle',
             'slug' => 'historic-venetian-castle',
+            'cover_image' => '',
             'description' => 'An ancient castle with historical architecture, ideal for hosting grand events.',
             'num_rooms' => 15,
             'num_beds' => 15,
@@ -466,6 +489,7 @@ return [
         [
             'title' => 'Spacious Garden Mansion',
             'slug' => 'spacious-garden-mansion',
+            'cover_image' => '',
             'description' => 'A luxurious mansion with a sprawling garden and exquisite interior design.',
             'num_rooms' => 8,
             'num_beds' => 8,
@@ -486,6 +510,7 @@ return [
         [
             'title' => 'Charming Ski Chalet',
             'slug' => 'charming-ski-chalet',
+            'cover_image' => '',
             'description' => 'A cozy ski lodge with direct access to the slopes, perfect for winter sports enthusiasts.',
             'num_rooms' => 4,
             'num_beds' => 4,
@@ -506,6 +531,7 @@ return [
         [
             'title' => 'Serene Forest Treehouse',
             'slug' => 'serene-forest-treehouse',
+            'cover_image' => '',
             'description' => 'A unique treehouse surrounded by nature, offering a tranquil getaway experience.',
             'num_rooms' => 1,
             'num_beds' => 1,
@@ -526,6 +552,7 @@ return [
         [
             'title' => 'Luxury Apartment Florence',
             'slug' => 'luxury-apartment-florence',
+            'cover_image' => '',
             'description' => 'A modern city apartment, fully furnished and close to public transport.',
             'num_rooms' => 3,
             'num_beds' => 3,
@@ -546,6 +573,7 @@ return [
         [
             'title' => 'Countryside Dome Retreat',
             'slug' => 'countryside-dome-retreat',
+            'cover_image' => '',
             'description' => 'A geodesic dome with large windows, providing a panoramic view of the countryside.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -566,6 +594,7 @@ return [
         [
             'title' => 'Authentic Cave Home',
             'slug' => 'authentic-cave-home',
+            'cover_image' => '',
             'description' => 'A converted cave dwelling with a rustic charm and modern amenities.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -586,6 +615,7 @@ return [
         [
             'title' => 'Quiet Forest Cabin',
             'slug' => 'quiet-forest-cabin',
+            'cover_image' => '',
             'description' => 'A cozy cabin in the mountains, ideal for a peaceful retreat surrounded by forest.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -606,6 +636,7 @@ return [
         [
             'title' => 'Lakeside Residence',
             'slug' => 'lakeside-residence',
+            'cover_image' => '',
             'description' => 'A beautiful lakefront property with stunning water views and private dock.',
             'num_rooms' => 3,
             'num_beds' => 3,
@@ -626,6 +657,7 @@ return [
         [
             'title' => 'Beachside Family Villa',
             'slug' => 'beachside-family-villa',
+            'cover_image' => '',
             'description' => 'A beachfront villa with direct access to the sandy shores, perfect for summer holidays.',
             'num_rooms' => 5,
             'num_beds' => 5,
@@ -646,6 +678,7 @@ return [
         [
             'title' => 'Historical Castle Retreat',
             'slug' => 'historical-castle-retreat',
+            'cover_image' => '',
             'description' => 'An ancient castle with historical architecture, ideal for hosting grand events.',
             'num_rooms' => 12,
             'num_beds' => 12,
@@ -666,6 +699,7 @@ return [
         [
             'title' => 'Grand Rome Mansion',
             'slug' => 'grand-rome-mansion',
+            'cover_image' => '',
             'description' => 'A luxurious mansion with a sprawling garden and exquisite interior design.',
             'num_rooms' => 9,
             'num_beds' => 9,
@@ -686,6 +720,7 @@ return [
         [
             'title' => 'Ski Lodge in Alps',
             'slug' => 'ski-lodge-alps',
+            'cover_image' => '',
             'description' => 'A cozy ski lodge with direct access to the slopes, perfect for winter sports enthusiasts.',
             'num_rooms' => 3,
             'num_beds' => 3,
@@ -706,6 +741,7 @@ return [
         [
             'title' => 'Rustic Treehouse Hideaway',
             'slug' => 'rustic-treehouse-hideaway',
+            'cover_image' => '',
             'description' => 'A unique treehouse surrounded by nature, offering a tranquil getaway experience.',
             'num_rooms' => 1,
             'num_beds' => 1,
@@ -726,6 +762,7 @@ return [
         [
             'title' => 'Elegant Florence Apartment',
             'slug' => 'elegant-florence-apartment',
+            'cover_image' => '',
             'description' => 'A modern city apartment, fully furnished and close to public transport.',
             'num_rooms' => 4,
             'num_beds' => 4,
@@ -746,6 +783,7 @@ return [
         [
             'title' => 'Dome Home Countryside View',
             'slug' => 'dome-home-countryside',
+            'cover_image' => '',
             'description' => 'A geodesic dome with large windows, providing a panoramic view of the countryside.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -766,6 +804,7 @@ return [
         [
             'title' => 'Urban Cave Residence',
             'slug' => 'urban-cave-residence',
+            'cover_image' => '',
             'description' => 'A converted cave dwelling with a rustic charm and modern amenities.',
             'num_rooms' => 2,
             'num_beds' => 2,
@@ -786,6 +825,7 @@ return [
         [
             'title' => 'Woodland Mountain Cabin',
             'slug' => 'woodland-mountain-cabin',
+            'cover_image' => '',
             'description' => 'A cozy cabin in the mountains, ideal for a peaceful retreat surrounded by forest.',
             'num_rooms' => 2,
             'num_beds' => 2,

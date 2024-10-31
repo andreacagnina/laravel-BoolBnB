@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('path', 255);
-            $table->boolean('cover_image')->default(false);
-            $table->unique(['property_id', 'cover_image'], 'unique_cover_image_per_property');
             $table->unsignedBigInteger('property_id');
             $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->timestamps();

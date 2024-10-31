@@ -11,7 +11,6 @@ class Image extends Model
 
     protected $fillable = [
         'path',
-        'cover_image',
         'property_id',
     ];
     public function property()
