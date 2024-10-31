@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Property;
-use App\Http\Requests\StorePropertyRequest;
-use App\Http\Requests\UpdatePropertyRequest;
+use App\Models\Sponsor;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSponsorRequest;
+use App\Http\Requests\UpdateSponsorRequest;
 
-class PropertyController extends Controller
+class SponsorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +32,10 @@ class PropertyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePropertyRequest  $request
+     * @param  \App\Http\Requests\StoreSponsorRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePropertyRequest $request)
+    public function store(StoreSponsorRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class PropertyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Sponsor  $sponsor
      * @return \Illuminate\Http\Response
      */
-    public function show(Property $property)
+    public function show(Sponsor $sponsor)
     {
         //
     }
@@ -53,10 +54,10 @@ class PropertyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Sponsor  $sponsor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Property $property)
+    public function edit(Sponsor $sponsor)
     {
         //
     }
@@ -64,11 +65,11 @@ class PropertyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePropertyRequest  $request
-     * @param  \App\Models\Property  $property
+     * @param  \App\Http\Requests\UpdateSponsorRequest  $request
+     * @param  \App\Models\Sponsor  $sponsor
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePropertyRequest $request, Property $property)
+    public function update(UpdateSponsorRequest $request, Sponsor $sponsor)
     {
         //
     }
@@ -76,10 +77,10 @@ class PropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Sponsor  $sponsor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Property $property)
+    public function destroy(Sponsor $sponsor)
     {
         //
     }
