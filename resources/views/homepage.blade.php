@@ -15,7 +15,9 @@
                     <ul class="d-flex flex-column">
                         @foreach ($properties as $property)
                             <li class="{{ $property->sponsored ? 'order-0 text-success' : 'order-1' }}">
-                                {{ $property->title }}
+                                <a href="{{ route('admin.properties.show', $property) }}">
+                                    {{ $property->title }}
+                                </a>
                             </li>
                         @endforeach
                     </ul>
