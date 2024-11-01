@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PropertyController as PropertyController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\Admin\SponsorController;
+use App\Http\Controllers\Admin\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
     Route::resource('properties', PropertyController::class);
+    Route::resource('sponsors', SponsorController::class);
+    Route::resource('services', ServiceController::class);
 });
 
 require __DIR__ . '/auth.php';

@@ -9,7 +9,7 @@ class HomePageController extends Controller
 {
     public function index()
     {
-        $properties = Property::all();
+        $properties = Property::Where('available', 1)->get();
 
         return view('homepage', compact('properties'));
     }
