@@ -16,7 +16,7 @@ class PropertySeeder extends Seeder
      */
     public function run()
     {
-        $properties = config('db_properties.properties');
+        $properties = config('db_properties');
 
         foreach ($properties as $property) {
             $NewProperty = new Property();
@@ -36,6 +36,7 @@ class PropertySeeder extends Seeder
             $NewProperty->type = $property['type'];
             $NewProperty->floor = $property['floor'];
             $NewProperty->available = $property['available'];
+            $NewProperty->sponsored = $property['sponsored'];
             $NewProperty->user_id = $property['user_id'];
             $NewProperty->save();
         }

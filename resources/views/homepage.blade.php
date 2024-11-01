@@ -12,9 +12,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="content">
-                    <ul>
+                    <ul class="d-flex flex-column">
                         @foreach ($properties as $property)
-                            <li>{{ $property->title }}</li>
+                            <li class="{{ $property->sponsored ? 'order-0 text-success' : 'order-1' }}">
+                                {{ $property->title }}
+                            </li>
                         @endforeach
                     </ul>
                 </div>
