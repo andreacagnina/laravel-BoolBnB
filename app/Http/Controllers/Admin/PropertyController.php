@@ -12,9 +12,8 @@ use App\Models\Sponsor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\View;
 
 class PropertyController extends Controller
 {
@@ -39,11 +38,13 @@ class PropertyController extends Controller
      */
     public function create()
     {
+        $propertyTypes = ['mansion', 'ski-in/out', 'tree-house', 'apartment', 'dome', 'cave', 'cabin', 'lake', 'beach', 'castle'];
+
         $images = Image::all();
         $services = Service::all();
         $sponsors = Sponsor::all();
 
-        return view('admin.properties.create', compact('images', 'services', 'sponsors'));
+        return view('admin.properties.create', compact('images', 'services', 'sponsors', 'propertyTypes'));
     }
 
     /**
@@ -86,31 +87,21 @@ class PropertyController extends Controller
      */
     public function show(Request $request, Property $property)
     {
-        // $userId = Auth::id();
-        // $properties = Property::where('user_id', $userId)->get();
         // Ottieni l'indirizzo IP del visitatore
         $ipAddress = $request->ip();
-        // Cerca una vista esistente per questa combinazione di IP e proprietà
-        $view = DB::table('views')
-            ->where('ip_address', $ipAddress)
+
+        // Cerca l'ultima visualizzazione di questa proprietà dallo stesso IP
+        $view = View::where('ip_address', $ipAddress)
             ->where('property_id', $property->id)
+            ->latest('updated_at')  // Ottieni la visualizzazione più recente
             ->first();
 
-        if (!$view || Carbon::parse($view->updated_at)->diffInMinutes(now()) >= 5) {
-            if ($view) {
-                // Aggiorna solo il timestamp di updated_at se esiste già
-                DB::table('views')
-                    ->where('id', $view->id)
-                    ->update(['updated_at' => now()]);
-            } else {
-                // Se la vista non esiste, crea una nuova riga
-                DB::table('views')->insert([
-                    'ip_address' => $ipAddress,
-                    'property_id' => $property->id,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
+        // Se non esiste una visualizzazione o è più vecchia di 1 minuto, aggiungi un nuovo record
+        if (!$view || $view->updated_at->diffInMinutes(now()) >= 1) {
+            View::create([
+                'ip_address' => $ipAddress,
+                'property_id' => $property->id,
+            ]);
         }
 
         $sponsors = Sponsor::all();

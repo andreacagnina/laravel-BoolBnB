@@ -1,4 +1,4 @@
-<footer class="bg-dark text-white py-4">
+{{-- <footer class="bg-dark text-white py-4">
     <div class="container">
         <div class="row">
             <!-- Company Info -->
@@ -16,4 +16,4 @@
             </div>
         </div>
     </div>
-</footer>
+</footer> --}}
