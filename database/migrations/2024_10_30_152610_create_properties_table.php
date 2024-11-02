@@ -23,8 +23,8 @@ return new class extends Migration
             $table->tinyInteger('num_beds')->unsigned()->default(1);
             $table->tinyInteger('num_baths')->unsigned()->default(0);
             $table->integer('mq')->unsigned();
-            $table->string('zip', 5);
-            $table->string('city', 50);
+            // $table->string('zip', 5);
+            // $table->string('city', 50);
             $table->string('address', 100);
             $table->string('lat')->nullable();
             $table->string('long')->nullable();

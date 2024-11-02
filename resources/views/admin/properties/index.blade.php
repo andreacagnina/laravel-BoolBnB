@@ -8,7 +8,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="content mt-1 text-center position-relative">
-                                    <div id="success-alert" class="alert alert-success fade show">
+                                    <div id="success-alert" class="alert alert-success">
                                         {{ session('success') }}
                                     </div>
                                 </div>
