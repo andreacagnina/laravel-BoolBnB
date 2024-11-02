@@ -122,11 +122,12 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
+        $propertyTypes = ['mansion', 'ski-in/out', 'tree-house', 'apartment', 'dome', 'cave', 'cabin', 'lake', 'beach', 'castle'];
         $sponsors = Sponsor::all();
         $services = Service::all();
         $images = Image::all();
 
-        return view('admin.properties.edit', compact('property', 'sponsors', 'services', 'images'));
+        return view('admin.properties.edit', compact('property', 'sponsors', 'services', 'images', 'propertyTypes'));
     }
 
     /**
@@ -163,7 +164,7 @@ class PropertyController extends Controller
             $property->services()->sync([]);
         }
 
-        return redirect()->route('admin.properties.show', ['property' => $property->id])->with("success", "Annuncio Modificato");
+        return redirect()->route('admin.properties.index', ['property' => $property->id])->with("success", "Annuncio Modificato");
     }
 
     /**

@@ -14,7 +14,7 @@
                     <!-- Title -->
                     <div class="col-12">
                         <label for="title" class="form-label">Title:</label>
-                        <input type="text" name="title" id="title" value="{{ old('title', 'try') }}"
+                        <input type="text" name="title" id="title" value="{{ old('title') }}"
                             class="form-control @error('title') is-invalid @enderror" required maxlength="50">
                         @error('title')
                             <span class="text-danger">{{ $message }}</span>
@@ -71,7 +71,7 @@
                     <!-- Square Meters -->
                     <div class="col-2">
                         <label for="mq" class="form-label">Square Meters (mq):</label>
-                        <input type="number" name="mq" id="mq" value="{{ old('mq', 100) }}"
+                        <input type="number" name="mq" id="mq" value="{{ old('mq')}}"
                             class="form-control @error('mq') is-invalid @enderror" min="10" max="5000" required>
                         @error('mq')
                             <span class="text-danger">{{ $message }}</span>
@@ -82,7 +82,7 @@
                     <div class="row">
                         <div class="col-2">
                             <label for="num_rooms" class="form-label">Number of Rooms:</label>
-                            <input type="number" name="num_rooms" id="num_rooms" value="{{ old('num_rooms', 1) }}"
+                            <input type="number" name="num_rooms" id="num_rooms" value="{{ old('num_rooms')}}"
                                 class="form-control @error('num_rooms') is-invalid @enderror" min="1" max="50"
                                 required>
                             @error('num_rooms')
@@ -104,7 +104,7 @@
                         <!-- Number of Bathrooms -->
                         <div class="col-2">
                             <label for="num_baths" class="form-label">Number of Bathrooms:</label>
-                            <input type="number" name="num_baths" id="num_baths" value="{{ old('num_baths', 0) }}"
+                            <input type="number" name="num_baths" id="num_baths" value="{{ old('num_baths') }}"
                                 class="form-control @error('num_baths') is-invalid @enderror" min="0" max="5"
                                 required>
                             @error('num_baths')
@@ -113,36 +113,10 @@
                         </div>
                     </div>
 
-
-                    <!-- ZIP -->
-                    {{-- <div class="row">
-                        <div class="col-2">
-                            <label for="zip" class="form-label">ZIP:</label>
-                            <input type="text" name="zip" id="zip" value="{{ old('zip', 10000) }}"
-                                class="form-control @error('zip') is-invalid @enderror" required minlength="5"
-                                maxlength="5">
-                            @error('zip')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <!-- City -->
-                        <div class="col-3">
-                            <label for="city" class="form-label">City:</label>
-                            <input type="text" name="city" id="city" value="{{ old('city', 'palermo') }}"
-                                class="form-control @error('city') is-invalid @enderror" required minlength="2"
-                                maxlength="50">
-                            @error('city')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div> --}}
-
-
-
                     <!-- Floor -->
                     <div class="col-2">
                         <label for="floor" class="form-label">Floor:</label>
-                        <input type="number" name="floor" id="floor" value="{{ old('floor', 2) }}"
+                        <input type="number" name="floor" id="floor" value="{{ old('floor') }}"
                             class="form-control @error('floor') is-invalid @enderror" required>
                         @error('floor')
                             <span class="text-danger">{{ $message }}</span>
@@ -155,7 +129,7 @@
                     <!-- Price -->
                     <div class="col-2">
                         <label for="price" class="form-label">Price:</label>
-                        <input type="number" name="price" id="price" value="{{ old('price', 100) }}"
+                        <input type="number" name="price" id="price" value="{{ old('price') }}"
                             class="form-control @error('price') is-invalid @enderror" min="10" max="999999.99"
                             step="0.01" required>
                         @error('price')
