@@ -58,8 +58,10 @@ class PropertyController extends Controller
         $form_data = $request->validated();
         $form_data['slug'] = Property::generateSlug($form_data['title']);
 
-        if ($request->hasFile('cover_image') && $request->file('cover_image')->isValid()) {
-            $form_data['cover_image'] = Storage::put('cover_image', $request->file('cover_image'));
+        $form_data['user_id'] = Auth::id();
+
+        if ($request->hasFile('cover_image')) {
+            $form_data['cover_image'] = Storage::put('cover_image', $form_data['cover_image']);
         } else {
             $form_data['cover_image'] = 'https://placehold.co/600x400?text=Cover+Image';
         }
@@ -75,6 +77,7 @@ class PropertyController extends Controller
             $services = $request->services;
             $property->services()->attach($services);
         }
+
 
         return redirect()->route('admin.properties.index')->with("success", "Annuncio creato");
     }

@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('zip', 5);
             $table->string('city', 50);
             $table->string('address', 100);
-            $table->string('lat');
-            $table->string('long');
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
             $table->decimal('price', 8, 2)->unsigned();
             $table->enum('type', ['mansion', 'ski-in/out', 'tree-house', 'apartment', 'dome', 'cave', 'cabin', 'lake', 'beach', 'castle'])->default('apartment');
             $table->tinyInteger('floor');

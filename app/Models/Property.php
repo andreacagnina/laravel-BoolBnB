@@ -28,6 +28,7 @@ class Property extends Model
         'floor',
         'available',
         'sponsored',
+        'user_id'
     ];
 
     public static function generateSlug($name)
