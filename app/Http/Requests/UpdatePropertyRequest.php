@@ -32,8 +32,6 @@ class UpdatePropertyRequest extends FormRequest
             'num_beds' => ['required', 'integer', 'min:1', 'max:20'],
             'num_baths' => ['required', 'integer', 'min:0', 'max:5'],
             'mq' => ['required', 'integer', 'min:10', 'max:5000'],
-            'zip' => ['required', 'numeric', 'digits:5'],
-            'city' => ['required', 'string', 'min:2', 'max:50'],
             'address' => ['required', 'string', 'min:2', 'max:100'],
             'lat' => ['required', 'numeric', 'between:-90,90'],
             'long' => ['required', 'numeric', 'between:-180,180'],
@@ -41,8 +39,6 @@ class UpdatePropertyRequest extends FormRequest
             'type' => ['required', 'string', 'in:mansion,ski-in/out,tree-house,apartment,dome,cave,cabin,lake,beach,castle'],
             'floor' => ['required', 'integer'],
             'available' => ['required', 'boolean'],
-            'sponsored' => ['required', 'boolean'],
-            'user_id' => ['required', 'integer', Rule::exists('users', 'id')],
             'sponsors' => ['array', 'integer', Rule::exists('sponsors', 'id')],
             'services' => ['array', 'integer', Rule::exists('services', 'id')],
         ];
@@ -81,14 +77,6 @@ class UpdatePropertyRequest extends FormRequest
             'mq.min' => 'I metri quadrati devono essere almeno 10.',
             'mq.max' => 'I metri quadrati non possono superare 5000.',
 
-            'zip.required' => 'Il CAP è obbligatorio.',
-            'zip.digits' => 'Il CAP deve essere composto da 5 cifre.',
-
-            'city.required' => 'La città è obbligatoria.',
-            'city.string' => 'La città deve essere una stringa.',
-            'city.min' => 'La città deve avere almeno 2 caratteri.',
-            'city.max' => 'La città non può superare i 50 caratteri.',
-
             'address.required' => 'L\'indirizzo è obbligatorio.',
             'address.string' => 'L\'indirizzo deve essere una stringa.',
             'address.min' => 'L\'indirizzo deve avere almeno 2 caratteri.',
@@ -116,13 +104,6 @@ class UpdatePropertyRequest extends FormRequest
 
             'available.required' => 'La disponibilità è obbligatoria.',
             'available.boolean' => 'La disponibilità deve essere vera o falsa.',
-
-            'sponsored.required' => 'Il campo sponsorizzato è obbligatorio.',
-            'sponsored.boolean' => 'Il campo sponsorizzato deve essere vero o falso.',
-
-            'user_id.required' => 'L\'ID utente è obbligatorio.',
-            'user_id.integer' => 'L\'ID utente deve essere un numero intero.',
-            'user_id.exists' => 'L\'ID utente specificato non esiste nel database.',
 
             'sponsors.array' => 'Il campo sponsors deve essere un array.',
             'sponsors.integer' => 'Ogni elemento di sponsors deve essere un numero intero.',

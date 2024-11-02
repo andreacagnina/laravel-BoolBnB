@@ -27,8 +27,6 @@ class PropertySeeder extends Seeder
             $NewProperty->num_beds = $property['num_beds'];
             $NewProperty->num_baths = $property['num_baths'];
             $NewProperty->mq = $property['mq'];
-            // $NewProperty->zip = $property['zip'];
-            // $NewProperty->city = $property['city'];
             $NewProperty->address = $property['address'];
             $NewProperty->lat = $property['lat'];
             $NewProperty->long = $property['long'];

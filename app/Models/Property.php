@@ -18,8 +18,6 @@ class Property extends Model
         'num_beds',
         'num_baths',
         'mq',
-        // 'zip',
-        // 'city',
         'address',
         'lat',
         'long',

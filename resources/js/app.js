@@ -6,6 +6,7 @@ import.meta.glob([
     '../img/**'
 ])
 
+// MODALE DELLA DELETE
 const delete_buttons = document.querySelectorAll('.delete');
 
 delete_buttons.forEach((button) => {
@@ -31,6 +32,7 @@ delete_buttons.forEach((button) => {
     );
 });
 
+// MESSAGGIO DI CONFERMA
 document.addEventListener('DOMContentLoaded', function () {
 
     var successAlert = document.getElementById('success-alert');
@@ -44,32 +46,37 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
+// TOM TOM
 document.addEventListener('DOMContentLoaded', function () {
     const addressInput = document.getElementById('address');
     const suggestionsList = document.getElementById('suggestions');
     const latInput = document.getElementById('lat'); // Campo nascosto per latitudine
     const longInput = document.getElementById('long'); // Campo nascosto per longitudine
 
-    const TOMTOM_API_KEY = 'N4TIi8FzWNZv1sUqEUsREdKHYaG6HhSU';  // Inserisci qui la tua chiave API di TomTom
+    const TOMTOM_API_KEY = 'N4TIi8FzWNZv1sUqEUsREdKHYaG6HhSU'; // Inserisci qui la tua chiave API di TomTom
 
     let currentIndex = -1; // Indice per il suggerimento attualmente selezionato
+    let filteredResults = []; // Array globale per i risultati filtrati
 
     addressInput.addEventListener('input', function () {
         const query = addressInput.value;
         currentIndex = -1; // Reset dell’indice ogni volta che si digita
 
         if (query.length > 1) { // Invia la richiesta solo se l'utente ha digitato almeno 2 caratteri
-            fetch(`https://api.tomtom.com/search/2/geocode/${encodeURIComponent(query)}.json?key=${TOMTOM_API_KEY}`)
+            fetch(`https://api.tomtom.com/search/2/search/${encodeURIComponent(query)}.json?key=${TOMTOM_API_KEY}&countrySet=IT`)
                 .then(response => response.json())
                 .then(data => {
                     suggestionsList.innerHTML = ''; // Pulisce i suggerimenti precedenti
+                    filteredResults = []; // Reset dei risultati filtrati
+
                     if (data.results && data.results.length > 0) {
-                        const filteredResults = data.results.filter(result => result.address.postalCode);
+                        // Filtra i risultati per mostrare solo quelli con CAP (postalCode)
+                        filteredResults = data.results.filter(result => result.address.postalCode);
 
                         filteredResults.forEach((result, index) => {
                             const fullAddress = result.address.freeformAddress;
-                            // Crea un div per ogni suggerimento con indirizzo completo, CAP e città
+
+                            // Crea un div per ogni suggerimento con indirizzo completo
                             const suggestionItem = document.createElement('div');
                             suggestionItem.classList.add('suggestion-item');
                             suggestionItem.innerHTML = `<strong>${fullAddress}</strong>`;
@@ -133,4 +140,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
