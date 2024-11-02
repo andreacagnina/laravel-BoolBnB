@@ -6,7 +6,7 @@
                 <div class="content">
                     <ul>
                         @foreach ($services as $service)
-                            <li>{{ $service->name }} <i class="{{ $service->icon }}"></i></li>
+                            <li>{{ $service->name }} {{ $service->icon }}"</li>
                         @endforeach
                     </ul>
                 </div>
