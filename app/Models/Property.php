@@ -18,8 +18,8 @@ class Property extends Model
         'num_beds',
         'num_baths',
         'mq',
-        'zip',
-        'city',
+        // 'zip',
+        // 'city',
         'address',
         'lat',
         'long',
@@ -28,6 +28,7 @@ class Property extends Model
         'floor',
         'available',
         'sponsored',
+        'user_id'
     ];
 
     public static function generateSlug($name)
