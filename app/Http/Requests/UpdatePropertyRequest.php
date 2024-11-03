@@ -39,8 +39,10 @@ class UpdatePropertyRequest extends FormRequest
             'type' => ['required', 'string', 'in:mansion,ski-in/out,tree-house,apartment,dome,cave,cabin,lake,beach,castle'],
             'floor' => ['required', 'integer'],
             'available' => ['required', 'boolean'],
-            'sponsors' => ['array', 'integer', Rule::exists('sponsors', 'id')],
-            'services' => ['array', 'integer', Rule::exists('services', 'id')],
+            'sponsors' => ['nullable', 'array'],
+            'sponsors.*' => ['integer', Rule::exists('sponsors', 'id')],
+            'services' => ['nullable', 'array'],
+            'services.*' => ['integer', Rule::exists('services', 'id')],
         ];
     }
     public function messages()

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Property extends Model
 {
@@ -29,6 +30,20 @@ class Property extends Model
         'user_id'
     ];
 
+    public function checkSponsorshipStatus()
+    {
+        $now = Carbon::now();
+
+        // Verifica se esiste almeno uno sponsor non ancora scaduto
+        $hasActiveSponsor = $this->sponsors()
+            ->wherePivot('created_at', '>=', $now->subHours($this->sponsors->max('duration')))
+            ->exists();
+
+        // Aggiorna lo stato `sponsored` in base alla presenza di sponsor attivi
+        $this->sponsored = $hasActiveSponsor;
+        $this->save();
+    }
+
     public static function generateSlug($name)
     {
         return Str::slug($name, '-');
@@ -42,7 +57,7 @@ class Property extends Model
     public function sponsors()
     {
         return $this->belongsToMany(Sponsor::class)
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 
     public function services()
