@@ -18,7 +18,13 @@
                     @if (count($properties) != 0)
                         <div class="my-3 d-flex justify-content-between align-items-center">
                             <h2>Proprietà caricate</h2>
-                            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary">Add a new Property</a>
+                            <div>
+                                <!-- Pulsante Sponsorizza Appartamento -->
+                                <a href="{{ route('admin.sponsors.index') }}" class="btn btn-warning me-2">Sponsorizza
+                                    Appartamento</a>
+                                <a href="{{ route('admin.properties.create') }}" class="btn btn-primary">Add a new
+                                    Property</a>
+                            </div>
                         </div>
                         <table class="table table-bordered table-striped align-middle table-sm text-center">
                             <thead>
@@ -50,24 +56,25 @@
                                         <td>{{ Str::limit($property->description, 50) }}</td>
                                         <td>
                                             <div class="d-flex justify-content-between">
-                                                <a href="{{ route('admin.sponsors.index', ['property' => $property->id]) }}"
+                                                <!-- Link per la sponsorizzazione con icona del dollaro -->
+                                                <a href="{{ route('admin.sponsors.show', ['property' => $property->slug]) }}"
                                                     class="btn btn-outline-success mx-1">
                                                     <i class="fas fa-money-bill"></i>
                                                 </a>
-                                                <a href="{{ route('admin.views.show', ['property' => $property->id]) }}"
+                                                <a href="{{ route('admin.views.show', ['property' => $property->slug]) }}"
                                                     class="btn btn-outline-info mx-1">
                                                     <i class="fas fa-chart-pie"></i>
                                                 </a>
-                                                <a href="{{ route('admin.properties.show', ['property' => $property->id]) }}"
+                                                <a href="{{ route('admin.properties.show', ['property' => $property->slug]) }}"
                                                     class="btn btn-outline-primary mx-1">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                                 <a class="btn btn-outline-warning mx-1"
-                                                    href="{{ route('admin.properties.edit', ['property' => $property->id]) }}"><i
+                                                    href="{{ route('admin.properties.edit', ['property' => $property->slug]) }}"><i
                                                         class="fa-solid fa-pen-to-square"></i></a>
                                                 </a>
                                                 <form
-                                                    action="{{ route('admin.properties.destroy', ['property' => $property->id]) }}"
+                                                    action="{{ route('admin.properties.destroy', ['property' => $property->slug]) }}"
                                                     method="post">
                                                     @csrf
                                                     @method('DELETE')

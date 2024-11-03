@@ -3,102 +3,102 @@
 return [
     [
         "name" => "Parking",
-        "icon" => '<i class="fa-sharp fa-solid fa-car"></i>'
+        "icon" => 'fa-sharp fa-solid fa-car'
     ],
     [
         "name" => "Garden",
-        "icon" => '<i class="fa-sharp fa-solid fa-sun-plant-wilt"></i>'
+        "icon" => 'fa-sharp fa-solid fa-sun-plant-wilt'
     ],
     [
         "name" => "Wi-Fi",
-        "icon" => '<i class="fa-sharp fa-solid fa-house-signal"></i>'
+        "icon" => 'fa-sharp fa-solid fa-house-signal'
     ],
     [
         "name" => "Kitchen",
-        "icon" => '<i class="fa-sharp fa-solid fa-fire-burner"></i>'
+        "icon" => 'fa-sharp fa-solid fa-fire-burner'
     ],
     [
         "name" => "HVAC",
-        "icon" => '<i class="fa-sharp fa-solid fa-temperature-half"></i>'
+        "icon" => 'fa-sharp fa-solid fa-temperature-half'
     ],
     [
         "name" => "View",
-        "icon" => '<i class="fa-sharp fa-solid fa-mountain-city"></i>'
+        "icon" => 'fa-sharp fa-solid fa-mountain-city'
     ],
     [
         "name" => "Balcony",
-        "icon" => '<i class="fa-sharp fa-solid fa-door-open"></i>'
+        "icon" => 'fa-sharp fa-solid fa-door-open'
     ],
     [
         "name" => "Animals Agree",
-        "icon" => '<i class="fa-sharp fa-solid fa-hippo"></i>'
+        "icon" => 'fa-sharp fa-solid fa-hippo'
     ],
     [
         "name" => "Asciugacapelli",
-        "icon" => '<i class="fa-sharp fa-solid fa-wind"></i>'
+        "icon" => 'fa-sharp fa-solid fa-wind'
     ],
     [
         "name" => "Asciugatrice",
-        "icon" => '<i class="fa-brands fa-hotjar"></i>'
+        "icon" => 'fa-brands fa-hotjar'
     ],
     [
         "name" => "Lavatrice",
-        "icon" => '<i class="fa-sharp fa-solid fa-jug-detergent"></i>'
+        "icon" => 'fa-sharp fa-solid fa-jug-detergent'
     ],
     [
         "name" => "Ferro da Stiro",
-        "icon" => '<i class="fa-sharp fa-solid fa-shirt"></i>'
+        "icon" => 'fa-sharp fa-solid fa-shirt'
     ],
     [
         "name" => "TV",
-        "icon" => '<i class="fa-sharp fa-solid fa-tv"></i>'
+        "icon" => 'fa-sharp fa-solid fa-tv'
     ],
     [
         "name" => "Stoviglie",
-        "icon" => '<i class="fa-sharp fa-solid fa-kitchen-set"></i>'
+        "icon" => 'fa-sharp fa-solid fa-kitchen-set'
     ],
     [
         "name" => "Macchinetta del caffe'",
-        "icon" => '<i class="fa-sharp fa-solid fa-mug-hot"></i>'
+        "icon" => 'fa-sharp fa-solid fa-mug-hot'
     ],
     [
         "name" => "Biancheria",
-        "icon" => '<i class="fa-sharp fa-regular fa-mattress-pillow"></i>'
+        "icon" => 'fa-sharp fa-regular fa-mattress-pillow'
     ],
     [
         "name" => "Prodotti pulizia",
-        "icon" => '<i class="fa-sharp fa-solid fa-hands-bubbles"></i>'
+        "icon" => 'fa-sharp fa-solid fa-hands-bubbles'
     ],
     [
         "name" => "Zanzariera",
-        "icon" => '<i class="fa-sharp fa-solid fa-mosquito-net"></i>'
+        "icon" => 'fa-sharp fa-solid fa-mosquito-net'
     ],
     [
         "name" => "Antincendio",
-        "icon" => '<i class="fa-sharp fa-solid fa-fire-extinguisher"></i>'
+        "icon" => 'fa-sharp fa-solid fa-fire-extinguisher'
     ],
     [
         "name" => "Breakfast",
-        "icon" => '<i class="fa-sharp fa-solid fa-mug-saucer"></i>'
+        "icon" => 'fa-sharp fa-solid fa-mug-saucer'
     ],
     [
         "name" => "Elevator",
-        "icon" => '<i class="fa-sharp fa-solid fa-elevator"></i>'
+        "icon" => 'fa-sharp fa-solid fa-elevator'
     ],
     [
         "name" => "Pool",
-        "icon" => '<i class="fa-sharp fa-solid fa-person-swimming"></i>'
+        "icon" => 'fa-sharp fa-solid fa-person-swimming'
     ],
     [
         "name" => "Playground",
-        "icon" => '<i class="fa-sharp fa-solid fa-table-tennis-paddle-ball"></i>'
+        "icon" => 'fa-sharp fa-solid fa-table-tennis-paddle-ball'
     ],
     [
         "name" => "Gym",
-        "icon" => '<i class="fa-sharp fa-solid fa-dumbbell"></i>'
+        "icon" => 'fa-sharp fa-solid fa-dumbbell'
     ],
     [
         "name" => "Sauna",
-        "icon" => '<i class="fa-sharp fa-solid fa-spa"></i>'
+        "icon" => 'fa-sharp fa-solid fa-spa'
     ]
 ];
