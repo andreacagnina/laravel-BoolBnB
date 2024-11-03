@@ -25,7 +25,7 @@ class PropertyController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $properties = Property::where('user_id', $userId)->get();
+        $properties = Property::where('user_id', $userId)->orderBy('sponsored', 'desc')->orderBy('title', 'asc')->get();
 
         return view('admin.properties.index', compact('properties'));
     }
@@ -151,7 +151,7 @@ class PropertyController extends Controller
         } else {
             $property->sponsors()->sync([]);
         }
-        
+
         if ($request->has('services')) {
             $property->services()->sync($request->services);
         } else {
@@ -176,33 +176,67 @@ class PropertyController extends Controller
         return redirect()->route("admin.properties.index")->with("success", "Annuncio cancellato");
     }
 
+    // MICHELE
+    // public function assignSponsor(Request $request)
+    // {
+    //     $propertySlug = $request->input('property_slug');
+    //     $sponsorId = $request->input('sponsor_id');
+
+    //     // Verifica che la proprietà e lo sponsor esistano
+    //     $property = Property::where('slug', $propertySlug)->firstOrFail();
+    //     $sponsor = Sponsor::findOrFail($sponsorId);
+
+    //     // Trova la data di scadenza dell'ultimo sponsor attivo, se esiste
+    //     $lastSponsorPivot = $property->sponsors()
+    //         ->withPivot('created_at')
+    //         ->orderByPivot('created_at', 'desc')
+    //         ->first();
+
+    //     if ($lastSponsorPivot) {
+    //         // Calcola la data di scadenza in base alla durata dell'ultimo sponsor
+    //         $lastSponsorEndDate = $lastSponsorPivot->pivot->created_at->addHours($lastSponsorPivot->duration);
+    //         $startDate = $lastSponsorEndDate;
+    //     } else {
+    //         // Se non ci sono sponsor attivi, la data di inizio è ora
+    //         $startDate = now();
+    //     }
+
+    //     // Aggiungi il nuovo sponsor con la data di inizio calcolata
+    //     $property->sponsors()->attach($sponsorId, ['created_at' => $startDate]);
+
+    //     // Aggiorna il campo `sponsored` a `true`
+    //     $property->sponsored = true;
+    //     $property->save();
+
+    //     return redirect()->back()->with('success', 'Sponsor assegnato alla proprietà con successo!');
+    // }
     public function assignSponsor(Request $request)
     {
         $propertySlug = $request->input('property_slug');
         $sponsorId = $request->input('sponsor_id');
-        
-        // Verifica che la proprietà e lo sponsor esistano
+
+        // Verifica che la proprietà esista
         $property = Property::where('slug', $propertySlug)->firstOrFail();
-        $sponsor = Sponsor::findOrFail($sponsorId);
-        
+
         // Trova la data di scadenza dell'ultimo sponsor attivo, se esiste
         $lastSponsorPivot = $property->sponsors()
             ->withPivot('created_at')
             ->orderByPivot('created_at', 'desc')
             ->first();
-        
+
         if ($lastSponsorPivot) {
-            // Calcola la data di scadenza in base alla durata dell'ultimo sponsor
             $lastSponsorEndDate = $lastSponsorPivot->pivot->created_at->addHours($lastSponsorPivot->duration);
             $startDate = $lastSponsorEndDate;
         } else {
-            // Se non ci sono sponsor attivi, la data di inizio è ora
             $startDate = now();
         }
-        
+
         // Aggiungi il nuovo sponsor con la data di inizio calcolata
         $property->sponsors()->attach($sponsorId, ['created_at' => $startDate]);
-        
+
+        // Aggiorna lo stato di sponsorizzazione della proprietà
+        $property->checkSponsorshipStatus();
+
         return redirect()->back()->with('success', 'Sponsor assegnato alla proprietà con successo!');
-    }         
+    }
 }

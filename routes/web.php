@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
     Route::resource('properties', AdminPropertyController::class)->parameters([
         'properties' => 'property:slug'
     ]);
+    // Route::resource('properties', AdminPropertyController::class);
     Route::resource('sponsors', SponsorController::class);
     Route::resource('services', ServiceController::class);
     Route::get('/views/{property:slug}', [ViewController::class, 'show'])->name('views.show');

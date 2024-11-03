@@ -34,6 +34,7 @@
                                     <th>Indirizzo</th>
                                     <th>Prezzo</th>
                                     <th>Descrizione</th>
+                                    <th>Sponsorizzato</th>
                                     <th>Strumenti</th>
                                 </tr>
                             </thead>
@@ -54,6 +55,7 @@
                                         <td>{{ $property->address }}</td>
                                         <td>{{ $property->price }}€</td>
                                         <td>{{ Str::limit($property->description, 50) }}</td>
+                                        <td>{{ $property->sponsored ? 'Si' : 'No' }}</td>
                                         <td>
                                             <div class="d-flex justify-content-between">
                                                 <!-- Link per la sponsorizzazione con icona del dollaro -->

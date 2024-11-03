@@ -48,6 +48,19 @@
                         <div id="suggestions" class="suggestions-list border-0"></div>
                     </div>
 
+                    <input type="hidden" name="lat" id="lat" value="{{ old('lat') }}">
+                    <input type="hidden" name="long" id="long" value="{{ old('long') }}">
+
+                    <!-- Floor -->
+                    <div class="col-2">
+                        <label for="floor" class="form-label">Floor:</label>
+                        <input type="number" name="floor" id="floor" value="{{ old('floor') }}"
+                            class="form-control @error('floor') is-invalid @enderror" required>
+                        @error('floor')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
                     <!-- Cover Image -->
                     <div class="col-12">
                         <label for="cover_image" class="form-label">Cover Image:</label>
@@ -71,7 +84,7 @@
                     <!-- Square Meters -->
                     <div class="col-2">
                         <label for="mq" class="form-label">Square Meters (mq):</label>
-                        <input type="number" name="mq" id="mq" value="{{ old('mq')}}"
+                        <input type="number" name="mq" id="mq" value="{{ old('mq') }}"
                             class="form-control @error('mq') is-invalid @enderror" min="10" max="5000" required>
                         @error('mq')
                             <span class="text-danger">{{ $message }}</span>
@@ -80,9 +93,9 @@
 
                     <!-- Number of Rooms -->
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-3">
                             <label for="num_rooms" class="form-label">Number of Rooms:</label>
-                            <input type="number" name="num_rooms" id="num_rooms" value="{{ old('num_rooms')}}"
+                            <input type="number" name="num_rooms" id="num_rooms" value="{{ old('num_rooms', 1) }}"
                                 class="form-control @error('num_rooms') is-invalid @enderror" min="1" max="50"
                                 required>
                             @error('num_rooms')
@@ -91,40 +104,40 @@
                         </div>
 
                         <!-- Number of Beds -->
-                        <div class="col-2">
+                        <div class="col-3">
                             <label for="num_beds" class="form-label">Number of Beds:</label>
                             <input type="number" name="num_beds" id="num_beds" value="{{ old('num_beds', 1) }}"
-                                class="form-control @error('num_beds') is-invalid @enderror" min="1" max="20"
-                                required>
+                                class="form-control @error('num_beds') is-invalid @enderror" min="1"
+                                max="20" required>
                             @error('num_beds')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <!-- Number of Bathrooms -->
-                        <div class="col-2">
+                        <div class="col-3">
                             <label for="num_baths" class="form-label">Number of Bathrooms:</label>
                             <input type="number" name="num_baths" id="num_baths" value="{{ old('num_baths') }}"
-                                class="form-control @error('num_baths') is-invalid @enderror" min="0" max="5"
-                                required>
+                                class="form-control @error('num_baths') is-invalid @enderror" min="0"
+                                max="5" required>
                             @error('num_baths')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
 
-                    <!-- Floor -->
-                    <div class="col-2">
-                        <label for="floor" class="form-label">Floor:</label>
-                        <input type="number" name="floor" id="floor" value="{{ old('floor') }}"
-                            class="form-control @error('floor') is-invalid @enderror" required>
-                        @error('floor')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                    <div class="row">
+                        <div class="col-12">
+                            @foreach ($services as $service)
+                                <div class="mx-2">
+                                    <input type="checkbox" name="services[]" id="services" value="{{ $service->id }}"
+                                        @checked(is_array(old('services')) && in_array($service->id, old('services')))>
+                                    <label for="services" class="form-label fw-normal">{{ $service->name }} <i
+                                            class="{{ $service->icon }}"></i></label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-
-                    <input type="hidden" name="lat" id="lat" value="{{ old('lat') }}">
-                    <input type="hidden" name="long" id="long" value="{{ old('long') }}">
 
                     <!-- Price -->
                     <div class="col-2">
