@@ -41,20 +41,25 @@ class Property extends Model
 
     public function sponsors()
     {
-        return $this->belongsToMany(Sponsor::class);
+        return $this->belongsToMany(Sponsor::class)
+                    ->withTimestamps();
     }
+
     public function services()
     {
         return $this->belongsToMany(Service::class);
     }
+
     public function views()
     {
         return $this->hasMany(View::class);
     }
+
     public function images()
     {
         return $this->hasMany(Image::class);
     }
+
     public function messages()
     {
         return $this->hasMany(Message::class);

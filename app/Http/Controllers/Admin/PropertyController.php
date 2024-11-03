@@ -25,7 +25,6 @@ class PropertyController extends Controller
     public function index()
     {
         $userId = Auth::id();
-
         $properties = Property::where('user_id', $userId)->get();
 
         return view('admin.properties.index', compact('properties'));
@@ -57,7 +56,6 @@ class PropertyController extends Controller
     {
         $form_data = $request->validated();
         $form_data['slug'] = Property::generateSlug($form_data['title']);
-
         $form_data['user_id'] = Auth::id();
 
         if ($request->hasFile('cover_image')) {
@@ -69,15 +67,12 @@ class PropertyController extends Controller
         $property = Property::create($form_data);
 
         if ($request->has('sponsors')) {
-            $sponsors = $request->sponsors;
-            $property->sponsors()->attach($sponsors);
+            $property->sponsors()->attach($request->sponsors);
         }
 
         if ($request->has('services')) {
-            $services = $request->services;
-            $property->services()->attach($services);
+            $property->services()->attach($request->services);
         }
-
 
         return redirect()->route('admin.properties.index')->with("success", "Annuncio creato");
     }
@@ -96,7 +91,7 @@ class PropertyController extends Controller
         // Cerca l'ultima visualizzazione di questa proprietà dallo stesso IP
         $view = View::where('ip_address', $ipAddress)
             ->where('property_id', $property->id)
-            ->latest('updated_at')  // Ottieni la visualizzazione più recente
+            ->latest('updated_at')
             ->first();
 
         // Se non esiste una visualizzazione o è più vecchia di 1 minuto, aggiungi un nuovo record
@@ -143,11 +138,9 @@ class PropertyController extends Controller
         $form_data['slug'] = Property::generateSlug($form_data['title']);
 
         if ($request->hasFile('cover_image') && $request->file('cover_image')->isValid()) {
-
-            if (Str::startsWith($property->cover_image, 'https') === false) {
+            if (!Str::startsWith($property->cover_image, 'https')) {
                 Storage::delete($property->cover_image);
             }
-
             $form_data['cover_image'] = Storage::put('cover_image', $request->file('cover_image'));
         }
 
@@ -158,13 +151,14 @@ class PropertyController extends Controller
         } else {
             $property->sponsors()->sync([]);
         }
+        
         if ($request->has('services')) {
             $property->services()->sync($request->services);
         } else {
             $property->services()->sync([]);
         }
 
-        return redirect()->route('admin.properties.index', ['property' => $property->id])->with("success", "Annuncio Modificato");
+        return redirect()->route('admin.properties.index')->with("success", "Annuncio Modificato");
     }
 
     /**
@@ -175,10 +169,40 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        if (Str::startsWith($property->cover_image, 'https') === false) {
+        if (!Str::startsWith($property->cover_image, 'https')) {
             Storage::delete($property->cover_image);
         }
         $property->delete();
         return redirect()->route("admin.properties.index")->with("success", "Annuncio cancellato");
     }
+
+    public function assignSponsor(Request $request)
+    {
+        $propertySlug = $request->input('property_slug');
+        $sponsorId = $request->input('sponsor_id');
+        
+        // Verifica che la proprietà e lo sponsor esistano
+        $property = Property::where('slug', $propertySlug)->firstOrFail();
+        $sponsor = Sponsor::findOrFail($sponsorId);
+        
+        // Trova la data di scadenza dell'ultimo sponsor attivo, se esiste
+        $lastSponsorPivot = $property->sponsors()
+            ->withPivot('created_at')
+            ->orderByPivot('created_at', 'desc')
+            ->first();
+        
+        if ($lastSponsorPivot) {
+            // Calcola la data di scadenza in base alla durata dell'ultimo sponsor
+            $lastSponsorEndDate = $lastSponsorPivot->pivot->created_at->addHours($lastSponsorPivot->duration);
+            $startDate = $lastSponsorEndDate;
+        } else {
+            // Se non ci sono sponsor attivi, la data di inizio è ora
+            $startDate = now();
+        }
+        
+        // Aggiungi il nuovo sponsor con la data di inizio calcolata
+        $property->sponsors()->attach($sponsorId, ['created_at' => $startDate]);
+        
+        return redirect()->back()->with('success', 'Sponsor assegnato alla proprietà con successo!');
+    }         
 }
