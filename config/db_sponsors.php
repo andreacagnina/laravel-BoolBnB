@@ -4,7 +4,7 @@ return [
         'name' => 'Pacchetto Base',
         'slug' => 'pacchetto-base',
         'price' => 2.99,
-        'duration' => 24,
+        'duration' => 1,
     ],
     [
         'name' => 'Pacchetto Standard',
