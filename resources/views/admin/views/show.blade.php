@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="alert alert-danger text-center my-3">
-                    <h5 class="mb-1">Favorites</h5>
+                    <h5 class="mb-1">Preferiti</h5>
                     <p class="display-6">0</p> <!-- Qui mettiamo il numero fisso di 0 per ora -->
                 </div>
             </div>
@@ -25,9 +25,9 @@
                     <div class="card-body">
                         <p class="card-text"><strong>Prezzo:</strong> €{{ number_format($property->price, 2) }}</p>
                         <p class="card-text"><strong>Tipo:</strong> {{ $property->type }}</p>
-                        <p class="card-text"><strong>Location:</strong> {{ $property->address }}</p>
+                        <p class="card-text"><strong>Località:</strong> {{ $property->address }}</p>
                         <a href="{{ route('admin.properties.show', $property) }}" class="btn btn-outline-primary">
-                            View Full Details
+                            Visualizza Dettagli Completi
                         </a>
                     </div>
                 </div>
