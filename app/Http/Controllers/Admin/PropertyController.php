@@ -106,7 +106,10 @@ class PropertyController extends Controller
         $services = Service::all();
         $images = Image::all();
 
-        return view('admin.properties.show', compact('property', 'sponsors', 'services', 'images'));
+        $latitude = $property->lat;
+        $longitude = $property->long;
+
+        return view('admin.properties.show', compact('property', 'sponsors', 'services', 'images', 'latitude', 'longitude'));
     }
 
     /**
