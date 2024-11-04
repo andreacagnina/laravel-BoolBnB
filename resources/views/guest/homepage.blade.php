@@ -16,8 +16,10 @@
                         @if ($property->sponsored)
                             <span class="badge bg-success position-absolute top-0 end-0 m-2">Sponsorizzata</span>
                         @endif
-                        <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
-                            class="card-img-top img-fluid rounded-top" alt="{{ $property->title }}">
+                        <div class="overflow-hidden" style="height: 200px;">
+                            <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
+                                class="card-img-top w-100 h-100" style="object-fit: cover;" alt="{{ $property->title }}">
+                        </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $property->title }}</h5>
                             <p class="card-text text-muted">{{ Str::limit($property->description, 60) }}</p>

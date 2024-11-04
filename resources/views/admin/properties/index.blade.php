@@ -44,14 +44,17 @@
                                     <tr>
                                         <td>{{ $property->title }}</td>
                                         <td>
-                                            @if (Str::startsWith($property->cover_image, 'https'))
-                                                <img class="cover_image w_100" src="{{ $property->cover_image }}"
-                                                    alt="{{ $property->name }}">
-                                            @else
-                                                <img class="cover_image w_100"
-                                                    src="{{ asset('storage/' . $property->cover_image) }}"
-                                                    alt="{{ $property->name }}">
-                                            @endif
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                @if (Str::startsWith($property->cover_image, 'https'))
+                                                    <img src="{{ $property->cover_image }}" alt="{{ $property->name }}"
+                                                        class="img-thumbnail"
+                                                        style="width: 100px; height: 100px; object-fit: cover;">
+                                                @else
+                                                    <img src="{{ asset('storage/' . $property->cover_image) }}"
+                                                        alt="{{ $property->name }}" class="img-thumbnail"
+                                                        style="width: 100px; height: 100px; object-fit: cover;">
+                                                @endif
+                                            </div>
                                         </td>
                                         <td>{{ $property->address }}</td>
                                         <td>{{ $property->price }}€</td>
@@ -64,7 +67,6 @@
                                             : '<span class="text-danger">&cross;</span>' !!}</td>
                                         <td>
                                             <div class="d-flex justify-content-between">
-                                                <!-- Link per la sponsorizzazione con icona del dollaro -->
                                                 <a href="{{ route('admin.sponsors.show', ['property' => $property->slug]) }}"
                                                     class="btn btn-outline-success mx-1">
                                                     <i class="fas fa-money-bill"></i>
@@ -77,18 +79,19 @@
                                                     class="btn btn-outline-primary mx-1">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a class="btn btn-outline-warning mx-1"
-                                                    href="{{ route('admin.properties.edit', ['property' => $property->slug]) }}"><i
-                                                        class="fa-solid fa-pen-to-square"></i></a>
+                                                <a href="{{ route('admin.properties.edit', ['property' => $property->slug]) }}"
+                                                    class="btn btn-outline-warning mx-1">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 <form
                                                     action="{{ route('admin.properties.destroy', ['property' => $property->slug]) }}"
-                                                    method="post">
+                                                    method="post" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger delete"
-                                                        data-propertyName="{{ $property->title }}"><i
-                                                            class="fa-solid fa-trash"></i>
+                                                    <button type="submit" class="btn btn-outline-danger mx-1 delete"
+                                                        data-propertyName="{{ $property->title }}">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
                                                 </form>
                                             </div>
                                         </td>
