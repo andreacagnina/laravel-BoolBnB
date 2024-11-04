@@ -22,6 +22,7 @@ class PropertySeeder extends Seeder
             $NewProperty = new Property();
             $NewProperty->title = $property['title'];
             $NewProperty->slug = Str::slug($property['title'], '-');
+            $NewProperty->cover_image = $property['cover_image'];
             $NewProperty->description = $property['description'];
             $NewProperty->num_rooms = $property['num_rooms'];
             $NewProperty->num_beds = $property['num_beds'];
