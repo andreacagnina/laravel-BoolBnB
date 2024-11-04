@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="card-footer text-end">
-                <a href="{{ route('homepage') }}" class="btn btn-secondary">Torna alla home</a>
+                <a href="{{ route('homepage') }}" class="btn btn-secondary">Torna all'elenco'</a>
             </div>
         </div>
     </div>

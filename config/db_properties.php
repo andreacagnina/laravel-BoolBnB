@@ -838,7 +838,7 @@ return [
         'type' => 'cabin',
         'floor' => 1,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'user_id' => 1
     ],
 ];

@@ -36,7 +36,7 @@ class Property extends Model
 
         // Verifica se esiste almeno uno sponsor non ancora scaduto
         $hasActiveSponsor = $this->sponsors()
-            ->wherePivot('created_at', '>=', $now->subHours($this->sponsors->max('duration')))
+            ->wherePivot('created_at', '>=', $now->subMinute($this->sponsors->max('duration')))
             ->exists();
 
         // Aggiorna lo stato `sponsored` in base alla presenza di sponsor attivi

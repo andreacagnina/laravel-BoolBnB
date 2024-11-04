@@ -53,7 +53,10 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Aggiungi Sponsor</button>
+            <div class="text-end d-flex justify-content-end align-items-center gap-2">
+                <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary">Torna Indietro</a>
+                <button type="submit" class="btn btn-primary px-4">Aggiungi</button>
+            </div>
         </form>
     </div>
 @endsection
