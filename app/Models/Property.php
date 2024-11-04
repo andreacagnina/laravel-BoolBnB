@@ -34,15 +34,16 @@ class Property extends Model
     {
         $now = Carbon::now();
 
-        // Verifica se esiste almeno uno sponsor non ancora scaduto
+        // Verifica se esiste almeno uno sponsor con una `end_date` futura
         $hasActiveSponsor = $this->sponsors()
-            ->wherePivot('created_at', '>=', $now->subMinute($this->sponsors->max('duration')))
+            ->wherePivot('end_date', '>', $now)
             ->exists();
 
         // Aggiorna lo stato `sponsored` in base alla presenza di sponsor attivi
         $this->sponsored = $hasActiveSponsor;
         $this->save();
     }
+
 
     public static function generateSlug($name)
     {

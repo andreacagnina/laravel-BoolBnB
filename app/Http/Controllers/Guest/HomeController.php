@@ -10,8 +10,12 @@ class HomeController extends Controller
     public function index()
     {
         $properties = Property::where('available', 1)
-                            ->orderByDesc('sponsored')
-                            ->get();
+            ->orderByDesc('sponsored')
+            ->get();
+
+        foreach ($properties as $property) {
+            $property->checkSponsorshipStatus();
+        }
 
         return view('guest.homepage', compact('properties'));
     }

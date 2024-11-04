@@ -29,6 +29,7 @@
                         <a href="{{ route('admin.properties.show', $property) }}" class="btn btn-outline-primary">
                             Visualizza Dettagli Completi
                         </a>
+                        <a href="{{ route('homepage') }}" class="btn btn-secondary">Torna all'elenco</a>
                     </div>
                 </div>
             </div>

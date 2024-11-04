@@ -28,6 +28,10 @@ class PropertyController extends Controller
         $userId = Auth::id();
         $properties = Property::where('user_id', $userId)->orderBy('sponsored', 'desc')->orderBy('available', 'desc')->orderBy('title', 'asc')->get();
 
+        foreach ($properties as $property) {
+            $property->checkSponsorshipStatus();
+        }
+
         return view('admin.properties.index', compact('properties'));
     }
 
@@ -205,6 +209,7 @@ class PropertyController extends Controller
         // Trova la durata dello sponsor selezionato e calcola la end_date
         $sponsor = Sponsor::findOrFail($sponsorId);
         $endDate = $startDate->addHours($sponsor->duration);
+
 
         // Aggiungi il nuovo sponsor con created_at, updated_at, e end_date
         $property->sponsors()->attach($sponsorId, [
