@@ -8,6 +8,8 @@
                     <h1>Modifica Property</h1>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <form action="{{ route('admin.properties.update', ['property' => $property->slug]) }}" method="post"
                     enctype="multipart/form-data">
@@ -39,15 +41,23 @@
                         @enderror
                     </div>
 
-                    <div class="col-7 position-relative">
-                        <label for="address" class="form-label">Address:</label>
-                        <input type="text" name="address" id="address" value="{{ old('address', $property->address) }}"
-                            class="form-control @error('address') is-invalid @enderror" required minlength="2"
-                            maxlength="100" autocomplete="off">
-                        @error('address')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <div id="suggestions" class="suggestions-list border-0"></div>
+                    <div class="row">
+                        <div class="col-6 position-relative">
+                            <label for="address" class="form-label">Address:</label>
+                            <input type="text" name="address" id="address"
+                                value="{{ old('address', $property->address) }}"
+                                class="form-control @error('address') is-invalid @enderror" required minlength="2"
+                                maxlength="100" autocomplete="off">
+                            @error('address')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            <div id="suggestions" class="suggestions-list border-0"></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="content mt-5">
+                                <div id="map" style="width: 100%; height: 400px;"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <input type="hidden" name="lat" id="lat" value="{{ old('lat', $property->lat) }}">
@@ -98,8 +108,8 @@
                             <label for="num_rooms" class="form-label">Number of Rooms:</label>
                             <input type="number" name="num_rooms" id="num_rooms"
                                 value="{{ old('num_rooms', $property->num_rooms) }}"
-                                class="form-control @error('num_rooms') is-invalid @enderror" min="1" max="50"
-                                required>
+                                class="form-control @error('num_rooms') is-invalid @enderror" min="1"
+                                max="50" required>
                             @error('num_rooms')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
