@@ -4,7 +4,7 @@
     <div class="container my-4">
         <div class="row mb-4 text-center">
             <div class="col-12">
-                <h1 class="display-4">Benvenuto su BoolBnB</h1>
+                <h1 class="display-4">Benvenuti su BoolBnB</h1>
                 <p class="lead text-muted">Trova la proprietà perfetta, che sia sponsorizzata o meno!</p>
             </div>
         </div>
