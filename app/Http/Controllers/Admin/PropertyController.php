@@ -26,7 +26,11 @@ class PropertyController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $properties = Property::where('user_id', $userId)->orderBy('sponsored', 'desc')->orderBy('available', 'desc')->orderBy('title', 'asc')->get();
+        $properties = Property::where('user_id', $userId)
+            ->orderBy('sponsored', 'desc')
+            ->orderBy('available', 'desc')
+            ->orderBy('title', 'asc')
+            ->get();
 
         foreach ($properties as $property) {
             $property->checkSponsorshipStatus();
@@ -43,7 +47,6 @@ class PropertyController extends Controller
     public function create()
     {
         $propertyTypes = ['mansion', 'ski-in/out', 'tree-house', 'apartment', 'dome', 'cave', 'cabin', 'lake', 'beach', 'castle'];
-
         $images = Image::all();
         $services = Service::all();
         $sponsors = Sponsor::all();
@@ -79,7 +82,7 @@ class PropertyController extends Controller
             $property->services()->attach($request->services);
         }
 
-        return redirect()->route('admin.properties.index')->with("success", "Annuncio creato");
+        return redirect()->route('admin.properties.index')->with("success", "Announcement Created");
     }
 
     /**
@@ -90,16 +93,17 @@ class PropertyController extends Controller
      */
     public function show(Request $request, Property $property)
     {
-        // Ottieni l'indirizzo IP del visitatore
-        $ipAddress = $request->ip();
+        // Verifica che l'utente sia il proprietario
+        if ($property->user_id !== Auth::id()) {
+            return abort(404, 'Not Found');
+        }
 
-        // Cerca l'ultima visualizzazione di questa proprietà dallo stesso IP
+        $ipAddress = $request->ip();
         $view = View::where('ip_address', $ipAddress)
             ->where('property_id', $property->id)
             ->latest('updated_at')
             ->first();
 
-        // Se non esiste una visualizzazione o è più vecchia di 1 minuto, aggiungi un nuovo record
         if (!$view || $view->updated_at->diffInMinutes(now()) >= 1) {
             View::create([
                 'ip_address' => $ipAddress,
@@ -110,7 +114,6 @@ class PropertyController extends Controller
         $sponsors = Sponsor::all();
         $services = Service::all();
         $images = Image::all();
-
         $latitude = $property->lat;
         $longitude = $property->long;
 
@@ -125,6 +128,10 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
+        if ($property->user_id !== Auth::id()) {
+            return abort(404, 'Not Found');
+        }
+
         $propertyTypes = ['mansion', 'ski-in/out', 'tree-house', 'apartment', 'dome', 'cave', 'cabin', 'lake', 'beach', 'castle'];
         $sponsors = Sponsor::all();
         $services = Service::all();
@@ -142,6 +149,10 @@ class PropertyController extends Controller
      */
     public function update(UpdatePropertyRequest $request, Property $property)
     {
+        if ($property->user_id !== Auth::id()) {
+            return abort(404, 'Not Found');
+        }
+
         $form_data = $request->validated();
         $form_data['slug'] = Property::generateSlug($form_data['title']);
 
@@ -166,7 +177,7 @@ class PropertyController extends Controller
             $property->services()->sync([]);
         }
 
-        return redirect()->route('admin.properties.index')->with("success", "Annuncio Modificato");
+        return redirect()->route('admin.properties.index')->with("success", 'Announcement Modified');
     }
 
     /**
@@ -177,50 +188,52 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
+        if ($property->user_id !== Auth::id()) {
+            return abort(404, 'Not Found');
+        }
+
         if (!Str::startsWith($property->cover_image, 'https')) {
             Storage::delete($property->cover_image);
         }
         $property->delete();
-        return redirect()->route("admin.properties.index")->with("success", "Annuncio cancellato");
-    }
 
+        return redirect()->route("admin.properties.index")->with("success", 'Announcement canceled');
+    }
 
     public function assignSponsor(Request $request)
     {
         $propertySlug = $request->input('property_slug');
         $sponsorId = $request->input('sponsor_id');
 
-        // Verifica che la proprietà esista
         $property = Property::where('slug', $propertySlug)->firstOrFail();
 
-        // Trova la data di scadenza dell'ultimo sponsor attivo, se esiste
+        // Verifica che l'utente sia il proprietario
+        if ($property->user_id !== Auth::id()) {
+            return abort(404, 'Not Found');
+        }
+
         $lastSponsorPivot = $property->sponsors()
             ->withPivot('end_date')
             ->orderByPivot('created_at', 'desc')
             ->first();
 
-        // Determina la data di inizio per il nuovo sponsor
         if ($lastSponsorPivot && $lastSponsorPivot->pivot->end_date) {
-            $startDate = Carbon::parse($lastSponsorPivot->pivot->end_date); // Converte end_date in Carbon
+            $startDate = Carbon::parse($lastSponsorPivot->pivot->end_date);
         } else {
             $startDate = now();
         }
 
-        // Trova la durata dello sponsor selezionato e calcola la end_date
         $sponsor = Sponsor::findOrFail($sponsorId);
-        $endDate = $startDate->addHours($sponsor->duration);
+        $endDate = $startDate->copy()->addHours($sponsor->duration); // Usa copy() per evitare di modificare startDate
 
-
-        // Aggiungi il nuovo sponsor con created_at, updated_at, e end_date
         $property->sponsors()->attach($sponsorId, [
             'created_at' => $startDate,
             'updated_at' => now(),
             'end_date' => $endDate
         ]);
 
-        // Aggiorna lo stato di sponsorizzazione della proprietà
         $property->checkSponsorshipStatus();
 
-        return redirect()->back()->with('success', 'Sponsor assegnato alla proprietà con successo!');
+        return redirect()->back()->with('success', 'Sponsor successfully assigned to the property!');
     }
 }

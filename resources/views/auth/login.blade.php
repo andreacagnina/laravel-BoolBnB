@@ -13,7 +13,7 @@
 
                             <div class="mb-4 row">
                                 <label for="email"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }} *</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email"
@@ -29,8 +29,8 @@
                             </div>
 
                             <div class="mb-4 row">
-                                <label for="password"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}
+                                    *</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
@@ -45,7 +45,7 @@
                                 </div>
                             </div>
 
-                            <div class="mb-4 row">
+                            <div class="mb-3 row">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
@@ -55,6 +55,7 @@
                                             {{ __('Remember Me') }}
                                         </label>
                                     </div>
+                                    <div class="mt-2">(*) Required fields</div>
                                 </div>
                             </div>
 

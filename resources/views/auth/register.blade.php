@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Register') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register') }}" onsubmit="return handleSubmit(event)">
                             @csrf
 
                             <div class="mb-4 row">
@@ -66,12 +66,13 @@
 
                             <div class="mb-4 row">
                                 <label for="email"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }} *</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email">
+                                        value="{{ old('email') }}" required autocomplete="email"
+                                        oninput="validateEmail()">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -82,8 +83,8 @@
                             </div>
 
                             <div class="mb-4 row">
-                                <label for="password"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}
+                                    *</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
@@ -98,19 +99,28 @@
                                 </div>
                             </div>
 
-                            <div class="mb-4 row">
+                            <div class="mb-4 row position-relative">
                                 <label for="password-confirm"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }} *</label>
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
                                         name="password_confirmation" required autocomplete="new-password">
+                                    <div id="password-tooltip" class="custom-tooltip">The passwords do not match.</div>
+
+
+                                    @error('password_confirmation')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="mb-4 row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <div class="my-3">(*) Required fields</div>
+                                    <button type="submit" class="btn btn-primary"
+                                        onclick="return validatePassword(),validateEmailFormat()">
                                         {{ __('Register') }}
                                     </button>
                                 </div>

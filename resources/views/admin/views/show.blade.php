@@ -8,13 +8,13 @@
                 <p class="lead text-muted">{{ $property->description }}</p>
 
                 <div class="alert alert-info text-center my-3">
-                    <h5 class="mb-1">Visualizzazioni</h5>
+                    <h5 class="mb-1">Views</h5>
                     <p class="display-6">{{ $property->views_count }}</p>
                 </div>
 
                 <div class="alert alert-danger text-center my-3">
-                    <h5 class="mb-1">Preferiti</h5>
-                    <p class="display-6">0</p> <!-- Qui mettiamo il numero fisso di 0 per ora -->
+                    <h5 class="mb-1">Favorites</h5>
+                    <p class="display-6">0</p> <!-- Currently showing a fixed number of 0 -->
                 </div>
             </div>
 
@@ -23,13 +23,13 @@
                     <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
                         class="card-img-top img-fluid rounded" alt="{{ $property->title }}">
                     <div class="card-body">
-                        <p class="card-text"><strong>Prezzo:</strong> €{{ number_format($property->price, 2) }}</p>
-                        <p class="card-text"><strong>Tipo:</strong> {{ $property->type }}</p>
-                        <p class="card-text"><strong>Località:</strong> {{ $property->address }}</p>
+                        <p class="card-text"><strong>Price:</strong> €{{ number_format($property->price, 2) }}</p>
+                        <p class="card-text"><strong>Type:</strong> {{ $property->type }}</p>
+                        <p class="card-text"><strong>Location:</strong> {{ $property->address }}</p>
                         <a href="{{ route('admin.properties.show', $property) }}" class="btn btn-outline-primary">
-                            Visualizza Dettagli Completi
+                            View Full Details
                         </a>
-                        <a href="{{ route('homepage') }}" class="btn btn-secondary">Torna all'elenco</a>
+                        <a href="{{ route('homepage') }}" class="btn btn-secondary">Back to list</a>
                     </div>
                 </div>
             </div>

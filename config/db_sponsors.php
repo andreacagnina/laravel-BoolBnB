@@ -1,20 +1,20 @@
 <?php
 return [
     [
-        'name' => 'Pacchetto Base',
-        'slug' => 'pacchetto-base',
+        'name' => 'Advert Basic',
+        'slug' => 'advert-basic',
         'price' => 2.99,
         'duration' => 24,
     ],
     [
-        'name' => 'Pacchetto Standard',
-        'slug' => 'pacchetto-standard',
+        'name' => 'Advert Standard',
+        'slug' => 'advert-standard',
         'price' => 5.99,
         'duration' => 72,
     ],
     [
-        'name' => 'Pacchetto Premium',
-        'slug' => 'pacchetto-premium',
+        'name' => 'Advert Premium',
+        'slug' => 'advert-premium',
         'price' => 9.99,
         'duration' => 144,
     ],

@@ -17,35 +17,36 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <h4 class="mb-4">Informazioni sulla proprietà</h4>
+                        <h4 class="mb-4">Property Information</h4>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Descrizione:</strong> {{ $property->description }}</li>
-                            <li class="list-group-item"><strong>Indirizzo:</strong> {{ $property->address }}</li>
-                            <li class="list-group-item"><strong>Piano:</strong> {{ $property->floor }}</li>
-                            <li class="list-group-item"><strong>Prezzo:</strong> {{ $property->price }}€</li>
-                            <li class="list-group-item"><strong>Metri quadri:</strong> {{ $property->mq }} mq</li>
-                            <li class="list-group-item"><strong>Numero di stanze:</strong> {{ $property->num_rooms }}</li>
-                            <li class="list-group-item"><strong>Numero di letti:</strong> {{ $property->num_beds }}</li>
-                            <li class="list-group-item"><strong>Numero di bagni:</strong> {{ $property->num_baths }}</li>
-                            <li class="list-group-item"><strong>Tipo:</strong>
+                            <li class="list-group-item"><strong>Description:</strong> {{ $property->description }}</li>
+                            <li class="list-group-item"><strong>Address:</strong> {{ $property->address }}</li>
+                            <li class="list-group-item"><strong>Floor:</strong> {{ $property->floor }}</li>
+                            <li class="list-group-item"><strong>Price:</strong> {{ $property->price }}€</li>
+                            <li class="list-group-item"><strong>Square Meters:</strong> {{ $property->mq }} sqm</li>
+                            <li class="list-group-item"><strong>Number of Rooms:</strong> {{ $property->num_rooms }}</li>
+                            <li class="list-group-item"><strong>Number of Beds:</strong> {{ $property->num_beds }}</li>
+                            <li class="list-group-item"><strong>Number of Bathrooms:</strong> {{ $property->num_baths }}
+                            </li>
+                            <li class="list-group-item"><strong>Type:</strong>
                                 {{ ucfirst(str_replace('-', ' ', $property->type)) }}</li>
-                            <li class="list-group-item"><strong>Servizi disponibili:</strong>
+                            <li class="list-group-item"><strong>Available Services:</strong>
                                 @if ($property->services->isEmpty())
-                                    Nessun servizio incluso.
+                                    No services included.
                                 @else
                                     @foreach ($property->services as $service)
                                         <span>{{ $service->name }} <i class="{{ $service->icon }} me-2"></i></span>
                                     @endforeach
                                 @endif
                             </li>
-                            <li class="list-group-item"><strong>Disponibilità:</strong>
-                                {{ $property->available ? 'Sì' : 'No' }}</li>
+                            <li class="list-group-item"><strong>Availability:</strong>
+                                {{ $property->available ? 'Yes' : 'No' }}</li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="card-footer text-end">
-                <a href="{{ route('homepage') }}" class="btn btn-secondary">Torna all'elenco</a>
+                <a href="{{ route('homepage') }}" class="btn btn-secondary">Back to list</a>
             </div>
         </div>
     </div>
