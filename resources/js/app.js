@@ -134,3 +134,27 @@ document.addEventListener('DOMContentLoaded', function () {
         initializeMap(); // Visualizzazione generale sull’Italia con zoom per tutto il paese
     }
 });
+
+// confronta se le password sono uguali
+function handleSubmit(event) {
+    if (!validatePassword()) {
+        event.preventDefault(); // Blocca l'invio del form se le password non coincidono
+    }
+}
+
+function validatePassword() {
+    const password = document.getElementById('password');
+    const passwordConfirm = document.getElementById('password-confirm');
+    const tooltip = document.getElementById('password-tooltip');
+
+    if (password.value !== passwordConfirm.value) {
+        passwordConfirm.classList.add('is-invalid');
+        tooltip.style.display = 'block'; // Mostra la tooltip
+        return false;
+    } else {
+        passwordConfirm.classList.remove('is-invalid');
+        tooltip.style.display = 'none'; // Nascondi la tooltip
+        return true;
+    }
+}
+

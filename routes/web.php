@@ -40,7 +40,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
         'properties' => 'property:slug'
     ]);
     // Route::resource('properties', AdminPropertyController::class);
-    Route::resource('sponsors', SponsorController::class);
+    // Route::resource('sponsors', SponsorController::class);
     Route::resource('services', ServiceController::class);
     Route::get('/views/{property:slug}', [ViewController::class, 'show'])->name('views.show');
     Route::post('/properties/assign-sponsor', [AdminPropertyController::class, 'assignSponsor'])->name('properties.assignSponsor');

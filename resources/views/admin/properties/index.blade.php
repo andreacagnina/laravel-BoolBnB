@@ -17,11 +17,8 @@
                     @endif
                     @if (count($properties) != 0)
                         <div class="my-3 d-flex justify-content-between align-items-center">
-                            <h2>Proprietà caricate</h2>
+                            <h2>Uploaded Properties</h2>
                             <div>
-                                <!-- Pulsante Sponsorizza Appartamento -->
-                                <a href="{{ route('admin.sponsors.index') }}" class="btn btn-warning me-2">Sponsorizza
-                                    Appartamento</a>
                                 <a href="{{ route('admin.properties.create') }}" class="btn btn-primary">Add a new
                                     Property</a>
                             </div>
@@ -29,14 +26,14 @@
                         <table class="table table-bordered table-striped align-middle table-sm text-center">
                             <thead>
                                 <tr>
-                                    <th>Titolo</th>
-                                    <th>Immagine di Copertina</th>
-                                    <th>Indirizzo</th>
-                                    <th>Prezzo</th>
-                                    <th>Descrizione</th>
-                                    <th>Sponsorizzato</th>
-                                    <th>Disponibile</th>
-                                    <th>Strumenti</th>
+                                    <th>Title</th>
+                                    <th>Cover Image</th>
+                                    <th>Address</th>
+                                    <th>Price</th>
+                                    <th>Description</th>
+                                    <th>Sponsored</th>
+                                    <th>Available</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,7 +98,7 @@
                         </table>
                     @else
                         <div class="my-3 d-flex justify-content-between align-items-center">
-                            <h2>Non hai ancora caricato nessun immobile</h2>
+                            <h2>You haven't uploaded any properties yet</h2>
                             <a href="{{ route('admin.properties.create') }}" class="btn btn-primary">Add a new Property</a>
                         </div>
                     @endif
