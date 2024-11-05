@@ -11,7 +11,7 @@
             <!-- Prima riga: Titolo e Prezzo -->
             <div class="row mb-3">
                 <div class="col-md-8">
-                    <label for="title" class="form-label">Titolo:</label>
+                    <label for="title" class="form-label">Titolo: *</label>
                     <input type="text" name="title" id="title" value="{{ old('title', $property->title) }}"
                         class="form-control @error('title') is-invalid @enderror" required maxlength="50">
                     @error('title')
@@ -19,7 +19,7 @@
                     @enderror
                 </div>
                 <div class="col-md-4">
-                    <label for="price" class="form-label">Prezzo:</label>
+                    <label for="price" class="form-label">Prezzo: *</label>
                     <input type="number" name="price" id="price" value="{{ old('price', $property->price) }}"
                         class="form-control @error('price') is-invalid @enderror" min="10" max="999999.99"
                         step="0.01" required>
@@ -32,7 +32,7 @@
             <!-- Seconda riga: Tipo -->
             <div class="row mb-3">
                 <div class="col-md-12">
-                    <label for="type" class="form-label">Tipo:</label>
+                    <label for="type" class="form-label">Tipo: *</label>
                     <select name="type" id="type" class="form-control @error('type') is-invalid @enderror" required>
                         <option value="" disabled>-Scegli un tipo-</option>
                         @foreach ($propertyTypes as $type)
@@ -76,7 +76,7 @@
                 <!-- Colonna Sinistra -->
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="floor" class="form-label">Piano:</label>
+                        <label for="floor" class="form-label">Piano: *</label>
                         <input type="number" name="floor" id="floor" value="{{ old('floor', $property->floor) }}"
                             class="form-control @error('floor') is-invalid @enderror" required>
                         @error('floor')
@@ -85,7 +85,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="mq" class="form-label">Metri Quadri (mq):</label>
+                        <label for="mq" class="form-label">Metri Quadri (mq): *</label>
                         <input type="number" name="mq" id="mq" value="{{ old('mq', $property->mq) }}"
                             class="form-control @error('mq') is-invalid @enderror" min="10" max="5000" required
                             step="10">
@@ -95,7 +95,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="num_rooms" class="form-label">Numero di Stanze:</label>
+                        <label for="num_rooms" class="form-label">Numero di Stanze: *</label>
                         <input type="number" name="num_rooms" id="num_rooms"
                             value="{{ old('num_rooms', $property->num_rooms) }}"
                             class="form-control @error('num_rooms') is-invalid @enderror" min="1" max="50"
@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="num_beds" class="form-label">Numero di Letti:</label>
+                        <label for="num_beds" class="form-label">Numero di Letti: *</label>
                         <input type="number" name="num_beds" id="num_beds"
                             value="{{ old('num_beds', $property->num_beds) }}"
                             class="form-control @error('num_beds') is-invalid @enderror" min="1" max="20"
@@ -117,7 +117,7 @@
                     </div>
 
                     <div>
-                        <label for="num_baths" class="form-label">Numero di Bagni:</label>
+                        <label for="num_baths" class="form-label">Numero di Bagni: *</label>
                         <input type="number" name="num_baths" id="num_baths"
                             value="{{ old('num_baths', $property->num_baths) }}"
                             class="form-control @error('num_baths') is-invalid @enderror" min="0" max="5"
@@ -131,7 +131,7 @@
                 <!-- Colonna Destra -->
                 <div class="col-md-6">
                     <div class="mb-3 position-relative">
-                        <label for="address" class="form-label">Indirizzo:</label>
+                        <label for="address" class="form-label">Indirizzo: *</label>
                         <input type="text" name="address" id="address"
                             value="{{ old('address', $property->address) }}"
                             class="form-control @error('address') is-invalid @enderror" required minlength="2"
@@ -201,10 +201,11 @@
                         </div>
                     </div>
                     @error('available')
-                        <div class="text-danger">{{ $message }}</div>
+                        <div class="text-danger ms-2">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="col-md-6 text-end d-flex justify-content-end align-items-center gap-2">
+                <div>(*) Campi Obbligatori</div>
+                <div class="col-md-12 text-end d-flex justify-content-end align-items-center gap-2">
                     <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary">Torna Indietro</a>
                     <button type="submit" class="btn btn-primary px-4">Aggiorna</button>
                 </div>
