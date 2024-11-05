@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="card-footer text-end">
-                <a href="{{ route('homepage') }}" class="btn btn-secondary">Back to list</a>
+                <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary">Back to list</a>
             </div>
         </div>
     </div>
