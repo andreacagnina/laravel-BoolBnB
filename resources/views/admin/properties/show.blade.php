@@ -12,9 +12,9 @@
                         <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
                             class="img-fluid rounded mb-3" alt="{{ $property->title }}">
                         <div id="map" class="rounded mb-3" style="width: 100%; height: 300px;">
-                            <input type="hidden" id="lat" value="{{ $property->lat }}">
-                            <input type="hidden" id="long" value="{{ $property->long }}">
                         </div>
+                        <input type="hidden" id="lat" value="{{ $property->lat }}">
+                        <input type="hidden" id="long" value="{{ $property->long }}">
                     </div>
                     <div class="col-lg-6">
                         <h4 class="mb-4">Property Information</h4>
