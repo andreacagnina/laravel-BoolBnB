@@ -3,11 +3,11 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PropertyController as AdminPropertyController;
-use App\Http\Controllers\Guest\PropertyController as GuestPropertyController;
 use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ViewController;
+use App\Http\Controllers\Admin\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +24,10 @@ use App\Http\Controllers\Admin\ViewController;
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
 
 // Route per la lista delle proprietà disponibili, utilizzando il PropertyController di Guest
-Route::get('/properties', [GuestPropertyController::class, 'index'])->name('properties.index');
+Route::get('/properties', [HomeController::class, 'index'])->name('properties.index');
 
 // Route per visualizzare i dettagli di una singola proprietà, utilizzando il PropertyController di Guest
-Route::get('/properties/{slug}', [GuestPropertyController::class, 'show'])->name('properties.show');
+Route::get('/properties/{slug}', [HomeController::class, 'show'])->name('properties.show');
 
 // Route per la dashboard, accessibile solo agli utenti autenticati e verificati
 Route::get('/dashboard', function () {
@@ -40,9 +40,10 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
         'properties' => 'property:slug'
     ]);
     // Route::resource('properties', AdminPropertyController::class);
-    // Route::resource('sponsors', SponsorController::class);
+    Route::resource('sponsors', SponsorController::class);
     Route::resource('services', ServiceController::class);
     Route::get('/views/{property:slug}', [ViewController::class, 'show'])->name('views.show');
+    Route::get('/messages', [MessageController::class, 'index']);
     Route::post('/properties/assign-sponsor', [AdminPropertyController::class, 'assignSponsor'])->name('properties.assignSponsor');
 
     // Rotta per la pagina show di uno sponsor per un appartamento specifico
