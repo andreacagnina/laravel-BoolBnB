@@ -22,7 +22,8 @@
                             <li class="list-group-item"><strong>Description:</strong> {{ $property->description }}</li>
                             <li class="list-group-item"><strong>Address:</strong> {{ $property->address }}</li>
                             <li class="list-group-item"><strong>Floor:</strong> {{ $property->floor }}</li>
-                            <li class="list-group-item"><strong>Price:</strong> {{ $property->price }}€</li>
+                            <li class="list-group-item"><strong>Price:</strong>
+                                {{ number_format($property->price, 2, ',', '') }}&euro;</li>
                             <li class="list-group-item"><strong>Square Meters:</strong> {{ $property->mq }} sqm</li>
                             <li class="list-group-item"><strong>Number of Rooms:</strong> {{ $property->num_rooms }}</li>
                             <li class="list-group-item"><strong>Number of Beds:</strong> {{ $property->num_beds }}</li>

@@ -45,6 +45,12 @@
 
                                 <a class="dropdown-item"
                                     href="{{ route('admin.properties.index') }}">{{ __('My Properties') }}</a>
+                                {{-- <a class="dropdown-item"
+                                    href="{{ route('admin.messages.index') }}">{{ __('Inbox') }}</a>
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.sponsors.index') }}">{{ __('Advertisements') }}</a> --}}
+                                {{-- <a class="dropdown-item"
+                                    href="{{ route('admin.views.show') }}">{{ __('Statistics') }}</a> --}}
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

@@ -54,7 +54,7 @@
                                             </div>
                                         </td>
                                         <td>{{ $property->address }}</td>
-                                        <td>{{ $property->price }}€</td>
+                                        <td>{{ number_format($property->price, 2, ',', '') }}&euro;</td>
                                         <td>{{ Str::limit($property->description, 50) }}</td>
                                         <td>{!! $property->sponsored
                                             ? '<span class="text-success">&check;</span>'

@@ -23,7 +23,8 @@
                     <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
                         class="card-img-top img-fluid rounded" alt="{{ $property->title }}">
                     <div class="card-body">
-                        <p class="card-text"><strong>Price:</strong> €{{ number_format($property->price, 2) }}</p>
+                        <p class="card-text"><strong>Price:</strong> {{ number_format($property->price, 2, ',', '') }}&euro;
+                        </p>
                         <p class="card-text"><strong>Type:</strong> {{ $property->type }}</p>
                         <p class="card-text"><strong>Location:</strong> {{ $property->address }}</p>
                         <a href="{{ route('admin.properties.show', $property) }}" class="btn btn-outline-primary">

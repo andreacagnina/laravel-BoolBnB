@@ -7,7 +7,7 @@
         <div class="mb-3">
             <p>{{ $property->description }}</p>
             <p><strong>Type:</strong> {{ $property->type }}</p>
-            <p><strong>Price:</strong> €{{ $property->price }}</p>
+            <p><strong>Price:</strong> {{ number_format($property->price, 2, ',', '') }}&euro;</p>
         </div>
 
         <h4 class="mt-4 mb-3">Active Sponsors</h4>
@@ -23,7 +23,7 @@
                     @endphp
                     <div class="list-group-item mb-3">
                         <p><strong>Sponsor:</strong> {{ $sponsor->name }}</p>
-                        <p><strong>Price:</strong> €{{ $sponsor->price }}</p>
+                        <p><strong>Price:</strong> {{ number_format($sponsor->price, 2, ',', '') }}&euro;</p>
                         <p><strong>Duration:</strong> {{ $sponsor->duration }} hours</p>
                         <p><strong>Start Date:</strong>
                             {{ $sponsor->pivot->created_at ? $sponsor->pivot->created_at->format('d-m-Y H:i') : 'Date not available' }}
@@ -47,7 +47,8 @@
                 <select name="sponsor_id" id="sponsor_id" class="form-select" required>
                     @foreach ($sponsors as $sponsor)
                         <option value="{{ $sponsor->id }}">
-                            {{ $sponsor->name }} - €{{ $sponsor->price }} for {{ $sponsor->duration }} hours
+                            {{ $sponsor->name }} - {{ number_format($sponsor->price, 2, ',', '') }}&euro; for
+                            {{ $sponsor->duration }} hours
                         </option>
                     @endforeach
                 </select>
