@@ -16,7 +16,13 @@ class SponsorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function index(Request $request)
+    {
+        $sponsors = Sponsor::all();
+        $properties = Property::where('user_id', Auth::id())->get();
 
+        return view('admin.sponsors.index', compact('sponsors', 'properties'));
+    }
     /**
      * Display the sponsorship details for a specific property.
      *
