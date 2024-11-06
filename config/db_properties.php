@@ -1,10 +1,9 @@
 <?php
 return [
-
     [
         'title' => 'Modern City Studio',
         'slug' => 'modern-city-studio',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/8374e2a1-13f8-48f9-8fd7-3c0b8217152f.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6OTc4Njc2MjY4MzQ3Mjg2MjI5/original/e9bbe93b-8052-4f9e-848e-34a1c809dcb9.jpeg?im_w=960',
         'description' => 'A stylish, compact studio apartment in the heart of the city, ideal for solo travelers.',
         'num_rooms' => 1,
         'num_beds' => 1,
@@ -23,7 +22,7 @@ return [
     [
         'title' => 'Rustic Lakeside Cabin',
         'slug' => 'rustic-lakeside-cabin',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/ea5e58cf-8052-4532-b8e6-0e7d3aab8143.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/41872e64-a8b6-4c66-a7de-5c83e8c4a250.jpg?im_w=1440&im_q=highq',
         'description' => 'A cozy cabin by the lake, offering tranquil views and nature trails.',
         'num_rooms' => 2,
         'num_beds' => 2,
@@ -42,7 +41,7 @@ return [
     [
         'title' => 'Luxury Penthouse with Cityscape',
         'slug' => 'luxury-penthouse-cityscape',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/4c69e0b7-5ef4-4d52-80b7-d05610d8e6d6.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-691869876520105705/original/be26495a-c0ca-4f33-8ded-3807aa332209.jpeg?im_w=1440&im_q=highq',
         'description' => 'A high-rise penthouse offering a stunning cityscape and luxurious amenities.',
         'num_rooms' => 4,
         'num_beds' => 4,
@@ -61,7 +60,7 @@ return [
     [
         'title' => 'Ski Lodge with Mountain View',
         'slug' => 'ski-lodge-mountain-view',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/349b3e74-5ab9-4690-816e-1b8c9a9a1d1d.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-1045854960701532360/original/862245f6-4040-4ae2-ab39-87a008084da5.jpeg?im_w=720',
         'description' => 'A rustic ski lodge with direct access to the slopes and beautiful mountain views.',
         'num_rooms' => 3,
         'num_beds' => 3,
@@ -80,7 +79,7 @@ return [
     [
         'title' => 'Exclusive Treehouse with Ocean View',
         'slug' => 'exclusive-treehouse-ocean-view',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/2b6c671f-1d8e-49b6-9f32-42a5d672e354.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-852570601015025177/original/64890f13-26cf-4cb5-978a-b64e9fe7e5f9.jpeg?im_w=1440&im_q=highq',
         'description' => 'An elevated treehouse with breathtaking views of the ocean and surrounding forest.',
         'num_rooms' => 1,
         'num_beds' => 1,
@@ -99,7 +98,7 @@ return [
     [
         'title' => 'Classic Italian Villa with Garden',
         'slug' => 'classic-italian-villa-garden',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/86cd6b6a-c37b-4ab2-8c60-3dcb41ff4b90.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-23015320/original/a768bb26-aba3-4898-88f3-72d82d497089.jpeg?im_w=1200',
         'description' => 'A beautiful villa with a lush garden, situated in the Tuscan countryside.',
         'num_rooms' => 5,
         'num_beds' => 5,
@@ -118,7 +117,7 @@ return [
     [
         'title' => 'Panoramic Dome Retreat',
         'slug' => 'panoramic-dome-retreat',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/b4ac9bfc-49ae-4a39-8a99-71abf26b5de8.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/27716585/6ae34f42_original.jpg?im_w=1440&im_q=highq',
         'description' => 'A modern dome structure with panoramic views of rolling hills and vineyards.',
         'num_rooms' => 1,
         'num_beds' => 1,
@@ -137,7 +136,7 @@ return [
     [
         'title' => 'Historic Countryside Castle',
         'slug' => 'historic-countryside-castle',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/0f8cbe37-f939-41a7-bac0-fd63c8b7c2da.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-6919592/original/40658605-0b96-46ea-b88b-707c3aac316f.jpeg?im_w=720',
         'description' => 'A majestic castle with rich history, surrounded by scenic countryside.',
         'num_rooms' => 15,
         'num_beds' => 15,
@@ -156,7 +155,7 @@ return [
     [
         'title' => 'Countryside Vineyard Villa',
         'slug' => 'countryside-vineyard-villa',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/8b3b60d7-92db-4b7f-b82f-8a8e3b5d528a.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-802785519039957337/original/1650faae-cddc-4f9b-a250-d4d7d1609bd0.jpeg?im_w=1200',
         'description' => 'A charming villa surrounded by vineyards, perfect for wine enthusiasts.',
         'num_rooms' => 4,
         'num_beds' => 4,
@@ -175,7 +174,7 @@ return [
     [
         'title' => 'Seaside Beach Bungalow',
         'slug' => 'seaside-beach-bungalow',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/d3b3b22f-6e84-4f7b-8a21-7c6c9e2f7adf.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-949295652607639713/original/b4ced034-7611-4732-93a6-74ce16b74f54.jpeg?im_w=720',
         'description' => 'A cozy beach bungalow with direct access to the sandy shores.',
         'num_rooms' => 2,
         'num_beds' => 2,
@@ -194,7 +193,7 @@ return [
     [
         'title' => 'Alpine Treehouse Hideaway',
         'slug' => 'alpine-treehouse-hideaway',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/87b6ae2a-7f9b-4d23-b25b-0f8eb7f8f8d5.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/898fe366-80f6-4773-800c-dc30f3e91dd5.jpg?im_w=720',
         'description' => 'A unique treehouse nestled in an alpine forest, offering spectacular views.',
         'num_rooms' => 1,
         'num_beds' => 1,
@@ -213,7 +212,7 @@ return [
     [
         'title' => 'City Penthouse with Rooftop Pool',
         'slug' => 'city-penthouse-rooftop-pool',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/4372dd57-0a17-4029-9d5c-df56f3218f41.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-48540750/original/ad68b77a-c309-4aef-87c5-d3964281cf29.jpeg?im_w=720',
         'description' => 'A luxurious penthouse with a private rooftop pool and panoramic city views.',
         'num_rooms' => 3,
         'num_beds' => 3,
@@ -232,7 +231,7 @@ return [
     [
         'title' => 'Rustic Mountain Cabin Escape',
         'slug' => 'rustic-mountain-cabin-escape',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/24b8f47a-3c74-4f39-8ff1-51f5c4a8e8b8.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/979cdf3a-2bd0-4567-8a07-2e2eb076aeee.jpg?im_w=1200',
         'description' => 'A rustic cabin in the mountains, perfect for a serene getaway in nature.',
         'num_rooms' => 2,
         'num_beds' => 2,
@@ -251,7 +250,7 @@ return [
     [
         'title' => 'Luxury Dome with Valley View',
         'slug' => 'luxury-dome-valley-view',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/354c86a7-5bff-45e4-9e23-4e04de8c4c4f.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-945451930446865365/original/20589ea0-db51-4921-8ef4-12327c2bad4e.jpeg?im_w=720',
         'description' => 'A luxurious dome offering views over a picturesque valley, ideal for relaxation.',
         'num_rooms' => 1,
         'num_beds' => 1,
@@ -270,7 +269,7 @@ return [
     [
         'title' => 'Modern City Apartment with Balcony',
         'slug' => 'modern-city-apartment-balcony',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/1a8b79c1-153f-4b74-a0b1-90271f2c8c6e.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/d45bcb02-cc52-43e0-bf5e-73c0b90e7f94.jpg?im_w=1440&im_q=highq',
         'description' => 'A sleek, modern apartment in the city center with a private balcony.',
         'num_rooms' => 2,
         'num_beds' => 2,
@@ -289,7 +288,7 @@ return [
     [
         'title' => 'Secluded Hillside Castle',
         'slug' => 'secluded-hillside-castle',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/65c3e4d8-4ec3-4992-b86c-bbff302bb6b9.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/8e94d0f0-8660-425e-8007-c32672b06a65.jpg?im_w=720',
         'description' => 'A historic castle on a hillside with panoramic views of the surrounding countryside.',
         'num_rooms' => 10,
         'num_beds' => 10,
@@ -308,7 +307,7 @@ return [
     [
         'title' => 'Treetop Cabin in the Dolomites',
         'slug' => 'treetop-cabin-dolomites',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/3b8a1f12-84a2-4f87-a865-b6c9826b9a02.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/15cd9844-c922-4492-b0c8-caee369cde09.jpg?im_w=1200',
         'description' => 'A unique cabin set among treetops in the Dolomites, perfect for nature lovers.',
         'num_rooms' => 1,
         'num_beds' => 1,
@@ -327,7 +326,7 @@ return [
     [
         'title' => 'Seaside Villa with Private Pool',
         'slug' => 'seaside-villa-private-pool',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/9a5f8a32-4451-431e-bddf-bd839d60c47b.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-579252/original/425f2cb4-9a90-4bbc-9221-3d75be20a1bc.jpeg?im_w=1200',
         'description' => 'A spacious villa by the sea with a private pool and beach access.',
         'num_rooms' => 6,
         'num_beds' => 6,
@@ -343,11 +342,10 @@ return [
         'sponsored' => false,
         'user_id' => 3
     ],
-
     [
         'title' => 'City Loft with Skyline View',
         'slug' => 'city-loft-skyline-view',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/5e14c015-abe6-4305-87d5-95511fe1a6fe.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-800442420577699374/original/0f408be9-2373-465f-844b-028389d57d08.jpeg?im_w=1200',
         'description' => 'A modern loft with stunning views of the city skyline, perfect for urbanites.',
         'num_rooms' => 2,
         'num_beds' => 1,
@@ -366,7 +364,7 @@ return [
     [
         'title' => 'Mountain View Ski Lodge',
         'slug' => 'mountain-view-ski-lodge',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-801341623720043983/original/2297c033-f03e-4f6a-97dc-86316e924859.jpeg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/8d8eebcf-bc98-4189-9d25-18287954a89e.jpg?im_w=720',
         'description' => 'A cozy ski lodge nestled in the mountains with direct access to ski slopes.',
         'num_rooms' => 4,
         'num_beds' => 4,
@@ -385,7 +383,7 @@ return [
     [
         'title' => 'Beachfront Villa Escape',
         'slug' => 'beachfront-villa-escape',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/6a1c328d-3e6b-4559-9d59-b6a6bc3c28ae.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/a983ae03-d09c-4efa-ad27-deeac242ea01.jpg?im_w=720',
         'description' => 'A luxurious beachfront villa with breathtaking views of the sea and private beach access.',
         'num_rooms' => 5,
         'num_beds' => 5,
@@ -404,7 +402,7 @@ return [
     [
         'title' => 'City Center Luxury Apartment',
         'slug' => 'city-center-luxury-apartment',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/6bb86806-c377-41b5-a8d3-de0bfb153b3a.jpeg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-1161447484734690123/original/cbd576cc-3e2c-4318-bc28-d324fd1fdb7f.jpeg?im_w=1200',
         'description' => 'A luxury apartment located in the heart of the city, close to all amenities.',
         'num_rooms' => 3,
         'num_beds' => 3,
@@ -423,7 +421,7 @@ return [
     [
         'title' => 'Remote Cabin by the Lake',
         'slug' => 'remote-cabin-lake',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/03d1a59c-672d-4c10-80ec-3dce231fc643.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/03d2fdf8-00f4-4bec-8eee-f3d6936404ba.jpg?im_w=1200',
         'description' => 'A secluded cabin by a serene lake, perfect for a peaceful retreat.',
         'num_rooms' => 2,
         'num_beds' => 2,
@@ -442,7 +440,7 @@ return [
     [
         'title' => 'Elegant Florence Villa',
         'slug' => 'elegant-florence-villa',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/e7b895af-bb32-4fb8-9cd8-7f0885645c0c.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6OTAzMzUzMzYxNDgyNTY1NTUz/original/95cc1212-cfa9-434b-80e4-42aa4c2e548c.jpeg?im_w=1200',
         'description' => 'A beautiful villa in Florence, perfect for family holidays and gatherings.',
         'num_rooms' => 5,
         'num_beds' => 5,
@@ -461,7 +459,7 @@ return [
     [
         'title' => 'Treetop Glamping Experience',
         'slug' => 'treetop-glamping-experience',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/8e94d0f0-8660-425e-8007-c32672b06a65.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-852570601015025177/original/64890f13-26cf-4cb5-978a-b64e9fe7e5f9.jpeg?im_w=1440&im_q=highq',
         'description' => 'A luxurious treehouse with glamping facilities in the midst of nature.',
         'num_rooms' => 1,
         'num_beds' => 2,
@@ -480,7 +478,7 @@ return [
     [
         'title' => 'Central Penthouse with Terrace',
         'slug' => 'central-penthouse-terrace',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/650c2e2e-8d20-46f9-94de-eae8020d351c.jpg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-48540750/original/e18cbd23-79de-417c-920c-073e0eb401ed.jpeg?im_w=1200',
         'description' => 'A luxurious penthouse with a large terrace offering panoramic city views.',
         'num_rooms' => 3,
         'num_beds' => 2,
@@ -499,7 +497,7 @@ return [
     [
         'title' => 'Alpine Dome with Lake View',
         'slug' => 'alpine-dome-lake-view',
-        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-663628334676790509/original/6bb86806-c377-41b5-a8d3-de0bfb153b3a.jpeg?im_w=720',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-675949174523622927/original/462b2652-01aa-4bc4-b0e3-b2c388fa6bd9.jpeg?im_w=720',
         'description' => 'A unique geodesic dome with lake views, ideal for a nature getaway.',
         'num_rooms' => 2,
         'num_beds' => 2,
@@ -534,4 +532,137 @@ return [
         'sponsored' => false,
         'user_id' => 1
     ],
+    [
+        'title' => 'Contemporary Loft in Milan',
+        'slug' => 'contemporary-loft-milan',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-931541062888884181/original/76a49f09-c9ba-447b-acfc-d7be34b07732.jpeg?im_w=1200',
+        'description' => 'A sleek and modern loft with minimalist design, perfect for business travelers.',
+        'num_rooms' => 2,
+        'num_beds' => 1,
+        'num_baths' => 1,
+        'mq' => 60,
+        'address' => 'Corso Garibaldi, 21, 20121 Milan',
+        'lat' => '45.477318',
+        'long' => '9.185924',
+        'price' => 1020.75,
+        'type' => 'apartment',
+        'floor' => 5,
+        'available' => true,
+        'sponsored' => false,
+        'user_id' => 3
+    ],
+    [
+        'title' => 'Lakefront Villa in Ronciglione',
+        'slug' => 'lakefront-villa-ronciglione',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/7816a7c8-cf0c-4c52-aaec-da198d065295.jpg?im_w=1200',
+        'description' => 'A spacious villa right by the lake, offering serene views and luxury amenities.',
+        'num_rooms' => 6,
+        'num_beds' => 6,
+        'num_baths' => 4,
+        'mq' => 280,
+        'address' => 'Via Lago di Vico, 2, 01037 Ronciglione',
+        'lat' => '42.328569',
+        'long' => '12.216789',
+        'price' => 1875.90,
+        'type' => 'mansion',
+        'floor' => 1,
+        'available' => true,
+        'sponsored' => false,
+        'user_id' => 1
+    ],
+    [
+        'title' => 'Urban Studio with Balcony in Turin',
+        'slug' => 'urban-studio-balcony-turin',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/miso/Hosting-820896778503897920/original/bdd370e0-63fa-4852-a6f2-4c23a2f12356.jpeg?im_w=1200',
+        'description' => 'A cozy studio apartment with a private balcony overlooking the vibrant city.',
+        'num_rooms' => 1,
+        'num_beds' => 1,
+        'num_baths' => 1,
+        'mq' => 45,
+        'address' => 'Via Garibaldi, 3, 10121 Turin',
+        'lat' => '45.070362',
+        'long' => '7.686812',
+        'price' => 720.50,
+        'type' => 'apartment',
+        'floor' => 4,
+        'available' => true,
+        'sponsored' => false,
+        'user_id' => 2
+    ],
+    [
+        'title' => 'Seaside Apartment with Terrace in Palermo',
+        'slug' => 'seaside-apartment-terrace-palermo',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/4de13a05-90d9-4c67-a4cb-0cf8dcbaf6f5.jpg?im_w=1200',
+        'description' => 'A modern seaside apartment with a large terrace overlooking the ocean.',
+        'num_rooms' => 2,
+        'num_beds' => 2,
+        'num_baths' => 1,
+        'mq' => 75,
+        'address' => 'Via del Mare, 7, 90143 Palermo',
+        'lat' => '38.135689',
+        'long' => '13.358978',
+        'price' => 950.30,
+        'type' => 'apartment',
+        'floor' => 2,
+        'available' => true,
+        'sponsored' => false,
+        'user_id' => 3
+    ],
+    [
+        'title' => 'Charming Countryside Bungalow in Tuscany',
+        'slug' => 'charming-countryside-bungalow-tuscany',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/8ef5797f-2fb8-4e82-96bd-d7e41dc3e25e.jpg?im_w=1200',
+        'description' => 'A quaint bungalow in the rolling hills of Tuscany, perfect for relaxation.',
+        'num_rooms' => 2,
+        'num_beds' => 2,
+        'num_baths' => 1,
+        'mq' => 65,
+        'address' => 'Via dei Cipressi, 14, 53013 Gaiole in Chianti',
+        'lat' => '43.469891',
+        'long' => '11.382012',
+        'price' => 580.00,
+        'type' => 'mansion',
+        'floor' => 1,
+        'available' => true,
+        'sponsored' => false,
+        'user_id' => 2
+    ],
+    [
+        'title' => 'Historic Castle Tower in Sorano',
+        'slug' => 'historic-castle-tower-sorano',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-786594155921786215/original/54545224-be32-4161-a4c5-72746e8ce418.jpeg?im_w=1200',
+        'description' => 'A charming tower room within a historic castle, offering unique medieval charm.',
+        'num_rooms' => 1,
+        'num_beds' => 1,
+        'num_baths' => 1,
+        'mq' => 50,
+        'address' => 'Castello di Sorano, 2, 58010 Sorano',
+        'lat' => '42.683019',
+        'long' => '11.722376',
+        'price' => 385.75,
+        'type' => 'castle',
+        'floor' => 2,
+        'available' => true,
+        'sponsored' => false,
+        'user_id' => 1
+    ],
+    [
+        'title' => 'Spacious Treehouse with Mountain View in Bormio',
+        'slug' => 'spacious-treehouse-mountain-view-bormio',
+        'cover_image' => 'https://a0.muscache.com/im/pictures/b7e49a4c-12ce-4a51-ba52-0cd596843c02.jpg?im_w=1200',
+        'description' => 'A beautiful treehouse with a large terrace and mountain views, ideal for adventurers.',
+        'num_rooms' => 1,
+        'num_beds' => 1,
+        'num_baths' => 1,
+        'mq' => 30,
+        'address' => 'Strada del Bosco, 12, 23032 Bormio',
+        'lat' => '46.469567',
+        'long' => '10.368421',
+        'price' => 295.50,
+        'type' => 'tree-house',
+        'floor' => 1,
+        'available' => true,
+        'sponsored' => false,
+        'user_id' => 2
+    ]
 ];
