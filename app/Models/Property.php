@@ -10,6 +10,7 @@ use Carbon\Carbon;
 class Property extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'title',
         'slug',
@@ -30,26 +31,43 @@ class Property extends Model
         'user_id'
     ];
 
-    public function checkSponsorshipStatus()
+    // Append custom attributes to the model's array form
+    protected $appends = ['cover_image_url'];
+
+    // Cast price to float to ensure numeric type
+    protected $casts = [
+        'price' => 'float',
+    ];
+
+    // Accessor for the cover image URL
+    public function getCoverImageUrlAttribute()
     {
-        $now = Carbon::now();
-
-        // Verifica se esiste almeno uno sponsor con una `end_date` futura
-        $hasActiveSponsor = $this->sponsors()
-            ->wherePivot('end_date', '>', $now)
-            ->exists();
-
-        // Aggiorna lo stato `sponsored` in base alla presenza di sponsor attivi
-        $this->sponsored = $hasActiveSponsor;
-        $this->save();
+        if (Str::startsWith($this->cover_image, 'http')) {
+            return $this->cover_image;
+        }
+        return asset('storage/' . $this->cover_image);
     }
-
 
     public static function generateSlug($name)
     {
         return Str::slug($name, '-');
     }
 
+    public function checkSponsorshipStatus()
+    {
+        $now = Carbon::now();
+
+        // Check if there's at least one sponsor with a future end_date
+        $hasActiveSponsor = $this->sponsors()
+            ->wherePivot('end_date', '>', $now)
+            ->exists();
+
+        // Update the sponsored status based on active sponsors
+        $this->sponsored = $hasActiveSponsor;
+        $this->save();
+    }
+
+    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
