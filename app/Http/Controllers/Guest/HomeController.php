@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -12,38 +14,69 @@ class HomeController extends Controller
     {
         $latitude = $request->query('latitude');
         $longitude = $request->query('longitude');
-        $radius = 20; // Raggio di ricerca in km
+        $radius = $request->query('radius', 20);
+        $minRooms = $request->query('rooms', 1);
+        $minBeds = $request->query('beds', 1);
+        $selectedServices = $request->query('services', []);
 
+        // Fetch all services to display in the view
+        $services = Service::all();
+
+        // Check if latitude and longitude are provided
         if ($latitude && $longitude) {
-            // Calcolo della variazione per il bounding box
-            $latDelta = $radius / 111; // 1 grado di latitudine è circa 111 km
-            $longDelta = $radius / (111 * cos(deg2rad($latitude)));
-
-            // Limiti del bounding box
-            $minLat = $latitude - $latDelta;
-            $maxLat = $latitude + $latDelta;
-            $minLong = $longitude - $longDelta;
-            $maxLong = $longitude + $longDelta;
-
-            // Query per trovare proprietà nel bounding box, con ordinamento per distanza approssimativa
             $properties = Property::selectRaw(
-                "*, POWER(lat - ?, 2) + POWER(`long` - ?, 2) AS distance",
-                [$latitude, $longitude]
+                "properties.*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(`long`) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance",
+                [$latitude, $longitude, $latitude]
             )
-                ->whereBetween('lat', [$minLat, $maxLat])
-                ->whereBetween('long', [$minLong, $maxLong])
+                ->having('distance', '<=', $radius)
                 ->where('available', 1)
-                ->orderBy('sponsored', 'desc') // Ordina per sponsorizzazione secondaria
-                ->orderBy('distance', 'asc') // Ordina per distanza approssimativa
+                ->where('num_rooms', '>=', $minRooms)
+                ->where('num_beds', '>=', $minBeds);
+
+            // Apply service filters if any
+            if (!empty($selectedServices)) {
+                $properties = $properties->whereHas('services', function ($query) use ($selectedServices) {
+                    $query->whereIn('services.id', $selectedServices);
+                }, '=', count($selectedServices));
+            }
+
+            // Ensure sponsored properties come first, then order by distance
+            $properties = $properties->orderBy('sponsored', 'desc')
+                ->orderBy('distance', 'asc')
                 ->get();
         } else {
-            // Mostra tutte le proprietà disponibili se non sono presenti coordinate
+            // If no coordinates provided, fetch all available properties
             $properties = Property::where('available', 1)
-                ->orderByDesc('sponsored')
-                ->get();
+                ->where('num_rooms', '>=', $minRooms)
+                ->where('num_beds', '>=', $minBeds);
+
+            // Apply service filters if any
+            if (!empty($selectedServices)) {
+                $properties = $properties->whereHas('services', function ($query) use ($selectedServices) {
+                    $query->whereIn('services.id', $selectedServices);
+                }, '=', count($selectedServices));
+            }
+
+            // Ensure sponsored properties come first
+            $properties = $properties->orderBy('sponsored', 'desc')->get();
         }
 
-        return view('guest.homepage', compact('properties'));
+        // Add full cover image URL and round distance
+        $properties->map(function ($property) {
+            $property->cover_image_url = Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image);
+            if (isset($property->distance)) {
+                $property->distance = round($property->distance, 2);
+            }
+            return $property;
+        });
+
+        // If the request is AJAX, return JSON response
+        if ($request->ajax()) {
+            return response()->json(['properties' => $properties]);
+        }
+
+        // Return the view with properties and services
+        return view('guest.homepage', compact('properties', 'services'));
     }
 
     public function show($slug)
