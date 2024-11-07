@@ -4,6 +4,13 @@ return [
         'title' => 'Modern City Studio',
         'slug' => 'modern-city-studio',
         'cover_image' => 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6OTc4Njc2MjY4MzQ3Mjg2MjI5/original/e9bbe93b-8052-4f9e-848e-34a1c809dcb9.jpeg?im_w=960',
+        'images' => [
+            'https://a0.muscache.com/im/pictures/20022381/09236f79_original.jpg?im_w=720',
+            'https://a0.muscache.com/im/pictures/20022548/36f71be6_original.jpg?im_w=720',
+            'https://a0.muscache.com/im/pictures/20022856/21e8c7a0_original.jpg?im_w=1200',
+            'https://a0.muscache.com/im/pictures/20022895/33c50f88_original.jpg?im_w=720',
+            'https://a0.muscache.com/im/pictures/20022919/fed0604c_original.jpg?im_w=720',
+        ],
         'description' => 'A stylish, compact studio apartment in the heart of the city, ideal for solo travelers.',
         'num_rooms' => 1,
         'num_beds' => 1,
