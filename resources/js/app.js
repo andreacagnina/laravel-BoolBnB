@@ -20,7 +20,7 @@ delete_buttons.forEach((button) => {
         const buttonDelete = modal.querySelector('.confirm-delete');
         const propertyName = button.getAttribute('data-propertyName');
         const ModalText = modal.querySelector('#modal_text');
-        ModalText.innerHTML = `Sei sicuro di voler cancellare questo immobile: <strong>${propertyName}</strong> ?`;
+        ModalText.innerHTML = `Are you sure you want to delete this item: <strong>${propertyName}</strong> ?`;
 
         buttonDelete.addEventListener('click', function () {
             button.parentElement.submit();
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
             suggestionsList.appendChild(suggestionItem);
         });
         suggestionsList.style.display = suggestionsData.length ? 'block' : 'none';
-    }    
+    }
 
     // Selezionare un suggerimento dall'elenco
     function selectAddressSuggestion(index) {
@@ -202,18 +202,30 @@ document.addEventListener('DOMContentLoaded', function () {
             trimFormFields(form, ['title', 'address', 'description']);
             const validation = new JustValidate(form);
             validation
-                .addField('#title', [{ rule: 'required', errorMessage: 'The title is required' }, { rule: 'maxLength', value: 50, errorMessage: 'The title must not exceed 50 characters' }])
-                .addField('#cover_image', [{ rule: 'maxFilesCount', value: 1, errorMessage: 'Only one file is allowed' }, { rule: 'files', value: { files: { extensions: ['jpg', 'jpeg', 'png', 'gif'], maxSize: 4096 * 1024 } }, errorMessage: 'The file must be an image and not exceed 4MB' }])
-                .addField('#description', [{ rule: 'maxLength', value: 300, errorMessage: 'The description must not exceed 300 characters' }])
-                .addField('#num_rooms', [{ rule: 'required', errorMessage: 'The number of rooms is required' }, { rule: 'number', errorMessage: 'The number of rooms must be a valid number' }, { rule: 'minNumber', value: 1, errorMessage: 'The number of rooms must be at least 1' }, { rule: 'maxNumber', value: 50, errorMessage: 'The number of rooms must not exceed 50' }])
-                .addField('#num_beds', [{ rule: 'required', errorMessage: 'The number of beds is required' }, { rule: 'number', errorMessage: 'The number of beds must be a valid number' }, { rule: 'minNumber', value: 1, errorMessage: 'The number of beds must be at least 1' }, { rule: 'maxNumber', value: 20, errorMessage: 'The number of beds must not exceed 20' }])
-                .addField('#num_baths', [{ rule: 'required', errorMessage: 'The number of bathrooms is required' }, { rule: 'number', errorMessage: 'The number of bathrooms must be a valid number' }, { rule: 'minNumber', value: 0, errorMessage: 'The number of bathrooms must be at least 0' }, { rule: 'maxNumber', value: 5, errorMessage: 'The number of bathrooms must not exceed 5' }])
-                .addField('#mq', [{ rule: 'required', errorMessage: 'The square meters are required' }, { rule: 'number', errorMessage: 'The square meters must be a valid number' }, { rule: 'minNumber', value: 10, errorMessage: 'The square meters must be at least 10' }, { rule: 'maxNumber', value: 5000, errorMessage: 'The square meters must not exceed 5000' }])
-                .addField('#address', [{ rule: 'required', errorMessage: 'The address is required' }, { rule: 'minLength', value: 2, errorMessage: 'The address must be at least 2 characters' }, { rule: 'maxLength', value: 100, errorMessage: 'The address must not exceed 100 characters' }])
-                .addField('#price', [{ rule: 'required', errorMessage: 'The price is required' }, { rule: 'number', errorMessage: 'The price must be a valid number' }, { rule: 'minNumber', value: 10, errorMessage: 'The price must be at least 10' }, { rule: 'maxNumber', value: 999999.99, errorMessage: 'The price must not exceed 999999.99' }])
-                .addField('#type', [{ rule: 'required', errorMessage: 'The type is required' }])
-                .addField('#floor', [{ rule: 'required', errorMessage: 'The floor is required' }, { rule: 'integer', errorMessage: 'The floor must be an integer' }])
+                .addField('#title', [{ rule: 'required', errorMessage: 'The title is required' }, { rule: 'maxLength', value: 50, errorMessage: 'The title must not exceed 50 characters' }], { errorsContainer: document.getElementById('error-container-title') })
+
+                .addField('#cover_image', [{ rule: 'maxFilesCount', value: 1, errorMessage: 'Only one file is allowed' }, { rule: 'files', value: { files: { extensions: ['jpg', 'jpeg', 'png', 'gif'], maxSize: 4096 * 1024 } }, errorMessage: 'The file must be an image and not exceed 4MB' }], { errorsContainer: document.getElementById('error-container-cover_image') })
+
+                .addField('#description', [{ rule: 'maxLength', value: 300, errorMessage: 'The description must not exceed 300 characters' }], { errorsContainer: document.getElementById('error-container-description') })
+
+                .addField('#num_rooms', [{ rule: 'required', errorMessage: 'The number of rooms is required' }, { rule: 'number', errorMessage: 'The number of rooms must be a valid number' }, { rule: 'minNumber', value: 1, errorMessage: 'The number of rooms must be at least 1' }, { rule: 'maxNumber', value: 50, errorMessage: 'The number of rooms must not exceed 50' }], { errorsContainer: document.getElementById('error-container-num_rooms') })
+
+                .addField('#num_beds', [{ rule: 'required', errorMessage: 'The number of beds is required' }, { rule: 'number', errorMessage: 'The number of beds must be a valid number' }, { rule: 'minNumber', value: 1, errorMessage: 'The number of beds must be at least 1' }, { rule: 'maxNumber', value: 20, errorMessage: 'The number of beds must not exceed 20' }], { errorsContainer: document.getElementById('error-container-num_beds') })
+
+                .addField('#num_baths', [{ rule: 'required', errorMessage: 'The number of bathrooms is required' }, { rule: 'number', errorMessage: 'The number of bathrooms must be a valid number' }, { rule: 'minNumber', value: 0, errorMessage: 'The number of bathrooms must be at least 0' }, { rule: 'maxNumber', value: 5, errorMessage: 'The number of bathrooms must not exceed 5' }], { errorsContainer: document.getElementById('error-container-num_baths') })
+
+                .addField('#mq', [{ rule: 'required', errorMessage: 'The square meters are required' }, { rule: 'number', errorMessage: 'The square meters must be a valid number' }, { rule: 'minNumber', value: 10, errorMessage: 'The square meters must be at least 10' }, { rule: 'maxNumber', value: 5000, errorMessage: 'The square meters must not exceed 5000' }], { errorsContainer: document.getElementById('error-container-mq') })
+
+                .addField('#address', [{ rule: 'required', errorMessage: 'The address is required' }, { rule: 'minLength', value: 2, errorMessage: 'The address must be at least 2 characters' }, { rule: 'maxLength', value: 100, errorMessage: 'The address must not exceed 100 characters' }], { errorsContainer: document.getElementById('error-container-address') })
+
+                .addField('#price', [{ rule: 'required', errorMessage: 'The price is required' }, { rule: 'number', errorMessage: 'The price must be a valid number' }, { rule: 'minNumber', value: 10, errorMessage: 'The price must be at least 10' }, { rule: 'maxNumber', value: 999999.99, errorMessage: 'The price must not exceed 999999.99' }], { errorsContainer: document.getElementById('error-container-price') })
+
+                .addField('#type', [{ rule: 'required', errorMessage: 'The type is required' }], { errorsContainer: document.getElementById('error-container-type') })
+
+                .addField('#floor', [{ rule: 'required', errorMessage: 'The floor is required' }, { rule: 'integer', errorMessage: 'The floor must be an integer' }], { errorsContainer: document.getElementById('error-container-floor') })
+
                 .addField('[name="services[]"]', [{ validator: () => Array.from(document.querySelectorAll('[name="services[]"]')).some(checkbox => checkbox.checked), errorMessage: 'Please select at least one service' }], { errorsContainer: document.getElementById('error-container-services') })
+
                 .addField('[name="available"]', [{ validator: () => Array.from(document.querySelectorAll('[name="available"]')).some(radio => radio.checked), errorMessage: 'Please select availability' }], { errorsContainer: document.getElementById('error-container-available') })
                 .onSuccess(() => form.submit());
         }

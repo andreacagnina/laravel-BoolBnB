@@ -10,7 +10,7 @@
                 <!-- Search Bar with Filter Button -->
                 <div class="col-lg-8 offset-lg-2 mt-4 position-relative">
                     <div class="input-group mb-3 shadow-sm rounded-pill">
-                        <input type="text" id="citySearch" class="form-control form-control-lg border-0"
+                        <input type="text" id="citySearch" class="form-control form-control-lg border-active"
                             placeholder="Search by city or address" aria-label="citySearch" autocomplete="off">
                         <button id="searchButton" class="btn btn-primary">Search</button>
                         <!-- Filter Button -->
