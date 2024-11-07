@@ -13,12 +13,15 @@ class PropertyController extends Controller
 {
     public function index()
     {
-        $properties = Property::with('images', 'services');
+        // Recupera le proprietà con le immagini e i servizi associati
+        $properties = Property::with('images', 'services')->paginate(24);
+    
         return response()->json([
             'success' => true,
-            'results' => $properties
+            'results' => $properties,
         ]);
     }
+    
 
     public function show($slug)
     {
