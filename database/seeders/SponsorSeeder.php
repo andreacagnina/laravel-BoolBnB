@@ -15,7 +15,7 @@ class SponsorSeeder extends Seeder
      */
     public function run()
     {
-        $sponsors = config('db_sponsors'); // Legge i pacchetti dal file di configurazione
+        $sponsors = config('db_sponsors');
 
         foreach ($sponsors as $sponsor) {
             $newSponsor = new Sponsor();

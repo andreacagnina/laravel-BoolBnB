@@ -17,12 +17,12 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        $services = config('db_services'); // Carica i dati dal file di configurazione
+        $services = config('db_services');
 
         foreach ($services as $service) {
             $newService = new Service();
             $newService->name = $service['name'];
-            $newService->slug = Str::slug($service['name'], '-'); // Genera lo slug automaticamente
+            $newService->slug = Str::slug($service['name'], '-');
             $newService->icon = $service['icon'];
             $newService->save();
         }

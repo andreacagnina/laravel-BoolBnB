@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'birth_date' => '1990-01-15',
             'email_verified_at' => now(),
             'password' => Hash::make('password123'),
-            'remember_token' => Str::random(10), // Usa Str::random(10)
+            'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
