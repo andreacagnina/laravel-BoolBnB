@@ -8,7 +8,7 @@ import.meta.glob(['../img/**']);
 // Chiave API TomTom
 const TOMTOM_API_KEY = 'N4TIi8FzWNZv1sUqEUsREdKHYaG6HhSU';
 
-// MODALE DELLA DELETE
+// Modale di conferma per la delete
 const delete_buttons = document.querySelectorAll('.delete');
 delete_buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
@@ -28,7 +28,7 @@ delete_buttons.forEach((button) => {
     });
 });
 
-// MESSAGGIO DI CONFERMA
+// Messaggio di conferma
 document.addEventListener('DOMContentLoaded', function () {
     const successAlert = document.getElementById('success-alert');
     if (successAlert) {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Inizializzazione della mappa
+// Inizializzazione della mappa per la modifica dell'indirizzo
 document.addEventListener('DOMContentLoaded', function () {
     const mapContainer = document.getElementById('map');
     const latInput = document.getElementById('lat');
@@ -57,87 +57,72 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         marker = new tt.Marker().setLngLat([long, lat]).addTo(map);
     }
+
     function updateMap(latitude, longitude, zoomLevel = 15) {
-        map.setCenter([longitude, latitude]);
-        map.setZoom(zoomLevel);
-        marker.setLngLat([longitude, latitude]);
+        if (map && marker) {
+            map.setCenter([longitude, latitude]);
+            map.setZoom(zoomLevel);
+            marker.setLngLat([longitude, latitude]);
+        }
     }
-});
 
-// Funzioni di filtro e ricerca
-document.addEventListener('DOMContentLoaded', function () {
-    const citySearch = document.getElementById('citySearch');
+    // Funzionalità di suggerimenti indirizzo e aggiornamento mappa nella pagina di modifica
+    const addressInput = document.getElementById('address');
     const suggestionsList = document.getElementById('suggestions');
-    const resultsContainer = document.getElementById('resultsContainer');
-    const radiusInput = document.getElementById('radius');
-    const roomsInput = document.getElementById('rooms');
-    const bedsInput = document.getElementById('beds');
-    const searchButton = document.getElementById('searchButton');
-    const applyFiltersButton = document.getElementById('applyFiltersButton');
-    const resetFiltersButton = document.getElementById('resetFiltersButton');
-    const filterModalElement = document.getElementById('filterModal');
-    const filterModal = new bootstrap.Modal(filterModalElement);
-
     let suggestionsData = [];
     let selectedAddress = null;
     let activeSuggestionIndex = -1;
 
-    // Reset dei filtri
-    resetFiltersButton.addEventListener('click', function () {
-        roomsInput.value = '1';
-        bedsInput.value = '1';
-        radiusInput.value = '20';
-        document.querySelectorAll('input[name="services[]"]').forEach(checkbox => checkbox.checked = false);
-        citySearch.value = '';
-        selectedAddress = null;
-        fetchProperties();
-        filterModal.hide();
-    });
-
-    // Funzione per ottenere suggerimenti dall'API TomTom
-    function fetchSuggestions(query) {
-        fetch(`https://api.tomtom.com/search/2/search/${encodeURIComponent(query)}.json?key=${TOMTOM_API_KEY}&countrySet=IT&typeahead=true&limit=5&entityType=Municipality`)
+    // Funzione per ottenere suggerimenti per l'indirizzo
+    function fetchAddressSuggestions(query) {
+        fetch(`https://api.tomtom.com/search/2/search/${encodeURIComponent(query)}.json?key=${TOMTOM_API_KEY}&countrySet=IT&typeahead=true&limit=5`)
             .then(response => response.json())
             .then(data => {
                 suggestionsData = data.results;
-                displaySuggestions();
+                displayAddressSuggestions();
             })
-            .catch(error => console.error('Error fetching suggestions:', error));
+            .catch(error => console.error('Error fetching address suggestions:', error));
     }
 
-    function displaySuggestions() {
+    // Visualizzare i suggerimenti per l'indirizzo
+    function displayAddressSuggestions() {
         suggestionsList.innerHTML = '';
         suggestionsData.forEach((result, index) => {
             const suggestionItem = document.createElement('a');
-            suggestionItem.classList.add('list-group-item', 'list-group-item-action');
+            suggestionItem.classList.add('list-group-item', 'list-group-item-action'); // Stile della homepage
             suggestionItem.textContent = result.address.freeformAddress;
-            suggestionItem.addEventListener('click', () => selectSuggestion(index));
+            suggestionItem.addEventListener('click', () => selectAddressSuggestion(index));
             suggestionsList.appendChild(suggestionItem);
         });
         suggestionsList.style.display = suggestionsData.length ? 'block' : 'none';
-    }
+    }    
 
-    function selectSuggestion(index) {
+    // Selezionare un suggerimento dall'elenco
+    function selectAddressSuggestion(index) {
         const result = suggestionsData[index];
         selectedAddress = result;
-        citySearch.value = result.address.freeformAddress;
+        addressInput.value = result.address.freeformAddress;
+        latInput.value = result.position.lat;
+        longInput.value = result.position.lon;
+        updateMap(result.position.lat, result.position.lon);
         suggestionsList.innerHTML = '';
         suggestionsList.style.display = 'none';
     }
 
-    citySearch.addEventListener('input', function () {
-        const query = citySearch.value.trim();
+    // Eventi per l'input di indirizzo
+    addressInput.addEventListener('input', function () {
+        const query = addressInput.value.trim();
         selectedAddress = null;
         activeSuggestionIndex = -1;
         if (query.length > 1) {
-            fetchSuggestions(query);
+            fetchAddressSuggestions(query);
         } else {
             suggestionsList.innerHTML = '';
             suggestionsList.style.display = 'none';
         }
     });
 
-    citySearch.addEventListener('keydown', function (event) {
+    addressInput.addEventListener('keydown', function (event) {
         if (event.key === 'ArrowDown') {
             if (activeSuggestionIndex < suggestionsData.length - 1) {
                 activeSuggestionIndex++;
@@ -151,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (event.key === 'Enter') {
             event.preventDefault();
             if (activeSuggestionIndex >= 0) {
-                selectSuggestion(activeSuggestionIndex);
+                selectAddressSuggestion(activeSuggestionIndex);
             } else {
                 selectedAddress = null;
             }
@@ -164,57 +149,12 @@ document.addEventListener('DOMContentLoaded', function () {
         items.forEach((item, index) => item.classList.toggle('active', index === activeSuggestionIndex));
     }
 
-    function fetchProperties(latitude = null, longitude = null) {
-        const radius = radiusInput.value || '20';
-        const rooms = roomsInput.value || '1';
-        const beds = bedsInput.value || '1';
-        const selectedServices = Array.from(document.querySelectorAll('input[name="services[]"]:checked')).map(checkbox => checkbox.value);
-
-        let url = `/properties`;
-        const params = new URLSearchParams();
-        if (rooms !== '1') params.append('rooms', rooms);
-        if (beds !== '1') params.append('beds', beds);
-        if (radius !== '20') params.append('radius', radius);
-        if (latitude && longitude) {
-            params.append('latitude', latitude);
-            params.append('longitude', longitude);
+    // Convalida del form di modifica per assicurarsi che lat e long siano impostati
+    document.getElementById('editPropertyForm').addEventListener('submit', function (event) {
+        if (!latInput.value || !longInput.value) {
+            event.preventDefault();
+            alert('Seleziona un indirizzo valido dai suggerimenti.');
         }
-
-        selectedServices.forEach(serviceId => params.append('services[]', serviceId));
-        url += `?${params.toString()}`;
-
-        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-            .then(response => response.json())
-            .then(data => updateResults(data.properties))
-            .catch(error => console.error('Error in AJAX request:', error));
-    }
-
-    function updateResults(properties) {
-        resultsContainer.innerHTML = properties.length
-            ? properties.map(property => `
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm ${property.sponsored ? 'border-success' : ''}">
-                        ${property.sponsored ? '<span class="badge bg-success position-absolute top-0 end-0 m-2">Sponsored</span>' : ''}
-                        <div class="overflow-hidden" style="height: 200px;">
-                            <img src="${property.cover_image_url}" class="card-img-top w-100 h-100" style="object-fit: cover;" alt="${property.title}">
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">${property.title}</h5>
-                            <p class="card-text text-muted">${property.description.substring(0, 60)}...</p>
-                            <p class="card-text"><strong>Price:</strong> ${parseFloat(property.price).toFixed(2)}&euro;</p>
-                            <p class="card-text"><strong>Location:</strong> ${property.address}</p>
-                            ${property.distance ? `<p class="card-text"><strong>Distance:</strong> ${property.distance} km</p>` : ''}
-                            <a href="/properties/${property.slug}" class="mt-auto btn btn-outline-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>`).join('')
-            : '<p>No properties found within the specified criteria.</p>';
-    }
-
-    searchButton.addEventListener('click', () => fetchProperties(selectedAddress?.position.lat, selectedAddress?.position.lon));
-    applyFiltersButton.addEventListener('click', () => {
-        fetchProperties();
-        filterModal.hide();
     });
 });
 
