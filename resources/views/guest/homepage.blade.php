@@ -20,7 +20,8 @@
                         </button>
                     </div>
                     <!-- Suggerimenti visualizzati sotto la barra di ricerca -->
-                    <div id="suggestions" class="list-group position-absolute w-100 mt-1 shadow-sm" style="z-index: 1000;">
+                    <div id="suggestions" class="list-group position-absolute w-100 mt-1 shadow-sm suggestions-list-home"
+                        style="z-index: 1000;">
                     </div>
                     <!-- Input nascosti per latitudine e longitudine -->
                     <input type="hidden" id="latitude" name="latitude">
