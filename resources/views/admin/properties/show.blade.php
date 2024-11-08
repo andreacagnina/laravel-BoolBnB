@@ -11,6 +11,7 @@
                     <div class="col-lg-6">
                         <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
                             class="img-fluid rounded mb-3" alt="{{ $property->title }}">
+
                         <div id="map" class="rounded mb-3" style="width: 100%; height: 300px;">
                         </div>
                         <input type="hidden" id="lat" value="{{ $property->lat }}">
@@ -35,9 +36,14 @@
                                 @if ($property->services->isEmpty())
                                     No services included.
                                 @else
-                                    @foreach ($property->services as $service)
-                                        <span>{{ $service->name }} <i class="{{ $service->icon }} me-2"></i></span>
-                                    @endforeach
+                                    <ul class="list-unstyled">
+                                        @foreach ($property->services as $service)
+                                            <li>
+                                                <span>{{ $service->name }} <i
+                                                        class="{{ $service->icon }} me-2"></i></span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 @endif
                             </li>
                             <li class="list-group-item"><strong>Availability:</strong>

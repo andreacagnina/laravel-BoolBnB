@@ -66,11 +66,9 @@ class PropertyController extends Controller
         $form_data['slug'] = Property::generateSlug($form_data['title']);
         $form_data['user_id'] = Auth::id();
 
-        if ($request->hasFile('cover_image')) {
-            $form_data['cover_image'] = Storage::put('cover_image', $form_data['cover_image']);
-        } else {
-            $form_data['cover_image'] = 'https://placehold.co/600x400?text=Cover+Image';
-        }
+        $form_data['cover_image'] = $request->hasFile('cover_image')
+            ? Storage::put('cover_image', $request->file('cover_image'))
+            : 'https://reviveyouthandfamily.org/wp-content/uploads/2016/11/house-placeholder.jpg';
 
         $property = Property::create($form_data);
 
