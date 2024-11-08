@@ -35,9 +35,14 @@
                                 @if ($property->services->isEmpty())
                                     No services included.
                                 @else
-                                    @foreach ($property->services as $service)
-                                        <span>{{ $service->name }} <i class="{{ $service->icon }} me-2"></i></span>
-                                    @endforeach
+                                    <ul class="list-unstyled">
+                                        @foreach ($property->services as $service)
+                                            <li>
+                                                <span>{{ $service->name }} <i
+                                                        class="{{ $service->icon }} me-2"></i></span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 @endif
                             </li>
                             <li class="list-group-item"><strong>Availability:</strong>

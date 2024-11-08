@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title', 50);
             $table->string('slug');
-            $table->string('cover_image')->default('https://placehold.co/600x400?text=Cover+Image');
+            $table->string('cover_image')->default('https://reviveyouthandfamily.org/wp-content/uploads/2016/11/house-placeholder.jpg');
             $table->text('description')->nullable();
             $table->tinyInteger('num_rooms')->unsigned()->default(1);
             $table->tinyInteger('num_beds')->unsigned()->default(1);

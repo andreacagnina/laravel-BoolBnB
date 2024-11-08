@@ -140,7 +140,7 @@
                                         <div class="card-header text-center">
                                             <h5>{{ $property->title }}</h5>
                                         </div>
-                                        <img src="{{ Str::startsWith($property->cover_image, 'https') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
+                                        <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
                                             alt="{{ $property->name }}" class="card-img-top img-thumbnail p-0 rounded-0"
                                             style="height: 200px; object-fit: cover;">
 
