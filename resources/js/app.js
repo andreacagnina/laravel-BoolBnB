@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const addressInput = document.getElementById('address');
     const suggestionsListCreateEdit = document.getElementById('suggestions-create-edit');
 
-    if (mapContainer && latInput && longInput && addressInput && suggestionsListCreateEdit && document.getElementById('editPropertyForm')) {
+    if (mapContainer && latInput && longInput && addressInput && suggestionsListCreateEdit && (document.getElementById('editPropertyForm') || document.getElementById('createPropertyForm'))) {
         const lat = parseFloat(latInput.value) || 41.8719;
         const long = parseFloat(longInput.value) || 12.5674;
 
