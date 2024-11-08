@@ -85,7 +85,7 @@
         <div class="row" id="resultsContainer">
             @forelse ($properties as $property)
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm {{ $property->sponsored ? 'border-success' : '' }}">
+                    <div class="card homepage-card h-100 shadow-sm {{ $property->sponsored ? 'border-success' : '' }}">
 
                         @if ($property->sponsored)
                             <span class="badge bg-success position-absolute top-0 end-0 m-2"
