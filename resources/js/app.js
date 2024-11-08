@@ -8,22 +8,35 @@ import.meta.glob(['../img/**']);
 // Chiave API TomTom
 const TOMTOM_API_KEY = 'N4TIi8FzWNZv1sUqEUsREdKHYaG6HhSU';
 
+// Funzione per ottenere suggerimenti per l'indirizzo
+function fetchAddressSuggestions(query) {
+    return fetch(`https://api.tomtom.com/search/2/search/${encodeURIComponent(query)}.json?key=${TOMTOM_API_KEY}&countrySet=IT&typeahead=true&limit=5`)
+        .then(response => response.json())
+        .then(data => data.results)
+        .catch(error => {
+            console.error('Errore nel recuperare i suggerimenti degli indirizzi:', error);
+            return [];
+        });
+}
+
 // Modale di conferma per la delete
-const delete_buttons = document.querySelectorAll('.delete');
-delete_buttons.forEach((button) => {
-    button.addEventListener('click', (event) => {
-        event.preventDefault();
-        const modal = document.getElementById('deleteModal');
-        const bootstrap_modal = new bootstrap.Modal(modal);
-        bootstrap_modal.show();
+document.addEventListener('DOMContentLoaded', function () {
+    const delete_buttons = document.querySelectorAll('.delete');
+    delete_buttons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const modal = document.getElementById('deleteModal');
+            const bootstrap_modal = new bootstrap.Modal(modal);
+            bootstrap_modal.show();
 
-        const buttonDelete = modal.querySelector('.confirm-delete');
-        const propertyName = button.getAttribute('data-propertyName');
-        const ModalText = modal.querySelector('#modal_text');
-        ModalText.innerHTML = `Are you sure you want to delete this item: <strong>${propertyName}</strong> ?`;
+            const buttonDelete = modal.querySelector('.confirm-delete');
+            const propertyName = button.getAttribute('data-propertyName');
+            const ModalText = modal.querySelector('#modal_text');
+            ModalText.innerHTML = `Are you sure you want to delete this item: <strong>${propertyName}</strong> ?`;
 
-        buttonDelete.addEventListener('click', function () {
-            button.parentElement.submit();
+            buttonDelete.addEventListener('click', function () {
+                button.parentElement.submit();
+            });
         });
     });
 });
@@ -38,124 +51,348 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Inizializzazione della mappa per la modifica dell'indirizzo
+// Inizializzazione della mappa e suggerimenti indirizzo per le pagine create/edit
 document.addEventListener('DOMContentLoaded', function () {
     const mapContainer = document.getElementById('map');
     const latInput = document.getElementById('lat');
     const longInput = document.getElementById('long');
+    const addressInput = document.getElementById('address');
+    const suggestionsListCreateEdit = document.getElementById('suggestions-create-edit');
 
-    let map, marker;
-    if (mapContainer && latInput && longInput) {
+    if (mapContainer && latInput && longInput && addressInput && suggestionsListCreateEdit) {
+        // Questa è la pagina di creazione/modifica
         const lat = parseFloat(latInput.value) || 41.8719;
         const long = parseFloat(longInput.value) || 12.5674;
 
-        map = tt.map({
+        const map = tt.map({
             key: TOMTOM_API_KEY,
             container: 'map',
             center: [long, lat],
             zoom: latInput.value && longInput.value ? 15 : 4
         });
-        marker = new tt.Marker().setLngLat([long, lat]).addTo(map);
-    }
+        const marker = new tt.Marker().setLngLat([long, lat]).addTo(map);
 
-    function updateMap(latitude, longitude, zoomLevel = 15) {
-        if (map && marker) {
+        function updateMap(latitude, longitude, zoomLevel = 15) {
             map.setCenter([longitude, latitude]);
             map.setZoom(zoomLevel);
             marker.setLngLat([longitude, latitude]);
         }
-    }
 
-    // Funzionalità di suggerimenti indirizzo e aggiornamento mappa nella pagina di modifica
-    const addressInput = document.getElementById('address');
-    const suggestionsList = document.getElementById('suggestions');
-    let suggestionsData = [];
-    let selectedAddress = null;
-    let activeSuggestionIndex = -1;
+        let suggestionsData = [];
+        let selectedAddress = null;
+        let activeSuggestionIndex = -1;
 
-    // Funzione per ottenere suggerimenti per l'indirizzo
-    function fetchAddressSuggestions(query) {
-        fetch(`https://api.tomtom.com/search/2/search/${encodeURIComponent(query)}.json?key=${TOMTOM_API_KEY}&countrySet=IT&typeahead=true&limit=5`)
-            .then(response => response.json())
-            .then(data => {
-                suggestionsData = data.results;
-                displayAddressSuggestions();
-            })
-            .catch(error => console.error('Error fetching address suggestions:', error));
-    }
-
-    // Visualizzare i suggerimenti per l'indirizzo
-    function displayAddressSuggestions() {
-        suggestionsList.innerHTML = '';
-        suggestionsData.forEach((result, index) => {
-            const suggestionItem = document.createElement('a');
-            suggestionItem.classList.add('list-group-item', 'list-group-item-action'); // Stile della homepage
-            suggestionItem.textContent = result.address.freeformAddress;
-            suggestionItem.addEventListener('click', () => selectAddressSuggestion(index));
-            suggestionsList.appendChild(suggestionItem);
-        });
-        suggestionsList.style.display = suggestionsData.length ? 'block' : 'none';
-    }
-
-    // Selezionare un suggerimento dall'elenco
-    function selectAddressSuggestion(index) {
-        const result = suggestionsData[index];
-        selectedAddress = result;
-        addressInput.value = result.address.freeformAddress;
-        latInput.value = result.position.lat;
-        longInput.value = result.position.lon;
-        updateMap(result.position.lat, result.position.lon);
-        suggestionsList.innerHTML = '';
-        suggestionsList.style.display = 'none';
-    }
-
-    // Eventi per l'input di indirizzo
-    addressInput.addEventListener('input', function () {
-        const query = addressInput.value.trim();
-        selectedAddress = null;
-        activeSuggestionIndex = -1;
-        if (query.length > 1) {
-            fetchAddressSuggestions(query);
-        } else {
-            suggestionsList.innerHTML = '';
-            suggestionsList.style.display = 'none';
-        }
-    });
-
-    addressInput.addEventListener('keydown', function (event) {
-        if (event.key === 'ArrowDown') {
-            if (activeSuggestionIndex < suggestionsData.length - 1) {
-                activeSuggestionIndex++;
-                updateActiveSuggestion();
-            }
-        } else if (event.key === 'ArrowUp') {
-            if (activeSuggestionIndex > 0) {
-                activeSuggestionIndex--;
-                updateActiveSuggestion();
-            }
-        } else if (event.key === 'Enter') {
-            event.preventDefault();
-            if (activeSuggestionIndex >= 0) {
-                selectAddressSuggestion(activeSuggestionIndex);
+        addressInput.addEventListener('input', function () {
+            const query = addressInput.value.trim();
+            selectedAddress = null;
+            activeSuggestionIndex = -1;
+            if (query.length > 1) {
+                fetchAddressSuggestions(query).then(results => {
+                    suggestionsData = results;
+                    displayAddressSuggestions();
+                });
             } else {
-                selectedAddress = null;
+                suggestionsListCreateEdit.innerHTML = '';
+                suggestionsListCreateEdit.style.display = 'none';
             }
-            suggestionsList.style.display = 'none';
-        }
-    });
+        });
 
-    function updateActiveSuggestion() {
-        const items = suggestionsList.querySelectorAll('.list-group-item');
-        items.forEach((item, index) => item.classList.toggle('active', index === activeSuggestionIndex));
+        function displayAddressSuggestions() {
+            suggestionsListCreateEdit.innerHTML = '';
+            suggestionsData.forEach((result, index) => {
+                const suggestionItem = document.createElement('a');
+                suggestionItem.classList.add('list-group-item', 'list-group-item-action');
+                suggestionItem.textContent = result.address.freeformAddress;
+                suggestionItem.addEventListener('click', () => selectAddressSuggestion(index));
+                suggestionsListCreateEdit.appendChild(suggestionItem);
+            });
+            suggestionsListCreateEdit.style.display = suggestionsData.length ? 'block' : 'none';
+        }
+
+        function selectAddressSuggestion(index) {
+            const result = suggestionsData[index];
+            selectedAddress = result;
+            addressInput.value = result.address.freeformAddress;
+            latInput.value = result.position.lat;
+            longInput.value = result.position.lon;
+            updateMap(result.position.lat, result.position.lon);
+            suggestionsListCreateEdit.innerHTML = '';
+            suggestionsListCreateEdit.style.display = 'none';
+        }
+
+        addressInput.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowDown') {
+                if (activeSuggestionIndex < suggestionsData.length - 1) {
+                    activeSuggestionIndex++;
+                    updateActiveSuggestion();
+                }
+            } else if (event.key === 'ArrowUp') {
+                if (activeSuggestionIndex > 0) {
+                    activeSuggestionIndex--;
+                    updateActiveSuggestion();
+                }
+            } else if (event.key === 'Enter') {
+                event.preventDefault();
+                if (activeSuggestionIndex >= 0) {
+                    selectAddressSuggestion(activeSuggestionIndex);
+                } else {
+                    selectedAddress = null;
+                }
+                suggestionsListCreateEdit.style.display = 'none';
+            }
+        });
+
+        function updateActiveSuggestion() {
+            const items = suggestionsListCreateEdit.querySelectorAll('.list-group-item');
+            items.forEach((item, index) => item.classList.toggle('active', index === activeSuggestionIndex));
+        }
+
+        // Convalida del form solo nella pagina di modifica
+        const editForm = document.getElementById('editPropertyForm');
+
+        if (editForm) {
+            // Questa è la pagina di modifica
+            editForm.addEventListener('submit', function (event) {
+                if (!latInput.value || !longInput.value) {
+                    event.preventDefault();
+                    alert('Seleziona un indirizzo valido dai suggerimenti.');
+                }
+            });
+        }
     }
+});
 
-    // Convalida del form di modifica per assicurarsi che lat e long siano impostati
-    document.getElementById('editPropertyForm').addEventListener('submit', function (event) {
-        if (!latInput.value || !longInput.value) {
-            event.preventDefault();
-            alert('Seleziona un indirizzo valido dai suggerimenti.');
+// Inizializzazione della funzionalità di ricerca e mappa per la homepage
+document.addEventListener('DOMContentLoaded', function () {
+    const citySearchInput = document.getElementById('citySearch');
+    const suggestionsListHome = document.getElementById('suggestions');
+    const latitudeInput = document.getElementById('latitude');
+    const longitudeInput = document.getElementById('longitude');
+    const resultsContainer = document.getElementById('resultsContainer');
+
+    if (citySearchInput && suggestionsListHome && latitudeInput && longitudeInput && resultsContainer) {
+        let suggestionsDataHome = [];
+        let activeSuggestionIndexHome = -1;
+
+        citySearchInput.addEventListener('input', function () {
+            const query = citySearchInput.value.trim();
+            activeSuggestionIndexHome = -1;
+            if (query.length > 1) {
+                fetchAddressSuggestions(query).then(results => {
+                    suggestionsDataHome = results;
+                    displayAddressSuggestionsHome();
+                });
+            } else {
+                suggestionsListHome.innerHTML = '';
+                suggestionsListHome.style.display = 'none';
+            }
+        });
+
+        function displayAddressSuggestionsHome() {
+            suggestionsListHome.innerHTML = '';
+            suggestionsDataHome.forEach((result, index) => {
+                const suggestionItem = document.createElement('a');
+                suggestionItem.classList.add('list-group-item', 'list-group-item-action');
+                suggestionItem.textContent = result.address.freeformAddress;
+                suggestionItem.addEventListener('click', () => selectAddressSuggestionHome(index));
+                suggestionsListHome.appendChild(suggestionItem);
+            });
+            suggestionsListHome.style.display = suggestionsDataHome.length ? 'block' : 'none';
         }
-    });
+
+        function selectAddressSuggestionHome(index) {
+            const result = suggestionsDataHome[index];
+            citySearchInput.value = result.address.freeformAddress;
+            latitudeInput.value = result.position.lat;
+            longitudeInput.value = result.position.lon;
+            suggestionsListHome.innerHTML = '';
+            suggestionsListHome.style.display = 'none';
+        }
+
+        citySearchInput.addEventListener('keydown', function (event) {
+            const items = suggestionsListHome.querySelectorAll('.list-group-item');
+            if (event.key === 'ArrowDown') {
+                if (activeSuggestionIndexHome < items.length - 1) {
+                    activeSuggestionIndexHome++;
+                    updateActiveSuggestionHome();
+                }
+            } else if (event.key === 'ArrowUp') {
+                if (activeSuggestionIndexHome > 0) {
+                    activeSuggestionIndexHome--;
+                    updateActiveSuggestionHome();
+                }
+            } else if (event.key === 'Enter') {
+                event.preventDefault();
+                if (activeSuggestionIndexHome >= 0) {
+                    selectAddressSuggestionHome(activeSuggestionIndexHome);
+                } else if (suggestionsDataHome.length > 0) {
+                    selectAddressSuggestionHome(0);
+                }
+                suggestionsListHome.style.display = 'none';
+                performSearch();
+            }
+        });
+
+        function updateActiveSuggestionHome() {
+            const items = suggestionsListHome.querySelectorAll('.list-group-item');
+            items.forEach((item, index) => item.classList.toggle('active', index === activeSuggestionIndexHome));
+        }
+
+        // Funzione per eseguire la ricerca con AJAX
+        function performSearch() {
+            const latitude = latitudeInput ? latitudeInput.value : null;
+            const longitude = longitudeInput ? longitudeInput.value : null;
+            const radius = document.getElementById('radius').value || 20;
+            const minRooms = document.getElementById('rooms').value || 1;
+            const minBeds = document.getElementById('beds').value || 1;
+
+            const selectedServices = Array.from(document.querySelectorAll('[name="services[]"]:checked'))
+                .map(checkbox => checkbox.value);
+
+            const params = new URLSearchParams({
+                radius: radius,
+                rooms: minRooms,
+                beds: minBeds,
+            });
+
+            if (latitude && longitude) {
+                params.append('latitude', latitude);
+                params.append('longitude', longitude);
+            }
+
+            selectedServices.forEach(serviceId => {
+                params.append('services[]', serviceId);
+            });
+
+            fetch(`/?${params.toString()}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    updateResults(data.properties);
+                })
+                .catch(error => console.error('Errore nella ricerca:', error));
+        }
+
+        function updateResults(properties) {
+            resultsContainer.innerHTML = '';
+
+            if (properties.length === 0) {
+                resultsContainer.innerHTML = '<p>No properties found within the specified criteria.</p>';
+                return;
+            }
+
+            properties.forEach(property => {
+                const colDiv = document.createElement('div');
+                colDiv.classList.add('col-md-4', 'mb-4');
+
+                const cardDiv = document.createElement('div');
+                cardDiv.classList.add('card', 'h-100', 'shadow-sm');
+                if (property.sponsored) {
+                    cardDiv.classList.add('border-success');
+                }
+
+                if (property.sponsored) {
+                    const badge = document.createElement('span');
+                    badge.classList.add('badge', 'bg-success', 'position-absolute', 'top-0', 'end-0', 'm-2');
+                    badge.textContent = 'Sponsored';
+                    cardDiv.appendChild(badge);
+                }
+
+                const imgDiv = document.createElement('div');
+                imgDiv.classList.add('overflow-hidden');
+                imgDiv.style.height = '200px';
+
+                const img = document.createElement('img');
+                img.src = property.cover_image_url;
+                img.classList.add('card-img-top', 'w-100', 'h-100');
+                img.style.objectFit = 'cover';
+                img.alt = property.title;
+
+                imgDiv.appendChild(img);
+                cardDiv.appendChild(imgDiv);
+
+                const cardBody = document.createElement('div');
+                cardBody.classList.add('card-body', 'd-flex', 'flex-column');
+
+                const title = document.createElement('h5');
+                title.classList.add('card-title');
+                title.textContent = property.title;
+
+                const description = document.createElement('p');
+                description.classList.add('card-text', 'text-muted');
+                description.textContent = property.description.length > 60 ? property.description.substring(0, 60) + '...' : property.description;
+
+                const price = document.createElement('p');
+                price.classList.add('card-text');
+                price.innerHTML = `<strong>Price:</strong> ${property.price.toFixed(2).replace('.', ',')}&euro;`;
+
+                const location = document.createElement('p');
+                location.classList.add('card-text');
+                location.innerHTML = `<strong>Location:</strong> ${property.address}`;
+
+                cardBody.appendChild(title);
+                cardBody.appendChild(description);
+                cardBody.appendChild(price);
+                cardBody.appendChild(location);
+
+                if (property.distance !== undefined) {
+                    const distance = document.createElement('p');
+                    distance.classList.add('card-text');
+                    distance.innerHTML = `<strong>Distance:</strong> ${property.distance} km`;
+                    cardBody.appendChild(distance);
+                }
+
+                const detailsLink = document.createElement('a');
+                detailsLink.href = `/properties/${property.slug}`;
+                detailsLink.classList.add('mt-auto', 'btn', 'btn-outline-primary');
+                detailsLink.textContent = 'View Details';
+
+                cardBody.appendChild(detailsLink);
+                cardDiv.appendChild(cardBody);
+                colDiv.appendChild(cardDiv);
+                resultsContainer.appendChild(colDiv);
+            });
+        }
+
+        // Pulsante per eseguire la ricerca
+        const searchButton = document.getElementById('searchButton');
+        if (searchButton) {
+            searchButton.addEventListener('click', performSearch);
+        }
+
+        const filterModalElement = document.getElementById('filterModal');
+        const filterModal = new bootstrap.Modal(filterModalElement);
+
+        const applyFiltersButton = document.getElementById('applyFiltersButton');
+        if (applyFiltersButton) {
+            applyFiltersButton.addEventListener('click', performSearch);
+        }
+
+        const resetFiltersButton = document.getElementById('resetFiltersButton');
+        if (resetFiltersButton) {
+            resetFiltersButton.addEventListener('click', function () {
+                document.getElementById('radius').value = 20;
+                document.getElementById('rooms').value = 1;
+                document.getElementById('beds').value = 1;
+                document.querySelectorAll('[name="services[]"]').forEach(service => service.checked = false);
+
+                if (citySearchInput) {
+                    citySearchInput.value = '';
+                }
+
+                if (latitudeInput && longitudeInput) {
+                    latitudeInput.value = '';
+                    longitudeInput.value = '';
+                }
+
+                filterModal.hide();
+                performSearch();
+            });
+        }
+    }
 });
 
 // Validazione dei form con JustValidate

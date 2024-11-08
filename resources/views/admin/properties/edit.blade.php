@@ -147,7 +147,7 @@
                         @error('address')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        <div id="suggestions" class="list-group position-absolute w-100 shadow-sm"
+                        <div id="suggestions-create-edit" class="list-group position-absolute w-100 shadow-sm"
                             style="z-index: 1000;"></div>
                     </div>
 

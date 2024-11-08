@@ -7,37 +7,38 @@
                 <h1 class="display-4">Welcome to BoolBnB</h1>
                 <p class="lead text-muted">Find the perfect property, whether it’s sponsored or not!</p>
 
-                <!-- Search Bar with Filter Button -->
+                <!-- Barra di ricerca con pulsante Filtro -->
                 <div class="col-lg-8 offset-lg-2 mt-4 position-relative">
                     <div class="input-group mb-3 shadow-sm rounded-pill">
                         <input type="text" id="citySearch" class="form-control form-control-lg border-active"
                             placeholder="Search by city or address" aria-label="citySearch" autocomplete="off">
                         <button id="searchButton" class="btn btn-primary">Search</button>
-                        <!-- Filter Button -->
+                        <!-- Pulsante Filtro -->
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
                             data-bs-target="#filterModal">
                             <i class="bi bi-sliders"></i> Filtri
                         </button>
                     </div>
-                    <!-- Suggestions displayed below the search bar -->
+                    <!-- Suggerimenti visualizzati sotto la barra di ricerca -->
                     <div id="suggestions" class="list-group position-absolute w-100 mt-1 shadow-sm" style="z-index: 1000;">
                     </div>
+                    <!-- Input nascosti per latitudine e longitudine -->
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
                 </div>
             </div>
         </div>
 
-        <!-- Modal for Filters -->
-        <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true"
-            data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Usa modal-lg per una larghezza maggiore -->
+        <!-- Modale per i Filtri -->
+        <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content" style="max-height: 80vh; overflow-y: auto;">
-                    <!-- Limita l'altezza e rimuovi overflow -->
                     <div class="modal-header">
                         <h5 class="modal-title" id="filterModalLabel">Filtri di Ricerca</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- Filters inside the modal -->
+                        <!-- Filtri all'interno del modale -->
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label for="rooms" class="form-label fw-bold">Min Rooms</label>
@@ -56,7 +57,7 @@
                             </div>
                         </div>
 
-                        <!-- Services Filters -->
+                        <!-- Filtri per i Servizi -->
                         <div class="mt-3">
                             <label class="form-label fw-bold">Services:</label>
                             <div class="row">
@@ -75,13 +76,14 @@
                     <div class="modal-footer">
                         <button type="button" id="resetFiltersButton" class="btn btn-outline-secondary">Reset
                             Filtri</button>
-                        <button type="button" id="applyFiltersButton" class="btn btn-primary">Apply Filters</button>
+                        <button type="button" id="applyFiltersButton" class="btn btn-primary" data-bs-dismiss="modal">Apply
+                            Filters</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Container for displaying search results dynamically -->
+        <!-- Contenitore per visualizzare i risultati della ricerca -->
         <div class="row" id="resultsContainer">
             @forelse ($properties as $property)
                 <div class="col-md-4 mb-4">

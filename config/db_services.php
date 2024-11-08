@@ -18,10 +18,6 @@ return [
         "icon" => 'fa-sharp fa-solid fa-fire-burner'
     ],
     [
-        "name" => "HVAC",
-        "icon" => 'fa-sharp fa-solid fa-temperature-half'
-    ],
-    [
         "name" => "View",
         "icon" => 'fa-sharp fa-solid fa-mountain-city'
     ],

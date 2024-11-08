@@ -19,49 +19,39 @@ class HomeController extends Controller
         $minBeds = $request->query('beds', 1);
         $selectedServices = $request->query('services', []);
 
-        // Fetch all services to display in the view
+        // Recupera tutti i servizi per visualizzarli nella vista
         $services = Service::all();
 
-        // Check if latitude and longitude are provided
+        // Costruisci la query di base
+        $properties = Property::query()
+            ->where('available', 1)
+            ->where('num_rooms', '>=', $minRooms)
+            ->where('num_beds', '>=', $minBeds);
+
+        // Filtra per servizi selezionati
+        if (!empty($selectedServices)) {
+            $properties = $properties->whereHas('services', function ($query) use ($selectedServices) {
+                $query->whereIn('services.id', $selectedServices);
+            }, '=', count($selectedServices));
+        }
+
+        // Se sono fornite latitudine e longitudine, calcola la distanza
         if ($latitude && $longitude) {
-            $properties = Property::selectRaw(
+            $properties = $properties->selectRaw(
                 "properties.*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(`long`) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance",
                 [$latitude, $longitude, $latitude]
             )
-                ->having('distance', '<=', $radius)
-                ->where('available', 1)
-                ->where('num_rooms', '>=', $minRooms)
-                ->where('num_beds', '>=', $minBeds);
-
-            // Apply service filters if any
-            if (!empty($selectedServices)) {
-                $properties = $properties->whereHas('services', function ($query) use ($selectedServices) {
-                    $query->whereIn('services.id', $selectedServices);
-                }, '=', count($selectedServices));
-            }
-
-            // Ensure sponsored properties come first, then order by distance
-            $properties = $properties->orderBy('sponsored', 'desc')
-                ->orderBy('distance', 'asc')
-                ->get();
+            ->having('distance', '<=', $radius)
+            ->orderBy('sponsored', 'desc')
+            ->orderBy('distance', 'asc');
         } else {
-            // If no coordinates provided, fetch all available properties
-            $properties = Property::where('available', 1)
-                ->where('num_rooms', '>=', $minRooms)
-                ->where('num_beds', '>=', $minBeds);
-
-            // Apply service filters if any
-            if (!empty($selectedServices)) {
-                $properties = $properties->whereHas('services', function ($query) use ($selectedServices) {
-                    $query->whereIn('services.id', $selectedServices);
-                }, '=', count($selectedServices));
-            }
-
-            // Ensure sponsored properties come first
-            $properties = $properties->orderBy('sponsored', 'desc')->get();
+            // Ordina per proprietà sponsorizzate
+            $properties = $properties->orderBy('sponsored', 'desc');
         }
 
-        // Add full cover image URL and round distance
+        $properties = $properties->get();
+
+        // Aggiungi URL completo dell'immagine di copertina e arrotonda la distanza
         $properties->map(function ($property) {
             $property->cover_image_url = Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image);
             if (isset($property->distance)) {
@@ -70,12 +60,12 @@ class HomeController extends Controller
             return $property;
         });
 
-        // If the request is AJAX, return JSON response
+        // Se la richiesta è AJAX, restituisci la risposta in JSON
         if ($request->ajax()) {
             return response()->json(['properties' => $properties]);
         }
 
-        // Return the view with properties and services
+        // Restituisci la vista con le proprietà e i servizi
         return view('guest.homepage', compact('properties', 'services'));
     }
 
