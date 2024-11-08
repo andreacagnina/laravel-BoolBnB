@@ -51,6 +51,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// Inizializzazione della mappa per la pagina della show
+document.addEventListener('DOMContentLoaded', function () {
+    const mapContainer = document.getElementById('map');
+    const latInput = document.getElementById('lat');
+    const longInput = document.getElementById('long');
+
+    if (mapContainer && latInput && longInput && !document.getElementById('editPropertyForm')) {
+        const lat = parseFloat(latInput.value) || 41.8719;
+        const long = parseFloat(longInput.value) || 12.5674;
+
+        const map = tt.map({
+            key: TOMTOM_API_KEY,
+            container: 'map',
+            center: [long, lat],
+            zoom: latInput.value && longInput.value ? 15 : 4
+        });
+        const marker = new tt.Marker().setLngLat([long, lat]).addTo(map);
+    }
+});
+
 // Inizializzazione della mappa e suggerimenti indirizzo per le pagine create/edit
 document.addEventListener('DOMContentLoaded', function () {
     const mapContainer = document.getElementById('map');
@@ -59,8 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const addressInput = document.getElementById('address');
     const suggestionsListCreateEdit = document.getElementById('suggestions-create-edit');
 
-    if (mapContainer && latInput && longInput && addressInput && suggestionsListCreateEdit) {
-        // Questa è la pagina di creazione/modifica
+    if (mapContainer && latInput && longInput && addressInput && suggestionsListCreateEdit && document.getElementById('editPropertyForm')) {
         const lat = parseFloat(latInput.value) || 41.8719;
         const long = parseFloat(longInput.value) || 12.5674;
 
@@ -147,11 +166,8 @@ document.addEventListener('DOMContentLoaded', function () {
             items.forEach((item, index) => item.classList.toggle('active', index === activeSuggestionIndex));
         }
 
-        // Convalida del form solo nella pagina di modifica
         const editForm = document.getElementById('editPropertyForm');
-
         if (editForm) {
-            // Questa è la pagina di modifica
             editForm.addEventListener('submit', function (event) {
                 if (!latInput.value || !longInput.value) {
                     event.preventDefault();
@@ -238,7 +254,6 @@ document.addEventListener('DOMContentLoaded', function () {
             items.forEach((item, index) => item.classList.toggle('active', index === activeSuggestionIndexHome));
         }
 
-        // Funzione per eseguire la ricerca con AJAX
         function performSearch() {
             const latitude = latitudeInput ? latitudeInput.value : null;
             const longitude = longitudeInput ? longitudeInput.value : null;
@@ -357,7 +372,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // Pulsante per eseguire la ricerca
         const searchButton = document.getElementById('searchButton');
         if (searchButton) {
             searchButton.addEventListener('click', performSearch);
@@ -406,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Validazione form di login
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         trimFormFields(loginForm, ['email', 'password']);
@@ -417,7 +430,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .onSuccess(() => loginForm.submit());
     }
 
-    // Validazione form di registrazione
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         trimFormFields(registerForm, ['email', 'password', 'password-confirm']);
@@ -432,7 +444,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .onSuccess(() => registerForm.submit());
     }
 
-    // Validazione form di creazione e modifica proprietà
     ['createPropertyForm', 'editPropertyForm'].forEach(formId => {
         const form = document.getElementById(formId);
         if (form) {
