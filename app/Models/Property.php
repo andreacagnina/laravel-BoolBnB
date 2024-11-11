@@ -75,13 +75,14 @@ class Property extends Model
 
     public function sponsors()
     {
-        return $this->belongsToMany(Sponsor::class)->withTimestamps();
+        return $this->belongsToMany(Sponsor::class)->withPivot('end_date')->withTimestamps();
     }
+
 
     public function services()
     {
         return $this->belongsToMany(Service::class)->withTimestamps();
-    }    
+    }
 
     public function views()
     {
