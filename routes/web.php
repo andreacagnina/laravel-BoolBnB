@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BraintreeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\Admin\PropertyController as AdminPropertyController;
@@ -48,6 +49,9 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
 
     // Rotta per la visualizzazione di uno sponsor specifico per un appartamento
     Route::get('/sponsors/{property:slug}/show', [SponsorController::class, 'show'])->name('sponsors.show');
+
+    Route::get('/braintree/token', [BraintreeController::class, 'token'])->name('braintree.token');
+    Route::post('/braintree/checkout', [BraintreeController::class, 'checkout'])->name('braintree.checkout');
 });
 
 require __DIR__ . '/auth.php';
