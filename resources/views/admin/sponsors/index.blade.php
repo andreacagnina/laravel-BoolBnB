@@ -42,7 +42,7 @@
 
                         <input type="hidden" name="payment_method_nonce" id="payment-method-nonce">
 
-                        <div id="dropin-container"></div>
+                        <div id="dropin-container" class="d-none"></div>
 
                         <div class="text-end d-flex justify-content-end align-items-center gap-2">
                             <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary">Go Back</a>
@@ -61,6 +61,7 @@
         const propertySelect = document.getElementById('property_slug');
         const payButton = document.getElementById('pay-button');
         const sponsorIdInput = document.getElementById('sponsor_id');
+        const container = document.getElementById('dropin-container');
 
         // Disabilita il pulsante di pagamento fino alla selezione di un'opzione valida
         payButton.disabled = true;
@@ -68,6 +69,7 @@
         // Abilita il pulsante solo quando viene selezionata un'opzione valida
         function validateForm() {
             payButton.disabled = !(sponsorSelect.value && propertySelect.value);
+            container.classList.toggle('d-none', !sponsorSelect.value || !propertySelect.value);
         }
 
         sponsorSelect.addEventListener('change', validateForm);

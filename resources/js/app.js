@@ -484,6 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sponsorSelect = document.getElementById('sponsor-select');
     const sponsorIdInput = document.getElementById('sponsor_id');
     const payButton = document.getElementById('pay-button');
+    const container = document.getElementById('dropin-container');
 
     // Disabilita il pulsante di pagamento all'inizio
     payButton.disabled = true;
@@ -495,6 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Abilita il pulsante se viene selezionata un'opzione valida
         if (sponsorSelect.value) {
             payButton.disabled = false;
+            container.classList.remove('d-none');
         } else {
             payButton.disabled = true;
         }
