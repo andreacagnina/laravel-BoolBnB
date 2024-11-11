@@ -480,4 +480,61 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const sponsorSelect = document.getElementById('sponsor-select');
+    const sponsorIdInput = document.getElementById('sponsor_id');
+    const payButton = document.getElementById('pay-button');
+
+    // Disabilita il pulsante di pagamento all'inizio
+    payButton.disabled = true;
+
+    // Abilita il pulsante solo quando viene selezionata un'opzione valida
+    sponsorSelect.addEventListener('change', () => {
+        sponsorIdInput.value = sponsorSelect.value;
+
+        // Abilita il pulsante se viene selezionata un'opzione valida
+        if (sponsorSelect.value) {
+            payButton.disabled = false;
+        } else {
+            payButton.disabled = true;
+        }
+    });
+
+    // Funzione per ottenere il token Braintree
+    const fetchBraintreeToken = () => {
+        fetch("/admin/braintree/token") // Assicurati che l'URL sia corretto e accessibile
+            .then(response => response.json())
+            .then(data => {
+                braintree.dropin.create({
+                    authorization: data.token,
+                    container: '#dropin-container'
+                }, (createErr, instance) => {
+                    if (createErr) {
+                        console.error('Errore nella creazione di Braintree Drop-in:', createErr);
+                        return;
+                    }
+
+                    payButton.addEventListener('click', () => {
+                        instance.requestPaymentMethod((err, payload) => {
+                            if (err) {
+                                console.error('Errore nella richiesta del metodo di pagamento:', err);
+                                return;
+                            }
+
+                            // Imposta il nonce nel campo nascosto del form
+                            document.getElementById('payment-method-nonce').value = payload.nonce;
+
+                            // Invia il form
+                            document.getElementById('payment-form').submit();
+                        });
+                    });
+                });
+            })
+            .catch(error => console.error('Errore nel recupero del token Braintree:', error));
+    };
+
+    // Chiamata per ottenere il token Braintree al caricamento della pagina
+    fetchBraintreeToken(); // <--- La funzione viene chiamata qui
+});
+
 
