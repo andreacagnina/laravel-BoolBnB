@@ -3,7 +3,7 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                 <div>
-                    <img class="logo" src="{{ asset('img/airbnb-2-logo-svg-vector.svg') }}" alt="Logo">
+                    <img class="logo" src="{{ asset('img/logo.png') }}" alt="Logo">
                 </div>
                 {{-- config('app.name', 'Laravel') --}}
             </a>
@@ -45,8 +45,8 @@
 
                                 <a class="dropdown-item"
                                     href="{{ route('admin.properties.index') }}">{{ __('My Properties') }}</a>
-                                {{-- <a class="dropdown-item"
-                                    href="{{ route('admin.messages.index') }}">{{ __('Inbox') }}</a> --}}
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.messages.index') }}">{{ __('Inbox') }}</a>
                                 <a class="dropdown-item"
                                     href="{{ route('admin.sponsors.index') }}">{{ __('Advertisements') }}</a>
                                 {{-- <a class="dropdown-item"

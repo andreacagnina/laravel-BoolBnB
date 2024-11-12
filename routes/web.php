@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ViewController;
 use App\Http\Controllers\Admin\MessageController;
-use App\Http\Controllers\ProfileController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
     Route::resource('sponsors', SponsorController::class);
     Route::resource('services', ServiceController::class);
     Route::get('/views/{property:slug}', [ViewController::class, 'show'])->name('views.show');
-    Route::get('/messages', [MessageController::class, 'index']);
+
     Route::post('/properties/assign-sponsor', [AdminPropertyController::class, 'assignSponsor'])->name('properties.assignSponsor');
 
     // Rotta per la visualizzazione di uno sponsor specifico per un appartamento
@@ -52,6 +53,8 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
 
     Route::get('/braintree/token', [BraintreeController::class, 'token'])->name('braintree.token');
     Route::post('/braintree/checkout', [BraintreeController::class, 'checkout'])->name('braintree.checkout');
+
+    Route::resource('messages', MessageController::class);
 });
 
 require __DIR__ . '/auth.php';
