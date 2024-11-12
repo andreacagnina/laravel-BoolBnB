@@ -17,6 +17,7 @@
         "@popperjs/core": "^2.11.8",
         "bootstrap": "^5.3.3",
         "bootstrap-icons": "^1.11.3",
+        "cors": "^2.8.5",
         "just-validate": "^4.3.0",
         "parsleyjs": "^2.9.2"
     }

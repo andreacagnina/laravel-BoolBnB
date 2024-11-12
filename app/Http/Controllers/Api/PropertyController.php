@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -26,11 +27,23 @@ class PropertyController extends Controller
             })
             // Filtro per numero di stanze
             ->when($request->num_rooms, function($query) use ($request) {
-                if ($request->num_rooms == 7) {
-                    return $query->where('num_rooms', '>=', 7); // 7 or more rooms
-                }
                 return $query->where('num_rooms', $request->num_rooms);
             })
+            // Filtro per numero di letti
+            ->when($request->num_beds, function($query) use ($request) {
+                return $query->where('num_beds', $request->num_beds);
+            })
+            // Filtro per numero di bagni
+            ->when($request->num_baths, function($query) use ($request) {
+                return $query->where('num_baths', $request->num_baths);
+            })
+            ->when($request->mq, function($query) use ($request) {
+                return $query->where('mq', '<=', $request->mq);
+            })
+            ->when($request->price, function($query) use ($request) {
+                return $query->where('price', '<=', $request->price);
+            })
+            
             ->orderByDesc('sponsored') // sponsored first
             ->paginate(24); 
 
