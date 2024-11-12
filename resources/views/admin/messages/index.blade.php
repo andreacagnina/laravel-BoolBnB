@@ -3,6 +3,17 @@
 @section('content')
     <div class="container">
         <h1 class="my-4">Messages</h1>
+        @if (session('success'))
+            <div class="row">
+                <div class="col-12">
+                    <div class="content mt-1 text-center position-relative">
+                        <div id="success-alert" class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <!-- Verifica se ci sono messaggi -->
         @if ($messages->isEmpty())
@@ -10,7 +21,7 @@
         @else
             <!-- Tabella dei messaggi -->
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped align-middle text-center table-sm">
                     <thead class="table-light">
                         <tr>
                             <th>First Name</th>
@@ -27,7 +38,7 @@
                             <tr>
                                 <td>{{ $message->first_name }}</td>
                                 <td>{{ $message->last_name }}</td>
-                                <td>{{ $message->email }}</td>
+                                <td><a href="mailto:{{ $message->email }}">{{ $message->email }}</a></td>
                                 <td>{{ Str::limit($message->message, 50) }}</td>
                                 <td>{{ $message->property->title ?? 'N/A' }}</td>
                                 <td>
@@ -40,15 +51,14 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="d-flex gap-2">
+                                    <div class="d-flex justify-content-center gap-2">
                                         <a href="{{ route('admin.messages.show', $message->id) }}"
                                             class="btn btn-primary btn-sm">View</a>
                                         <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm delete"
-                                                data-messageID="{{ $message->id }}">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm delete">Delete</button>
                                         </form>
                                     </div>
                                 </td>

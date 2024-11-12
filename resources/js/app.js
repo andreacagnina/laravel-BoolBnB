@@ -30,35 +30,22 @@ document.addEventListener('DOMContentLoaded', function () {
             bootstrap_modal.show();
 
             const buttonDelete = modal.querySelector('.confirm-delete');
-            const propertyName = button.getAttribute('data-propertyName');
-            const ModalText = modal.querySelector('#modal_text');
-            ModalText.innerHTML = `Are you sure you want to delete this item: <strong>${propertyName}</strong> ?`;
+            const modalText = modal.querySelector('#modal_text');
+            modalText.innerHTML = 'Are you sure you want to delete this item?';
 
             buttonDelete.addEventListener('click', function () {
                 button.parentElement.submit();
+                bootstrap_modal.hide(); // Nasconde la modale dopo la conferma di eliminazione
             });
         });
     });
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-    const delete_buttons = document.querySelectorAll('.delete');
-    delete_buttons.forEach((button) => {
-        button.addEventListener('click', (event) => {
-            event.preventDefault();
-            const modal = document.getElementById('deleteModal');
-            const bootstrap_modal = new bootstrap.Modal(modal);
-            bootstrap_modal.show();
-
-            const buttonDelete = modal.querySelector('.confirm-delete');
-            const messageID = button.getAttribute('data-messageID');
-            const ModalText = modal.querySelector('#modal_text');
-            ModalText.innerHTML = 'Are you sure you want to delete this item?';
-
-            buttonDelete.addEventListener('click', function () {
-                button.parentElement.submit();
-            });
-        });
+    // Assicura la rimozione dell'overlay quando la modale viene chiusa
+    document.getElementById('deleteModal').addEventListener('hidden.bs.modal', function () {
+        const modalBackdrop = document.querySelector('.modal-backdrop');
+        if (modalBackdrop) {
+            modalBackdrop.remove();
+        }
     });
 });
 

@@ -186,8 +186,7 @@
                                                 method="post" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger delete"
-                                                    data-propertyName="{{ $property->title }}">
+                                                <button type="submit" class="btn btn-outline-danger delete">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </form>
