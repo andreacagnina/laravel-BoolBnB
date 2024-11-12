@@ -15,9 +15,19 @@
                     <li class="list-group-item"><strong>Last Name:</strong> {{ $message->last_name }}</li>
                     <li class="list-group-item"><strong>Email:</strong> {{ $message->email }}</li>
                     <li class="list-group-item"><strong>Message:</strong> {{ $message->message }}</li>
-                    <li class="list-group-item"><strong>Property ID:</strong>
-                        {{ $message->property_id }}
+                    <li class="list-group-item"><strong>Property Name:</strong> {{ $message->property->title ?? 'N/A' }}
                     </li>
+
+                    <!-- Aggiungi l'immagine della proprietà se esiste -->
+                    <li class="list-group-item">
+                        <strong>Property Image:</strong><br>
+                        @if (!empty($message->property->cover_image))
+                            <img src="{{ $message->property->cover_image }}" alt="Property Image" width="200">
+                        @else
+                            N/A
+                        @endif
+                    </li>
+
                     <li class="list-group-item"><strong>Created At:</strong> {{ $message->created_at->format('d-m-Y H:i') }}
                     </li>
                 </ul>
