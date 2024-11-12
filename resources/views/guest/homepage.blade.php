@@ -107,7 +107,7 @@
                             </div>
 
                             <!-- Carousel images -->
-                            <div class="carousel-inner" style="height: 200px;">
+                            <div class="carousel-inner rounded overflow-hidden" style="height: 200px;">
                                 <!-- Cover Image as the First Slide -->
                                 <div class="carousel-item active">
                                     <img src="{{ $property->cover_image_url }}" class="d-block w-100 h-100"

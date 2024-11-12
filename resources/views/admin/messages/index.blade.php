@@ -17,7 +17,8 @@
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Message</th>
-                            <th>Property ID</th>
+                            <th>Property Name</th>
+                            <th>Property Image</th> <!-- Nuova colonna per l'immagine -->
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -28,7 +29,16 @@
                                 <td>{{ $message->last_name }}</td>
                                 <td>{{ $message->email }}</td>
                                 <td>{{ Str::limit($message->message, 50) }}</td>
-                                <td>{{ $message->property->name }}</td>
+                                <td>{{ $message->property->title ?? 'N/A' }}</td>
+                                <td>
+                                    <!-- Mostra l'immagine della proprietà, se disponibile -->
+                                    @if (!empty($message->property->cover_image))
+                                        <img src="{{ $message->property->cover_image }}" alt="Property Image" width="100"
+                                            height="60">
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <a href="{{ route('admin.messages.show', $message->id) }}"
