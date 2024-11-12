@@ -19,6 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
+    // Lasciato '*' per comodità, ma dovrebbe essere sostituito con l'URL del frontend Vue
     'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
@@ -29,6 +30,7 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    // Abilitato il supporto per le credenziali
+    'supports_credentials' => true,
 
 ];
