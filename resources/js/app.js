@@ -41,6 +41,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const delete_buttons = document.querySelectorAll('.delete');
+    delete_buttons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const modal = document.getElementById('deleteModal');
+            const bootstrap_modal = new bootstrap.Modal(modal);
+            bootstrap_modal.show();
+
+            const buttonDelete = modal.querySelector('.confirm-delete');
+            const messageID = button.getAttribute('data-messageID');
+            const ModalText = modal.querySelector('#modal_text');
+            ModalText.innerHTML = 'Are you sure you want to delete this item?';
+
+            buttonDelete.addEventListener('click', function () {
+                button.parentElement.submit();
+            });
+        });
+    });
+});
+
 // Messaggio di conferma
 document.addEventListener('DOMContentLoaded', function () {
     const successAlert = document.getElementById('success-alert');

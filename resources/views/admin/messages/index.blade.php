@@ -37,8 +37,8 @@
                                             class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Are you sure you want to delete this message?')">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm delete"
+                                                data-messageID="{{ $message->id }}">Delete</button>
                                         </form>
                                     </div>
                                 </td>
@@ -49,4 +49,5 @@
             </div>
         @endif
     </div>
+    @include('admin.properties.partials.modal_delete')
 @endsection
