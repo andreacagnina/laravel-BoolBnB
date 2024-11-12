@@ -2,13 +2,12 @@
 @import '@fortawesome/fontawesome-free/css/all.css';
 
 @import './header';
-@import './footer';
 @import'./suggestion';
 @import './formValidation';
 
 main {
-    height: calc(100vh - 76px);
-    margin-top: 76px;
+    height: calc(100vh - 80px);
+    margin-top: 80px;
     overflow: auto;
 }
 
