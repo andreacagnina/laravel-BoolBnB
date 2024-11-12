@@ -43,19 +43,19 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                                <a class="dropdown-item"
-                                    href="{{ route('admin.properties.index') }}">{{ __('My Properties') }}</a>
-                                <a class="dropdown-item"
-                                    href="{{ route('admin.messages.index') }}">{{ __('Inbox') }}</a>
-                                <a class="dropdown-item"
-                                    href="{{ route('admin.sponsors.index') }}">{{ __('Advertisements') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.properties.index') }}"><i
+                                        class="fa-solid fa-house"></i> &nbsp;{{ __('My Properties') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.messages.index') }}"><i
+                                        class="fa-solid fa-envelope-open-text"></i> &nbsp;{{ __('Inbox') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.sponsors.index') }}"><i
+                                        class="fa-solid fa-arrow-up-wide-short"></i> &nbsp;{{ __('Advertisements') }}</a>
                                 {{-- <a class="dropdown-item"
                                     href="{{ route('admin.views.show') }}">{{ __('Statistics') }}</a> --}}
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    <i class="fa-solid fa-right-from-bracket"></i> {{ __('Logout') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

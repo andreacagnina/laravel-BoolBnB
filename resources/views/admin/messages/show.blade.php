@@ -13,7 +13,8 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><strong>First Name:</strong> {{ $message->first_name }}</li>
                     <li class="list-group-item"><strong>Last Name:</strong> {{ $message->last_name }}</li>
-                    <li class="list-group-item"><strong>Email:</strong> {{ $message->email }}</li>
+                    <li class="list-group-item"><strong>Email:</strong> <a
+                            href="mailto:{{ $message->email }}">{{ $message->email }}</a> </li>
                     <li class="list-group-item"><strong>Message:</strong> {{ $message->message }}</li>
                     <li class="list-group-item"><strong>Property Name:</strong> {{ $message->property->title ?? 'N/A' }}
                     </li>
@@ -28,7 +29,7 @@
                         @endif
                     </li>
 
-                    <li class="list-group-item"><strong>Created At:</strong> {{ $message->created_at->format('d-m-Y H:i') }}
+                    <li class="list-group-item"><strong>Sended At:</strong> {{ $message->created_at->format('d-m-Y H:i') }}
                     </li>
                 </ul>
 
