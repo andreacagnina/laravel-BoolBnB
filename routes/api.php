@@ -50,9 +50,9 @@ Route::post('/login', function (Request $request) {
 
     $user = Auth::user();
     // Creazione del token usando Laravel Sanctum
-    $token = $user->createToken('authToken')->plainTextToken;
+    // $token = $user->createToken('authToken')->plainTextToken;
 
-    return response()->json(['user' => $user, 'token' => $token]);
+    // return response()->json(['user' => $user, 'token' => $token]);
 });
 
 // Rotta per il logout

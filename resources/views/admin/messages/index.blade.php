@@ -24,6 +24,7 @@
                 <table class="table table-bordered table-striped align-middle text-center table-sm">
                     <thead class="table-light">
                         <tr>
+                            <th>Received</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
@@ -36,6 +37,7 @@
                     <tbody>
                         @foreach ($messages as $message)
                             <tr>
+                                <td>{{ $message->created_at }}</td>
                                 <td>{{ $message->first_name }}</td>
                                 <td>{{ $message->last_name }}</td>
                                 <td><a href="mailto:{{ $message->email }}">{{ $message->email }}</a></td>
