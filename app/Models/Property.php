@@ -99,4 +99,8 @@ class Property extends Model
     {
         return $this->hasMany(Message::class);
     }
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }

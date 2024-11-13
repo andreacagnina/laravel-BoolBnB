@@ -8,13 +8,13 @@
                 <p class="lead text-muted">{{ $property->description }}</p>
 
                 <div class="alert alert-info text-center my-3">
-                    <h5 class="mb-1">Views ;</h5>
+                    <h5 class="mb-1">Views</h5>
                     <p class="display-6">{{ $property->views_count }}</p>
                 </div>
 
                 <div class="alert alert-danger text-center my-3">
                     <h5 class="mb-1">Favorites</h5>
-                    <p class="display-6">0</p> <!-- Currently showing a fixed number of 0 -->
+                    <p class="display-6">{{ $property->favorites_count }}</p> <!-- Currently showing a fixed number of 0 -->
                 </div>
 
                 <div class="alert alert-success text-center my-3">

@@ -6,47 +6,33 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use App\Models\Favorite;
 
 class ViewController extends Controller
 {
     /**
      * Aggiunge una proprietà ai preferiti dell'utente autenticato.
      */
-    public function addToFavorites(Request $request)
+    public function toggleFavorite(Request $request, $propertyId)
     {
-        Log::info('Richiesta ricevuta:', $request->all());
+        $ipAddress = $request->ip();
 
-        $request->validate([
-            'property_id' => 'required|exists:properties,id',
-        ]);
+        // Cerca se l'IP ha già aggiunto la proprietà ai preferiti
+        $favorite = Favorite::where('property_id', $propertyId)
+            ->where('ip_address', $ipAddress)
+            ->first();
 
-        $propertyId = $request->property_id;
-
-        // Genera la chiave di cache per i preferiti
-        $cacheKey = $this->getFavoriteCacheKey($propertyId);
-
-        // Controlla se la proprietà è già nei preferiti
-        if (Cache::has($cacheKey)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Property is already in favorites.',
-            ], 400);
+        if ($favorite) {
+            // Se esiste, rimuovilo
+            $favorite->delete();
+            return response()->json(['success' => true, 'isFavorite' => false]);
+        } else {
+            // Altrimenti, aggiungilo ai preferiti
+            Favorite::create([
+                'property_id' => $propertyId,
+                'ip_address' => $ipAddress
+            ]);
+            return response()->json(['success' => true, 'isFavorite' => true]);
         }
-
-        // Aggiungi la proprietà ai preferiti per 1 giorno
-        Cache::put($cacheKey, true, now()->addDay());
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Property added to favorites.',
-        ]);
-    }
-
-    /**
-     * Restituisce la chiave di cache per una proprietà e un utente.
-     */
-    private function getFavoriteCacheKey($propertyId)
-    {
-        return "user_" . auth()->id() . "_property_{$propertyId}_favorite";
     }
 }
