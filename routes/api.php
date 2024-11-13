@@ -62,4 +62,4 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
     return response()->json(['message' => 'Logout effettuato con successo']);
 });
 
-Route::post('/favorites', [ViewController::class, 'addToFavorites']);
+Route::post('/properties/{property}/favorite', [PropertyController::class, 'toggleFavorite'])->name('properties.toggleFavorite');

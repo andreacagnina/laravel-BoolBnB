@@ -12,6 +12,7 @@ class ViewController extends Controller
     public function show(Property $property)
     {
         $property->loadCount('views');
+        $property->loadCount('favorites');
 
         return view('admin.views.show', compact('property'));
     }
