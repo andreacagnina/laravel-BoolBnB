@@ -26,16 +26,20 @@ class PropertyController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $properties = Property::where('user_id', $userId)
+        
+        // Include all properties, both active and deleted
+        $properties = Property::withTrashed()
+            ->where('user_id', $userId)
+            ->orderBy('deleted_at', 'asc') // Non-deleted properties come first
             ->orderBy('sponsored', 'desc')
             ->orderBy('available', 'desc')
             ->orderBy('title', 'asc')
             ->get();
-
+    
         foreach ($properties as $property) {
             $property->checkSponsorshipStatus();
         }
-
+    
         return view('admin.properties.index', compact('properties'));
     }
 
@@ -91,9 +95,9 @@ class PropertyController extends Controller
      */
     public function show(Request $request, Property $property)
     {
-        // Verifica che l'utente sia il proprietario
-        if ($property->user_id !== Auth::id()) {
-            return abort(404, 'Not Found');
+        // Block access if property is soft deleted
+        if ($property->trashed() || $property->user_id !== Auth::id()) {
+            return abort(404, 'Property not found');
         }
 
         $ipAddress = $request->ip();
@@ -126,8 +130,9 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        if ($property->user_id !== Auth::id()) {
-            return abort(404, 'Not Found');
+        // Block access if property is soft deleted
+        if ($property->trashed() || $property->user_id !== Auth::id()) {
+            return abort(404, 'Property not found');
         }
 
         $propertyTypes = ['mansion', 'ski-in/out', 'tree-house', 'apartment', 'dome', 'cave', 'cabin', 'lake', 'beach', 'castle'];
@@ -147,8 +152,9 @@ class PropertyController extends Controller
      */
     public function update(UpdatePropertyRequest $request, Property $property)
     {
-        if ($property->user_id !== Auth::id()) {
-            return abort(404, 'Not Found');
+        // Block access if property is soft deleted
+        if ($property->trashed() || $property->user_id !== Auth::id()) {
+            return abort(404, 'Property not found');
         }
 
         $form_data = $request->validated();
@@ -205,8 +211,8 @@ class PropertyController extends Controller
 
         $property = Property::where('slug', $propertySlug)->firstOrFail();
 
-        // Verifica che l'utente sia il proprietario
-        if ($property->user_id !== Auth::id()) {
+        // Block access if property is soft deleted
+        if ($property->trashed() || $property->user_id !== Auth::id()) {
             return abort(404, 'Not Found');
         }
 
@@ -215,14 +221,12 @@ class PropertyController extends Controller
             ->orderByPivot('created_at', 'desc')
             ->first();
 
-        if ($lastSponsorPivot && $lastSponsorPivot->pivot->end_date) {
-            $startDate = Carbon::parse($lastSponsorPivot->pivot->end_date);
-        } else {
-            $startDate = now();
-        }
+        $startDate = $lastSponsorPivot && $lastSponsorPivot->pivot->end_date
+            ? Carbon::parse($lastSponsorPivot->pivot->end_date)
+            : now();
 
         $sponsor = Sponsor::findOrFail($sponsorId);
-        $endDate = $startDate->copy()->addHours($sponsor->duration); // Usa copy() per evitare di modificare startDate
+        $endDate = $startDate->copy()->addHours($sponsor->duration);
 
         $property->sponsors()->attach($sponsorId, [
             'created_at' => $startDate,
@@ -233,5 +237,13 @@ class PropertyController extends Controller
         $property->checkSponsorshipStatus();
 
         return redirect()->back()->with('success', 'Sponsor successfully assigned to the property!');
+    }
+
+    public function restore($id)
+    {
+        $property = Property::onlyTrashed()->where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $property->restore();
+
+        return redirect()->route("admin.properties.index")->with("success", 'Announcement restored successfully.');
     }
 }
