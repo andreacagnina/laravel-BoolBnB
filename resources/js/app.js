@@ -445,12 +445,13 @@ document.addEventListener('DOMContentLoaded', function () {
         validation
             .addField('#name', [{ rule: 'maxLength', value: 50, errorMessage: 'The name must not exceed 50 characters' }])
             .addField('#surname', [{ rule: 'maxLength', value: 50, errorMessage: 'The surname must not exceed 50 characters' }])
-            .addField('#birth_date', [{ rule: 'customRegexp', value: /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/, errorMessage: 'Enter a valid date in DD-MM-YYYY format' }])
+            // .addField('#birth_date', [{ rule: 'customRegexp', value: /^(0[1-9]|[12][0-9]|3[01])\s*\/\s*(0[1-9]|1[0-2])\s*\/\s*\d{4}$/, errorMessage: 'Enter a valid date in DD/MM/YYYY format' }])
             .addField('#email', [{ rule: 'required', errorMessage: 'The email address is required' }, { rule: 'email', errorMessage: 'Enter a valid email address' }])
             .addField('#password', [{ rule: 'required', errorMessage: 'The password is required' }, { rule: 'minLength', value: 8, errorMessage: 'The password must contain at least 8 characters' }, { rule: 'maxLength', value: 255, errorMessage: 'The password must not exceed 255 characters' }])
             .addField('#password-confirm', [{ rule: 'required', errorMessage: 'Password confirmation is required' }, { validator: value => value === document.getElementById('password').value, errorMessage: 'The passwords do not match' }])
             .onSuccess(() => registerForm.submit());
     }
+
 
     ['createPropertyForm', 'editPropertyForm'].forEach(formId => {
         const form = document.getElementById(formId);
