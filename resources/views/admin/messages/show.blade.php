@@ -28,9 +28,6 @@
                             N/A
                         @endif
                     </li>
-
-                    <li class="list-group-item"><strong>Sended At:</strong> {{ $message->created_at->format('d-m-Y H:i') }}
-                    </li>
                 </ul>
 
                 <a href="{{ route('admin.messages.index') }}" class="btn btn-secondary mt-3">Back to Messages</a>

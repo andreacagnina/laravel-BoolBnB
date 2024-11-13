@@ -39,8 +39,8 @@
                                     <ul class="list-unstyled">
                                         @foreach ($property->services as $service)
                                             <li>
-                                                <span>{{ $service->name }} <i
-                                                        class="{{ $service->icon }} me-2"></i></span>
+                                                <i class="{{ $service->icon }}"></i><span
+                                                    class="ms-2">{{ $service->name }} </span>
                                             </li>
                                         @endforeach
                                     </ul>

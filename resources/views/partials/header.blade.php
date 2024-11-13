@@ -46,7 +46,14 @@
                                 <a class="dropdown-item" href="{{ route('admin.properties.index') }}"><i
                                         class="fa-solid fa-house"></i> &nbsp;{{ __('My Properties') }}</a>
                                 <a class="dropdown-item" href="{{ route('admin.messages.index') }}"><i
-                                        class="fa-solid fa-envelope-open-text"></i> &nbsp;{{ __('Inbox') }}</a>
+                                        class="fa-solid fa-envelope-open-text position-relative">
+                                        @if ($unreadCount > 0)
+                                            <span
+                                                class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill">{{ $unreadCount }}</span>
+                                        @endif
+                                    </i>
+                                    &nbsp;{{ __('Inbox') }}
+                                </a>
                                 <a class="dropdown-item" href="{{ route('admin.sponsors.index') }}"><i
                                         class="fa-solid fa-arrow-up-wide-short"></i> &nbsp;{{ __('Advertisements') }}</a>
                                 {{-- <a class="dropdown-item"

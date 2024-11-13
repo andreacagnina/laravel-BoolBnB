@@ -9,13 +9,18 @@ class MessageController extends Controller
 {
     public function index()
     {
-        $messages = Message::with('property')->get();
-        return view('admin.messages.index', compact('messages'));
+        $messages = Message::orderBy('created_at', 'desc')->with('property')->get();
+        $unreadCount = Message::where('is_read', false)->count();
+        return view('admin.messages.index', compact('messages', 'unreadCount'));
     }
 
     public function show(Message $message)
     {
-        return view('admin.messages.show', compact('message'));
+        if (!$message->is_read) {
+            $message->update(['is_read' => true]);
+        }
+        $unreadCount = Message::where('is_read', false)->count();
+        return view('admin.messages.show', compact('message', 'unreadCount'));
     }
 
     public function destroy(Message $message)
