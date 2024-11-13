@@ -28,6 +28,7 @@ class StoreMessageRequest extends FormRequest
             'last_name' => 'nullable|string|max:50',
             'email' => 'required|email|max:255',
             'message' => 'required|string',
+            'is_read' => 'required|boolean',
             'property_id' => 'required|exists:properties,id',
         ];
     }

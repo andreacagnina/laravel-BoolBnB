@@ -25,10 +25,10 @@
                     <thead class="table-light">
                         <tr>
                             <th>Received</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th>Sended By</th>
+                            {{-- <th>Last Name</th> --}}
                             <th>Email</th>
-                            <th>Message</th>
+                            {{-- <th>Message</th> --}}
                             <th>Property Name</th>
                             <th>Property Image</th> <!-- Nuova colonna per l'immagine -->
                             <th>Actions</th>
@@ -36,12 +36,12 @@
                     </thead>
                     <tbody>
                         @foreach ($messages as $message)
-                            <tr>
+                            <tr class="{{ $message->is_read ? 'fw-normal' : 'fw-bold' }}">
                                 <td>{{ $message->created_at->diffForHumans() }}</td>
-                                <td>{{ $message->first_name }}</td>
-                                <td>{{ $message->last_name }}</td>
+                                <td>{{ $message->first_name }} {{ $message->last_name }}</td>
+                                {{-- <td>{{ $message->last_name }}</td> --}}
                                 <td><a href="mailto:{{ $message->email }}">{{ $message->email }}</a></td>
-                                <td>{{ Str::limit($message->message, 50) }}</td>
+                                {{-- <td>{{ Str::limit($message->message, 50) }}</td> --}}
                                 <td>{{ $message->property->title ?? 'N/A' }}</td>
                                 <td>
                                     <!-- Mostra l'immagine della proprietà, se disponibile -->

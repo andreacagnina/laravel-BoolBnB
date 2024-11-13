@@ -167,7 +167,7 @@
                         @foreach ($services->chunk(ceil($services->count() / 3)) as $serviceChunk)
                             <div class="col-md-4">
                                 @foreach ($serviceChunk as $service)
-                                    <div class="form-check d-flex align-items-center gap-3 mb-3">
+                                    <div class="form-check d-flex align-items-center gap-3 mb-3 cursor-pointer">
                                         @if ($errors->any())
                                             <input type="checkbox" name="services[]" id="service_{{ $service->id }}"
                                                 value="{{ $service->id }}" class="form-check-input"
@@ -197,7 +197,7 @@
 
             <!-- Availability and Submit/Back Buttons -->
             <div class="row">
-                <div class="col-md-6 d-flex align-items-center">
+                <div class="col-md-6 d-flex align-items-center cursor-pointer">
                     <label class="form-label d-flex align-items-center me-3 mb-0">Available:</label>
                     <div class="d-flex gap-3">
                         <div class="form-check d-flex align-items-center gap-2 m-0">

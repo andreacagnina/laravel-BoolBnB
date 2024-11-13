@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('last_name', 50)->nullable();
             $table->string('email', 255);
             $table->text('message');
+            $table->boolean('is_read')->default(false);
             $table->unsignedBigInteger('property_id');
             $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->timestamps();
