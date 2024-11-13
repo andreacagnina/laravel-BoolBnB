@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Rotte per le proprietà
 Route::get('/properties', [PropertyController::class, 'index'])->name('properties');
 Route::get('/property/{slug}', [PropertyController::class, 'show'])->name('property');
+
+// Rotte per i servizi
+Route::get('/services', [ServiceController::class, 'index']);
 
 // Rotte per i messaggi
 Route::apiResource('messages', MessageController::class);
