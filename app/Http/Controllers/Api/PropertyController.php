@@ -69,13 +69,30 @@ class PropertyController extends Controller
             ->first();
 
         if ($property) {
+            // Registra la visualizzazione solo se l'IP non ha già visto questa proprietà oggi
+            $existingView = View::where('property_id', $property->id)
+                ->where('ip_address', request()->ip())
+                ->whereDate('created_at', today())
+                ->exists();
+
+            if (!$existingView) {
+                View::create([
+                    'property_id' => $property->id,
+                    'ip_address' => request()->ip(),
+                ]);
+            }
+
+            // Verifica se è tra i preferiti
             $isFavorite = Favorite::where('property_id', $property->id)
                 ->where('ip_address', request()->ip())
                 ->exists();
 
             return response()->json([
                 'success' => true,
-                'results' => $property->toArray() + ['is_favorite' => $isFavorite]
+                'results' => $property->toArray() + [
+                    'is_favorite' => $isFavorite,
+                    'view_count' => View::where('property_id', $property->id)->count(), // Numero di visualizzazioni
+                ]
             ]);
         }
 
