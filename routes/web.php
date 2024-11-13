@@ -9,8 +9,6 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ViewController;
 use App\Http\Controllers\Admin\MessageController;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,19 +40,24 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
         'properties' => 'property:slug'
     ]);
 
+    Route::patch('/properties/{id}/restore', [AdminPropertyController::class, 'restore'])->name('properties.restore');
+
     Route::resource('sponsors', SponsorController::class);
     Route::resource('services', ServiceController::class);
     Route::get('/views/{property:slug}', [ViewController::class, 'show'])->name('views.show');
 
     Route::post('/properties/assign-sponsor', [AdminPropertyController::class, 'assignSponsor'])->name('properties.assignSponsor');
 
-    // Rotta per la visualizzazione di uno sponsor specifico per un appartamento
-    Route::get('/sponsors/{property:slug}/show', [SponsorController::class, 'show'])->name('sponsors.show');
+    // Rotta per la visualizzazione di uno sponsor specifico per un appartamento, con nome univoco (ex '/sponsors/{property:slug}/show')
+    Route::get('/sponsors/{property:slug}/property_show', [SponsorController::class, 'show'])->name('sponsors.property_show');
 
     Route::get('/braintree/token', [BraintreeController::class, 'token'])->name('braintree.token');
     Route::post('/braintree/checkout', [BraintreeController::class, 'checkout'])->name('braintree.checkout');
 
     Route::resource('messages', MessageController::class);
+
+    // Rotta per ripristinare un messaggio eliminato
+    Route::patch('/messages/{id}/restore', [MessageController::class, 'restore'])->name('messages.restore');
 });
 
 require __DIR__ . '/auth.php';

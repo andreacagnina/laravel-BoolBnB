@@ -24,6 +24,7 @@ class HomeController extends Controller
 
         // Costruisci la query di base
         $properties = Property::query()
+            ->where('deleted_at', null) // Escludi le proprietà eliminate
             ->where('available', 1)
             ->where('num_rooms', '>=', $minRooms)
             ->where('num_beds', '>=', $minBeds);

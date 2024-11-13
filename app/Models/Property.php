@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; // Aggiungi SoftDeletes
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class Property extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes; // Usa SoftDeletes
 
     protected $fillable = [
         'title',
@@ -34,9 +35,10 @@ class Property extends Model
     // Append custom attributes to the model's array form
     protected $appends = ['cover_image_url'];
 
-    // Cast price to float to ensure numeric type
+    // Cast price to float and deleted_at to datetime
     protected $casts = [
         'price' => 'float',
+        'deleted_at' => 'datetime', // Cast deleted_at come datetime
     ];
 
     // Accessor for the cover image URL
@@ -77,7 +79,6 @@ class Property extends Model
     {
         return $this->belongsToMany(Sponsor::class)->withPivot('end_date')->withTimestamps();
     }
-
 
     public function services()
     {

@@ -1,114 +1,3 @@
-{{-- @extends('layouts.app')
-@section('content')
-    <div class="container my-3">
-        <div class="row">
-            <div class="col-12">
-                <div class="content">
-                    @if (session('success'))
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="content mt-1 text-center position-relative">
-                                    <div id="success-alert" class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                    @if (count($properties) != 0)
-                        <div class="my-3 d-flex justify-content-between align-items-center">
-                            <h2>Uploaded Properties</h2>
-                            <div>
-                                <a href="{{ route('admin.properties.create') }}" class="btn btn-primary">Add a new
-                                    Property</a>
-                            </div>
-                        </div>
-                        <table class="table table-bordered table-striped align-middle table-sm text-center">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Cover Image</th>
-                                    <th>Address</th>
-                                    <th>Price</th>
-                                    <th>Description</th>
-                                    <th>Sponsored</th>
-                                    <th>Available</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($properties as $property)
-                                    <tr>
-                                        <td>{{ $property->title }}</td>
-                                        <td>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                @if (Str::startsWith($property->cover_image, 'https'))
-                                                    <img src="{{ $property->cover_image }}" alt="{{ $property->name }}"
-                                                        class="img-thumbnail"
-                                                        style="width: 100px; height: 100px; object-fit: cover;">
-                                                @else
-                                                    <img src="{{ asset('storage/' . $property->cover_image) }}"
-                                                        alt="{{ $property->name }}" class="img-thumbnail"
-                                                        style="width: 100px; height: 100px; object-fit: cover;">
-                                                @endif
-                                            </div>
-                                        </td>
-                                        <td>{{ $property->address }}</td>
-                                        <td>{{ number_format($property->price, 2, ',', '') }}&euro;</td>
-                                        <td>{{ Str::limit($property->description, 50) }}</td>
-                                        <td>{!! $property->sponsored
-                                            ? '<span class="text-success">&check;</span>'
-                                            : '<span class="text-danger">&cross;</span>' !!}</td>
-                                        <td>{!! $property->available
-                                            ? '<span class="text-success">&check;</span>'
-                                            : '<span class="text-danger">&cross;</span>' !!}</td>
-                                        <td>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="{{ route('admin.sponsors.show', ['property' => $property->slug]) }}"
-                                                    class="btn btn-outline-success mx-1">
-                                                    <i class="fas fa-money-bill"></i>
-                                                </a>
-                                                <a href="{{ route('admin.views.show', ['property' => $property->slug]) }}"
-                                                    class="btn btn-outline-info mx-1">
-                                                    <i class="fas fa-chart-pie"></i>
-                                                </a>
-                                                <a href="{{ route('admin.properties.show', ['property' => $property->slug]) }}"
-                                                    class="btn btn-outline-primary mx-1">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ route('admin.properties.edit', ['property' => $property->slug]) }}"
-                                                    class="btn btn-outline-warning mx-1">
-                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                </a>
-                                                <form
-                                                    action="{{ route('admin.properties.destroy', ['property' => $property->slug]) }}"
-                                                    method="post" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger mx-1 delete"
-                                                        data-propertyName="{{ $property->title }}">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @else
-                        <div class="my-3 d-flex justify-content-between align-items-center">
-                            <h2>You haven't uploaded any properties yet</h2>
-                            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary">Add a new Property</a>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-    @include('admin.properties.partials.modal_delete')
-@endsection --}}
-
 @extends('layouts.app')
 @section('content')
     <div class="container my-3">
@@ -127,14 +16,16 @@
                         </div>
                     @endif
 
-                    @if (count($properties) != 0)
+                    @if ($properties->isNotEmpty())
                         <div class="my-3 d-flex justify-content-between align-items-center flex-wrap">
                             <h2>Uploaded Properties</h2>
-                            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary mt-2 mt-md-0">Add a new
-                                Property</a>
+                            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary mt-2 mt-md-0">
+                                Add a new Property
+                            </a>
                         </div>
                         <div class="row">
-                            @foreach ($properties as $property)
+                            {{-- Proprietà attive --}}
+                            @foreach ($properties->where('deleted_at', null) as $property)
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <div class="card h-100">
                                         <div class="card-header text-center">
@@ -143,29 +34,21 @@
                                         <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
                                             alt="{{ $property->name }}" class="card-img-top img-thumbnail p-0 rounded-0"
                                             style="height: 200px; object-fit: cover;">
-
                                         <div class="card-body">
                                             <p><strong>Address:</strong> {{ $property->address }}</p>
-                                            <p><strong>Price:</strong>
-                                                {{ number_format($property->price, 2, ',', '') }}&euro;</p>
-                                            <p><strong>Description:</strong> {{ Str::limit($property->description, 50) }}
-                                            </p>
+                                            <p><strong>Price:</strong> {{ number_format($property->price, 2, ',', '') }}&euro;</p>
+                                            <p><strong>Description:</strong> {{ Str::limit($property->description, 50) }}</p>
                                             <p>
                                                 <strong>Sponsored:</strong>
-                                                {!! $property->sponsored
-                                                    ? '<span class="text-success">&check;</span>'
-                                                    : '<span class="text-danger">&cross;</span>' !!}
+                                                {!! $property->sponsored ? '<span class="text-success">&check;</span>' : '<span class="text-danger">&cross;</span>' !!}
                                             </p>
                                             <p>
                                                 <strong>Available:</strong>
-                                                {!! $property->available
-                                                    ? '<span class="text-success">&check;</span>'
-                                                    : '<span class="text-danger">&cross;</span>' !!}
+                                                {!! $property->available ? '<span class="text-success">&check;</span>' : '<span class="text-danger">&cross;</span>' !!}
                                             </p>
                                         </div>
-
                                         <div class="card-footer d-flex justify-content-around">
-                                            <a href="{{ route('admin.sponsors.show', ['property' => $property->slug]) }}"
+                                            <a href="{{ route('admin.sponsors.property_show', ['property' => $property->slug]) }}"
                                                 class="btn btn-outline-success">
                                                 <i class="fas fa-money-bill"></i>
                                             </a>
@@ -181,13 +64,46 @@
                                                 class="btn btn-outline-warning">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <form
-                                                action="{{ route('admin.properties.destroy', ['property' => $property->slug]) }}"
+                                            <form action="{{ route('admin.properties.destroy', ['property' => $property->slug]) }}"
                                                 method="post" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-outline-danger delete">
                                                     <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            {{-- Proprietà eliminate --}}
+                            @foreach ($properties->where('deleted_at', '!=', null) as $property)
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <div class="card h-100" style="position: relative; border-radius: 5px;">
+                                        <!-- La parte sopra oscurata -->
+                                        <div style="background: rgba(0, 0, 0, 0.4); border-radius: 5px 5px 0 0;">
+                                            <div class="card-header text-center">
+                                                <h5>{{ $property->title }}</h5>
+                                            </div>
+                                            <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
+                                                alt="{{ $property->name }}" class="card-img-top img-thumbnail p-0 rounded-0"
+                                                style="height: 200px; object-fit: cover; filter: grayscale(100%) brightness(50%); z-index: 0;">
+                                            <div class="card-body" style="z-index: 1;">
+                                                <p><strong>Address:</strong> {{ $property->address }}</p>
+                                                <p><strong>Price:</strong> {{ number_format($property->price, 2, ',', '') }}&euro;</p>
+                                                <p><strong>Description:</strong> {{ Str::limit($property->description, 50) }}</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Sezione inferiore con messaggio di eliminazione e pulsante di restore -->
+                                        <div class="card-footer d-flex justify-content-between align-items-center" style="background-color: #f25e6c; border-radius: 0 0 5px 5px;">
+                                            <p class="mb-0">This property has been deleted</p>
+                                            <form action="{{ route('admin.properties.restore', ['id' => $property->id]) }}" method="post" class="d-inline">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-success btn-sm">
+                                                    <i class="fas fa-undo"></i> Restore
                                                 </button>
                                             </form>
                                         </div>
