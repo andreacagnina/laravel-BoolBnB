@@ -37,7 +37,7 @@
                     <tbody>
                         @foreach ($messages as $message)
                             <tr>
-                                <td>{{ $message->created_at }}</td>
+                                <td>{{ $message->created_at->diffForHumans() }}</td>
                                 <td>{{ $message->first_name }}</td>
                                 <td>{{ $message->last_name }}</td>
                                 <td><a href="mailto:{{ $message->email }}">{{ $message->email }}</a></td>
