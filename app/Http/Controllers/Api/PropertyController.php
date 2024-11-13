@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Property;
-use App\Models\Image;
 use App\Models\Service;
 
 class PropertyController extends Controller
@@ -37,14 +35,21 @@ class PropertyController extends Controller
             ->when($request->num_baths, function($query) use ($request) {
                 return $query->where('num_baths', $request->num_baths);
             })
+            // Filtro per metri quadrati
             ->when($request->mq, function($query) use ($request) {
                 return $query->where('mq', '<=', $request->mq);
             })
+            // Filtro per prezzo
             ->when($request->price, function($query) use ($request) {
                 return $query->where('price', '<=', $request->price);
             })
-            
-            ->orderByDesc('sponsored') // sponsored first
+            // Filtro per servizi selezionati
+            ->when($request->filled('selectedServices') && is_array($request->selectedServices), function($query) use ($request) {
+                return $query->whereHas('services', function($query) use ($request) {
+                    $query->whereIn('services.id', $request->selectedServices);  // Filtra per servizi selezionati
+                });
+            })
+            ->orderByDesc('sponsored') // Ordina per sponsor
             ->paginate(24); 
 
         // Restituisci la risposta in formato JSON
