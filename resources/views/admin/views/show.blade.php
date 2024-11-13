@@ -19,7 +19,7 @@
 
                 <div class="alert alert-success text-center my-3">
                     <h5 class="mb-1">Messages Received</h5>
-                    <p class="display-6">{{ $property->messages->count() }}</p>
+                    <p class="display-6">{{ $property->messages()->withTrashed()->count() }}</p>
                 </div>
             </div>
 

@@ -58,6 +58,8 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
 
     // Rotta per ripristinare un messaggio eliminato
     Route::patch('/messages/{id}/restore', [MessageController::class, 'restore'])->name('messages.restore');
+
+    Route::delete('/messages/{id}/hard-destroy', [MessageController::class, 'hardDestroy'])->name('messages.hardDestroy');
 });
 
 require __DIR__ . '/auth.php';

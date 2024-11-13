@@ -16,7 +16,7 @@ class MessageController extends Controller
             ->orderBy('created_at', 'desc') // Ordine per data di creazione
             ->get();
         $unreadCount = Message::where('is_read', false)->count();
-            
+
         return view('admin.messages.index', compact('messages', 'unreadCount'));
     }
 
@@ -39,6 +39,28 @@ class MessageController extends Controller
         $message->delete();
         return redirect()->route('admin.messages.index')->with('success', 'Message deleted successfully');
     }
+    public function hardDestroy($id)
+    {
+        // Recupera il messaggio, inclusi quelli eliminati (soft deleted)
+        $message = Message::withTrashed()->find($id);
+
+        // Se il messaggio non esiste, reindirizza con un messaggio di errore
+        if (!$message) {
+            return redirect()->route('admin.messages.index')->with('error', 'Message not found.');
+        }
+
+        try {
+            // Esegui l'eliminazione definitiva
+            $message->forceDelete();
+
+            // Reindirizza con un messaggio di successo
+            return redirect()->route('admin.messages.index')->with('success', 'Message deleted permanently.');
+        } catch (\Exception $e) {
+            // In caso di errore, reindirizza con un messaggio di errore
+            return redirect()->route('admin.messages.index')->with('error', 'Failed to delete message permanently. Please try again.');
+        }
+    }
+
 
     public function restore($id)
     {
