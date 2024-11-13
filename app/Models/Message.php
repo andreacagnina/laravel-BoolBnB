@@ -15,6 +15,7 @@ class Message extends Model
         'last_name',
         'email',
         'message',
+        'is_read',
         'property_id',
     ];
 

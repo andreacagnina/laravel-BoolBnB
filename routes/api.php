@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\ViewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +61,5 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
     $request->user()->tokens()->delete(); // Revoca tutti i token dell'utente
     return response()->json(['message' => 'Logout effettuato con successo']);
 });
+
+Route::post('/favorites', [ViewController::class, 'addToFavorites']);

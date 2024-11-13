@@ -15,8 +15,9 @@ class MessageController extends Controller
             ->orderByRaw('deleted_at IS NULL DESC') // Prima i messaggi non eliminati
             ->orderBy('created_at', 'desc') // Ordine per data di creazione
             ->get();
+        $unreadCount = Message::where('is_read', false)->count();
             
-        return view('admin.messages.index', compact('messages'));
+        return view('admin.messages.index', compact('messages', 'unreadCount'));
     }
 
     public function show(Message $message)
@@ -26,7 +27,11 @@ class MessageController extends Controller
             abort(404, 'Message not found');
         }
 
-        return view('admin.messages.show', compact('message'));
+        if (!$message->is_read) {
+            $message->update(['is_read' => true]);
+        }
+        $unreadCount = Message::where('is_read', false)->count();
+        return view('admin.messages.show', compact('message', 'unreadCount'));
     }
 
     public function destroy(Message $message)
