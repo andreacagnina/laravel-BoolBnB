@@ -47,10 +47,10 @@
                                         class="fa-solid fa-house me-2"></i>{{ __('My Properties') }}</a>
                                 <a class="dropdown-item" href="{{ route('admin.messages.index') }}"><i
                                         class="fa-solid fa-envelope-open-text position-relative me-2">
-                                        {{-- @if ($unreadCount > 0)
+                                        @if ($unreadCount > 0)
                                             <span
                                                 class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill">{{ $unreadCount }}</span>
-                                        @endif --}}
+                                        @endif
                                     </i>{{ __('Inbox') }}
                                 </a>
                                 <a class="dropdown-item" href="{{ route('admin.sponsors.index') }}"><i
