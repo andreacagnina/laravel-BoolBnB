@@ -615,3 +615,5 @@ document.addEventListener('DOMContentLoaded', function () {
         countdownElement.textContent = 'No end date available';
     }
 });
+
+
