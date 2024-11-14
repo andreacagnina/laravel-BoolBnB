@@ -2,9 +2,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header ">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <h5 class="modal-title fw-bold" style="color: #192033" id="deleteModalLabel">Confirm Deletion</h5>
             </div>
-            <div class="modal-body" id="modal_text">
+            <div class="modal-body" style="color: #192033" id="modal_text">
                 Are you sure you want to delete this item?
             </div>
             <div class="modal-footer">

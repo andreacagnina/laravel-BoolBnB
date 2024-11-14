@@ -64,3 +64,19 @@ label {
     color: $background-color !important;
 }
 
+.table,
+.table thead,
+.table tbody,
+.table td,
+.table th {
+    background-color: transparent !important;
+    border-color: $darkblue-color !important;
+    color: $text-color !important;
+}
+
+.list-group-item{
+    background-color: transparent !important;
+    color: $text-color !important;
+    border-color: $darkblue-color !important;
+}
+

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container my-3">
-        <h1>Add a New Property</h1>
+        <h1 class="fw-bold">Add a New Property</h1>
         <form action="{{ route('admin.properties.store') }}" method="post" enctype="multipart/form-data"
             id="createPropertyForm">
             @csrf

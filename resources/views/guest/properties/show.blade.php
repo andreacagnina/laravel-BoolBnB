@@ -5,7 +5,7 @@
         <div class="card shadow-lg">
             {{-- Card Header --}}
             <div class="card-header bg-primary text-white text-center">
-                <h2 class="mb-0">{{ $property->title }}</h2>
+                <h2 class="mb-0 fw-bold">{{ $property->title }}</h2>
             </div>
 
             {{-- Card Body --}}

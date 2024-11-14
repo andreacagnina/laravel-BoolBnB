@@ -18,7 +18,7 @@
 
                     @if ($properties->isNotEmpty())
                         <div class="my-3 d-flex justify-content-between align-items-center flex-wrap">
-                            <h2>Uploaded Properties</h2>
+                            <h2 class="fw-bold">Uploaded Properties</h2>
                             <a href="{{ route('admin.properties.create') }}" class="btn btn-primary mt-2 mt-md-0">
                                 Add a new Property
                             </a>
@@ -26,13 +26,13 @@
                         <div class="row">
                             {{-- Proprietà attive --}}
                             @foreach ($properties->where('deleted_at', null) as $property)
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 my-4">
                                     <div class="card h-100">
                                         <div class="card-header text-center">
-                                            <h5>{{ $property->title }}</h5>
+                                            <h5 class="fw-bold">{{ $property->title }}</h5>
                                         </div>
                                         <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
-                                            alt="{{ $property->name }}" class="card-img-top img-thumbnail p-0 rounded-0"
+                                            alt="{{ $property->name }}" class="card-img-top p-0 rounded "
                                             style="height: 200px; object-fit: cover;">
                                         <div class="card-body">
                                             <p><strong>Address:</strong> {{ $property->address }}</p>

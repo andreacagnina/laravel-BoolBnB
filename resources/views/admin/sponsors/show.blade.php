@@ -10,7 +10,7 @@
         @if ($property->sponsors->isNotEmpty())
             <div class="text-center fs-3">
                 <!-- Dettagli della proprietà e sponsorizzazione esistente -->
-                <h3 class="mb-4">Sponsorship Details for Apartment: {{ $property->title }}</h3>
+                <h3 class="mb-4 fw-bold">Sponsorship Details for Apartment: "{{ $property->title }}"</h3>
                 @php
                     // Ottieni l'ultima sponsorizzazione attiva ordinando per la data di creazione in ordine decrescente
 $latestSponsor = $property->sponsors->sortByDesc('pivot.created_at')->first();
@@ -32,9 +32,9 @@ $latestSponsor = $property->sponsors->sortByDesc('pivot.created_at')->first();
             <p>No active sponsorships available for this property.</p>
         @endif
         <!-- Aggiungi una nuova sponsorizzazione -->
-        <h4 class="mt-5 mb-3">Add a New Sponsorship</h4>
+        <h4 class="mt-5 mb-3 text-center fw-bold">Add a New Sponsorship</h4>
 
-        <form id="payment-form" action="{{ route('admin.braintree.checkout') }}" method="POST" class="border p-4 rounded">
+        <form id="payment-form" action="{{ route('admin.braintree.checkout') }}" method="POST" class=" p-4 rounded">
             @csrf
             <input type="hidden" name="property_slug" value="{{ $property->slug }}">
             <input type="hidden" name="sponsor_id" id="sponsor_id">
