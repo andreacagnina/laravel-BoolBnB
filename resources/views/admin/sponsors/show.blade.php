@@ -14,11 +14,19 @@
                 // Ottieni l'ultima sponsorizzazione attiva ordinando per la data di creazione in ordine decrescente
 $latestSponsor = $property->sponsors->sortByDesc('pivot.created_at')->first();
             @endphp
-
-            <h4>Latest Sponsor: {{ $latestSponsor->name }} for {{ $latestSponsor->price }} &euro;</h4>
-            <h4>End Sponsor Date:
-                {{ $latestSponsor->pivot->end_date ? \Carbon\Carbon::parse($latestSponsor->pivot->end_date)->format('d-m-Y H:i') : 'N/A' }}
-            </h4>
+            <div class="text-center fs-3">
+                <h4 class="sponsor-info">
+                    Latest Sponsor: <span class="sponsor-name">{{ $latestSponsor->name }}</span> for <span
+                        class="sponsor-price">{{ $latestSponsor->price }} &euro;</span>
+                </h4>
+                <h4 class="sponsor-date">
+                    End Sponsor Date:
+                    <span id="end-date">
+                        {{ $latestSponsor->pivot->end_date ? \Carbon\Carbon::parse($latestSponsor->pivot->end_date)->format('d-m-Y H:i:s') : 'N/A' }}
+                    </span>
+                </h4>
+                <div id="countdown" class="countdown"></div>
+            </div>
         @else
             <p>No active sponsorships available for this property.</p>
         @endif

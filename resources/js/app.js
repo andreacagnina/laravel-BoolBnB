@@ -548,4 +548,52 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchBraintreeToken(); // <--- La funzione viene chiamata qui
 });
 
+//countdown
+document.addEventListener('DOMContentLoaded', function () {
+    const endDateElement = document.getElementById('end-date');
+    const countdownElement = document.getElementById('countdown');
 
+    const endDateText = endDateElement.textContent.trim(); // Trim spaces for safety
+    if (endDateText !== 'N/A') {
+        // Convert "DD-MM-YYYY HH:mm" to "YYYY-MM-DDTHH:mm:ss" for compatibility
+        const [datePart, timePart] = endDateText.split(' ');
+        const [day, month, year] = datePart.split('-');
+        const formattedDate = `${year}-${month}-${day}T${timePart}`;
+        const endDate = new Date(formattedDate);
+
+        if (isNaN(endDate.getTime())) {
+            countdownElement.textContent = 'Invalid end date format';
+            return;
+        }
+
+        function formatDateToDMY(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}-${month}-${year}`;
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const timeDifference = endDate - now;
+
+            if (timeDifference <= 0) {
+                countdownElement.textContent = 'Sponsorship has ended';
+                return;
+            }
+
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            const formattedNow = formatDateToDMY(now);
+            countdownElement.textContent = `${days}days ${hours}hours ${minutes}minutes ${seconds}seconds remaining`;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    } else {
+        countdownElement.textContent = 'No end date available';
+    }
+});
