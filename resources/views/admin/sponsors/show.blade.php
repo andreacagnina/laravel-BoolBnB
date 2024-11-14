@@ -3,21 +3,22 @@
 @section('content')
     <div class="container py-4">
         @if (session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success text-center">
                 {{ session('success') }}
             </div>
         @endif
-        <!-- Dettagli della proprietà e sponsorizzazione esistente -->
-        <h3 class="mb-4">Sponsorship Details for Apartment: {{ $property->title }}</h3>
         @if ($property->sponsors->isNotEmpty())
-            @php
-                // Ottieni l'ultima sponsorizzazione attiva ordinando per la data di creazione in ordine decrescente
-$latestSponsor = $property->sponsors->sortByDesc('pivot.created_at')->first();
-            @endphp
             <div class="text-center fs-3">
+                <!-- Dettagli della proprietà e sponsorizzazione esistente -->
+                <h3 class="mb-4">Sponsorship Details for Apartment: {{ $property->title }}</h3>
+                @php
+                    // Ottieni l'ultima sponsorizzazione attiva ordinando per la data di creazione in ordine decrescente
+$latestSponsor = $property->sponsors->sortByDesc('pivot.created_at')->first();
+                @endphp
                 <h4 class="sponsor-info">
                     Latest Sponsor: <span class="sponsor-name">{{ $latestSponsor->name }}</span> for <span
-                        class="sponsor-price">{{ $latestSponsor->price }} &euro;</span>
+                        class="sponsor-price">{{ number_format($latestSponsor->price, 2, ',', '') }} &euro;</span>
+
                 </h4>
                 <h4 class="sponsor-date">
                     End Sponsor Date:
