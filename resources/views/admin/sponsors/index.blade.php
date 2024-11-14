@@ -55,10 +55,7 @@
         </div>
     </div>
 
-
-
-
-    <script src="https://js.braintreegateway.com/web/dropin/1.30.0/js/dropin.min.js"></script>
+<script src="https://js.braintreegateway.com/web/dropin/1.30.0/js/dropin.min.js"></script>
     <script>
         const sponsorSelect = document.getElementById('sponsor_id');
         const propertySelect = document.getElementById('property_slug');
@@ -127,4 +124,5 @@
                 setLoadingState(false); // Rimuovi lo stato di "loading" in caso di errore
             });
     </script>
+    
 @endsection

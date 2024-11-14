@@ -31,7 +31,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('name', 255)->nullable(false)->change();
+            $table->dropColumn('name');
 
             $table->dropColumn('surname');
 

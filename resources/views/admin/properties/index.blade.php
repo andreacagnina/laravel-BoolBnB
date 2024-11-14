@@ -123,3 +123,5 @@
     </div>
     @include('admin.properties.partials.modal_delete')
 @endsection
+
+
