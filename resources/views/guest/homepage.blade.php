@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-4">
+    <div class="container my-4 .homapage-style">
         <div class="row mb-4 text-center">
             <div class="col-12">
-                <h1 class="display-4">Welcome to BoolBnB</h1>
-                <p class="lead text-muted">Find the perfect property, whether it’s sponsored or not!</p>
+                <h1 class="display-4 fw-bold">Welcome to BoolBnB</h1>
+                <p class="lead">Find the perfect property, whether it’s sponsored or not!</p>
 
                 <!-- Search Bar with Filter Button -->
                 <div class="col-lg-8 offset-lg-2 mt-4 position-relative">
@@ -84,12 +84,12 @@
         <!-- Results Container -->
         <div class="row" id="resultsContainer">
             @forelse ($properties as $property)
-                <div class="col-md-4 mb-4">
-                    <div class="card homepage-card h-100 shadow-sm {{ $property->sponsored ? 'border-success' : '' }}">
+                <div class="col-md-3 mb-4">
+                    <div class="card homepage-card h-100 {{ $property->sponsored }}">
 
                         @if ($property->sponsored)
-                            <span class="badge bg-success position-absolute top-0 end-0 m-2"
-                                style="z-index: 10;">Sponsored</span>
+                            <span class="badge bg-success position-absolute top-0 end-0 "
+                                style="z-index: 10; font-size: 0.9rem; font-weight: bold; color: #192033;"><i class="fa-solid fa-crown"></i> Sponsored <i class="fa-solid fa-crown"></i></span>
                         @endif
 
                         <!-- Carousel for property images, without auto-slide -->
@@ -107,11 +107,11 @@
                             </div>
 
                             <!-- Carousel images -->
-                            <div class="carousel-inner rounded overflow-hidden" style="height: 200px;">
+                            <div class="carousel-inner rounded overflow-hidden" style="height: 280px;">
                                 <!-- Cover Image as the First Slide -->
                                 <div class="carousel-item active">
-                                    <img src="{{ $property->cover_image_url }}" class="d-block w-100 h-100"
-                                        style="object-fit: cover;" alt="{{ $property->title }} Cover Image">
+                                    <img src="{{ $property->cover_image_url }}" class="d-block w-100"
+                                        style="object-fit: cover; height: 280px; border-radius: 20px;" alt="{{ $property->title }} Cover Image">
                                 </div>
 
                                 <!-- Additional Images from the "images" table -->
@@ -139,7 +139,7 @@
                         <!-- Property Details -->
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $property->title }}</h5>
-                            <p class="card-text text-muted">{{ Str::limit($property->description, 60) }}</p>
+                            <p class="card-text">{{ Str::limit($property->description, 60) }}</p>
                             <p class="card-text"><strong>Price:</strong>
                                 {{ number_format($property->price, 2, ',', '') }}&euro;</p>
                             <p class="card-text"><strong>Location:</strong> {{ $property->address }}</p>
