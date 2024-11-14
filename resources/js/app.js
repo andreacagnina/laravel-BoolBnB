@@ -489,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
     const sponsorSelect = document.getElementById('sponsor-select');
     const sponsorIdInput = document.getElementById('sponsor_id');
     const payButton = document.getElementById('pay-button');
@@ -498,37 +498,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // Disabilita il pulsante di pagamento all'inizio
     payButton.disabled = true;
 
+    // Aggiungi la classe di "loading" al pulsante durante il caricamento
+    function setLoadingState(isLoading) {
+        payButton.disabled = isLoading;
+        payButton.textContent = isLoading ? "Loading..." : "Pay with Braintree";
+    }
+
     // Abilita il pulsante solo quando viene selezionata un'opzione valida
-    sponsorSelect.addEventListener('change', () => {
+    sponsorSelect.addEventListener('change', function () {
         sponsorIdInput.value = sponsorSelect.value;
 
-        // Abilita il pulsante se viene selezionata un'opzione valida
         if (sponsorSelect.value) {
             payButton.disabled = false;
             container.classList.remove('d-none');
         } else {
             payButton.disabled = true;
+            container.classList.add('d-none');
         }
     });
 
     // Funzione per ottenere il token Braintree
-    const fetchBraintreeToken = () => {
-        fetch("/admin/braintree/token") // Assicurati che l'URL sia corretto e accessibile
-            .then(response => response.json())
-            .then(data => {
+    function fetchBraintreeToken() {
+        setLoadingState(true);
+
+        fetch("/admin/braintree/token")
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
                 braintree.dropin.create({
                     authorization: data.token,
                     container: '#dropin-container'
-                }, (createErr, instance) => {
+                }, function (createErr, instance) {
+                    setLoadingState(false);
+
                     if (createErr) {
                         console.error('Errore nella creazione di Braintree Drop-in:', createErr);
                         return;
                     }
 
-                    payButton.addEventListener('click', () => {
-                        instance.requestPaymentMethod((err, payload) => {
+                    payButton.addEventListener('click', function () {
+                        setLoadingState(true);
+
+                        instance.requestPaymentMethod(function (err, payload) {
                             if (err) {
                                 console.error('Errore nella richiesta del metodo di pagamento:', err);
+                                setLoadingState(false);
                                 return;
                             }
 
@@ -541,11 +556,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 });
             })
-            .catch(error => console.error('Errore nel recupero del token Braintree:', error));
-    };
+            .catch(function (error) {
+                console.error('Errore nel recupero del token Braintree:', error);
+                setLoadingState(false);
+            });
+    }
 
     // Chiamata per ottenere il token Braintree al caricamento della pagina
-    fetchBraintreeToken(); // <--- La funzione viene chiamata qui
+    fetchBraintreeToken();
 });
 
 //countdown

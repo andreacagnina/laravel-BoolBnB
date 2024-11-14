@@ -55,6 +55,9 @@
         </div>
     </div>
 
+
+
+
     <script src="https://js.braintreegateway.com/web/dropin/1.30.0/js/dropin.min.js"></script>
     <script>
         const sponsorSelect = document.getElementById('sponsor_id');
@@ -65,6 +68,12 @@
 
         // Disabilita il pulsante di pagamento fino alla selezione di un'opzione valida
         payButton.disabled = true;
+
+        // Gestione dello stato di "loading"
+        function setLoadingState(isLoading) {
+            payButton.disabled = isLoading;
+            payButton.textContent = isLoading ? "Loading..." : "Pay with Braintree";
+        }
 
         // Abilita il pulsante solo quando viene selezionata un'opzione valida
         function validateForm() {
@@ -79,19 +88,27 @@
         fetch("{{ route('admin.braintree.token') }}")
             .then(response => response.json())
             .then(data => {
+                setLoadingState(true); // Imposta lo stato di "loading"
+
                 braintree.dropin.create({
                     authorization: data.token,
                     container: '#dropin-container'
                 }, function(createErr, instance) {
+                    setLoadingState(false); // Rimuovi lo stato di "loading"
+
                     if (createErr) {
                         console.error('Error creating Braintree Drop-in:', createErr);
                         return;
                     }
 
                     payButton.addEventListener('click', () => {
+                        setLoadingState(true); // Imposta lo stato di "loading" al click del pagamento
+
                         instance.requestPaymentMethod((err, payload) => {
                             if (err) {
                                 console.error('Error requesting payment method:', err);
+                                setLoadingState(
+                                false); // Rimuovi lo stato di "loading" in caso di errore
                                 return;
                             }
 
@@ -105,6 +122,9 @@
                     });
                 });
             })
-            .catch(error => console.error('Error fetching Braintree token:', error));
+            .catch(error => {
+                console.error('Error fetching Braintree token:', error);
+                setLoadingState(false); // Rimuovi lo stato di "loading" in caso di errore
+            });
     </script>
 @endsection
