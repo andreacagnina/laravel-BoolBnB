@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-4">
+    <div class="container my-4 .homapage-style">
         <div class="row mb-4 text-center">
             <div class="col-12">
-                <h1 class="display-4">Welcome to BoolBnB</h1>
-                <p class="lead text-muted">Find the perfect property, whether it’s sponsored or not!</p>
+                <h1 class="display-4 fw-bold">Welcome to BoolBnB</h1>
+                <p class="lead">Find the perfect property, whether it’s sponsored or not!</p>
 
                 <!-- Search Bar with Filter Button -->
                 <div class="col-lg-8 offset-lg-2 mt-4 position-relative">
@@ -13,7 +13,7 @@
                         <input type="text" id="citySearch" class="form-control form-control-lg border-active"
                             placeholder="Search by city or address" aria-label="citySearch" autocomplete="off">
                         <button id="searchButton" class="btn btn-primary">Search</button>
-                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-custom" data-bs-toggle="modal"
                             data-bs-target="#filterModal">
                             <i class="bi bi-sliders"></i> Filters
                         </button>
@@ -32,10 +32,10 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content" style="max-height: 80vh; overflow-y: auto;">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="filterModalLabel">Search Filters</h5>
+                        <h5 class="modal-title fw-bold" id="filterModalLabel" style="color: #192033">Search Filters</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body"  style="color: #192033">
                         <!-- Filters in Modal -->
                         <div class="row mb-3">
                             <div class="col-md-4">
@@ -64,7 +64,7 @@
                                         <input class="form-check-input me-2" type="checkbox" value="{{ $service->id }}"
                                             id="service-{{ $service->id }}" name="services[]">
                                         <label class="form-check-label" for="service-{{ $service->id }}">
-                                            {{ $service->name }}
+                                            <i class="me-2{{ $service->icon }}"></i> {{ $service->name }}
                                         </label>
                                     </div>
                                 @endforeach
@@ -74,7 +74,7 @@
                     <div class="modal-footer">
                         <button type="button" id="resetFiltersButton" class="btn btn-outline-secondary">Reset
                             Filters</button>
-                        <button type="button" id="applyFiltersButton" class="btn btn-primary" data-bs-dismiss="modal">Apply
+                        <button type="button" id="applyFiltersButton" class="btn btn-custom" data-bs-dismiss="modal">Apply
                             Filters</button>
                     </div>
                 </div>
@@ -84,12 +84,12 @@
         <!-- Results Container -->
         <div class="row" id="resultsContainer">
             @forelse ($properties as $property)
-                <div class="col-md-4 mb-4">
-                    <div class="card homepage-card h-100 shadow-sm {{ $property->sponsored ? 'border-success' : '' }}">
+                <div class="col-md-3 mb-4">
+                    <div class="card homepage-card h-100 {{ $property->sponsored }}">
 
                         @if ($property->sponsored)
-                            <span class="badge bg-success position-absolute top-0 end-0 m-2"
-                                style="z-index: 10;">Sponsored</span>
+                            <span class="badge bg-success position-absolute top-0 end-0 "
+                                style="z-index: 10; font-size: 0.9rem; font-weight: bold; color: #192033;"><i class="fa-solid fa-crown"></i> Sponsored <i class="fa-solid fa-crown"></i></span>
                         @endif
 
                         <!-- Carousel for property images, without auto-slide -->
@@ -107,11 +107,11 @@
                             </div>
 
                             <!-- Carousel images -->
-                            <div class="carousel-inner rounded overflow-hidden" style="height: 200px;">
+                            <div class="carousel-inner rounded overflow-hidden" style="height: 280px;">
                                 <!-- Cover Image as the First Slide -->
                                 <div class="carousel-item active">
-                                    <img src="{{ $property->cover_image_url }}" class="d-block w-100 h-100"
-                                        style="object-fit: cover;" alt="{{ $property->title }} Cover Image">
+                                    <img src="{{ $property->cover_image_url }}" class="d-block w-100"
+                                        style="object-fit: cover; height: 280px; border-radius: 20px;" alt="{{ $property->title }} Cover Image">
                                 </div>
 
                                 <!-- Additional Images from the "images" table -->
@@ -139,7 +139,7 @@
                         <!-- Property Details -->
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $property->title }}</h5>
-                            <p class="card-text text-muted">{{ Str::limit($property->description, 60) }}</p>
+                            <p class="card-text">{{ Str::limit($property->description, 60) }}</p>
                             <p class="card-text"><strong>Price:</strong>
                                 {{ number_format($property->price, 2, ',', '') }}&euro;</p>
                             <p class="card-text"><strong>Location:</strong> {{ $property->address }}</p>
@@ -147,7 +147,7 @@
                                 <p class="card-text"><strong>Distance:</strong> {{ $property->distance }} km</p>
                             @endif
                             <a href="{{ route('properties.show', ['slug' => $property->slug]) }}"
-                                class="mt-auto btn btn-outline-primary">View Details</a>
+                                class="mt-auto btn btn-custom">View Details</a>
                         </div>
                     </div>
                 </div>

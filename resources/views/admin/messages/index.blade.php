@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="my-4">Messages</h1>
+        <h1 class="my-4 fw-bold text-center">Messages</h1>
         @if (session('success'))
             <div class="row">
                 <div class="col-12">
@@ -21,9 +21,9 @@
         @else
             <!-- Tabella dei messaggi -->
             <div class="table-responsive">
-                <h2>Inbox</h2>
+                <h2 class="fw-bold">Inbox</h2>
                 <table class="table table-bordered table-striped align-middle text-center table-sm">
-                    <thead class="table-light">
+                    <thead class="table-light fw-bold">
                         <tr>
                             <th>Received</th>
                             <th>Sended By</th>
@@ -75,7 +75,7 @@
         @if ($messages->filter(fn($message) => $message->deleted_at != null)->isNotEmpty())
             <div class="table-responsive">
                 <h2>Trashed</h2>
-                <table class="table table-secondary table-bordered table-striped align-middle text-center table-sm">
+                <table class="table table-bordered table-striped align-middle text-center table-sm">
                     <thead class="table-light">
                         <tr>
                             <th>Received</th>
@@ -99,7 +99,7 @@
                                     <!-- Mostra l'immagine della proprietà, se disponibile -->
                                     @if (!empty($message->property->cover_image))
                                         <img src="{{ $message->property->cover_image }}" alt="Property Image"
-                                            width="100" height="60">
+                                            width="100" height="60" style="filter: grayscale(100%);">
                                     @else
                                         N/A
                                     @endif
