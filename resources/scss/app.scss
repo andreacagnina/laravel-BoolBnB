@@ -80,3 +80,13 @@ label {
     border-color: $darkblue-color !important;
 }
 
+.btn-custom{
+    background: linear-gradient(45deg, $darkpink-color, $pink-color) !important;
+    color: $background-color !important;
+    border: none !important;
+
+    &:hover{
+        background-color: $darkpink-color !important;
+        color: $text-color !important;
+    }
+}

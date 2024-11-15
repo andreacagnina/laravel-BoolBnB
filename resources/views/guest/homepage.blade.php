@@ -13,7 +13,7 @@
                         <input type="text" id="citySearch" class="form-control form-control-lg border-active"
                             placeholder="Search by city or address" aria-label="citySearch" autocomplete="off">
                         <button id="searchButton" class="btn btn-primary">Search</button>
-                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-custom" data-bs-toggle="modal"
                             data-bs-target="#filterModal">
                             <i class="bi bi-sliders"></i> Filters
                         </button>
@@ -32,10 +32,10 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content" style="max-height: 80vh; overflow-y: auto;">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="filterModalLabel">Search Filters</h5>
+                        <h5 class="modal-title fw-bold" id="filterModalLabel" style="color: #192033">Search Filters</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body"  style="color: #192033">
                         <!-- Filters in Modal -->
                         <div class="row mb-3">
                             <div class="col-md-4">
@@ -64,7 +64,7 @@
                                         <input class="form-check-input me-2" type="checkbox" value="{{ $service->id }}"
                                             id="service-{{ $service->id }}" name="services[]">
                                         <label class="form-check-label" for="service-{{ $service->id }}">
-                                            {{ $service->name }}
+                                            <i class="me-2{{ $service->icon }}"></i> {{ $service->name }}
                                         </label>
                                     </div>
                                 @endforeach
@@ -74,7 +74,7 @@
                     <div class="modal-footer">
                         <button type="button" id="resetFiltersButton" class="btn btn-outline-secondary">Reset
                             Filters</button>
-                        <button type="button" id="applyFiltersButton" class="btn btn-primary" data-bs-dismiss="modal">Apply
+                        <button type="button" id="applyFiltersButton" class="btn btn-custom" data-bs-dismiss="modal">Apply
                             Filters</button>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                                 <p class="card-text"><strong>Distance:</strong> {{ $property->distance }} km</p>
                             @endif
                             <a href="{{ route('properties.show', ['slug' => $property->slug]) }}"
-                                class="mt-auto btn btn-outline-primary">View Details</a>
+                                class="mt-auto btn btn-custom">View Details</a>
                         </div>
                     </div>
                 </div>
