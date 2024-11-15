@@ -14,54 +14,49 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
         $types = Property::select('type')->distinct()->get();
-    
-        // Inizializza la query di ricerca delle proprietà
+
+        // Costruzione query con filtri dinamici
         $propertiesQuery = Property::with('images', 'services')
-            ->when($request->type, function ($query) use ($request) {
-                return $query->where('type', $request->type); // Filtro per tipo di proprietà
-            })
-            ->when($request->search, function ($query) use ($request) {
-                $searchTerm = $request->search;
-                return $query->where('title', 'like', "%{$searchTerm}%")
-                    ->orWhere('address', 'like', "%{$searchTerm}%"); // Filtro per termini di ricerca
-            })
-            // Filtro per numero di stanze (>=)
-            ->when($request->num_rooms, function ($query) use ($request) {
-                return $query->where('num_rooms', '>=', $request->num_rooms);
-            })
-            // Filtro per numero di letti (>=)
-            ->when($request->num_beds, function ($query) use ($request) {
-                return $query->where('num_beds', '>=', $request->num_beds);
-            })
-            // Filtro per numero di bagni (>=)
-            ->when($request->num_baths, function ($query) use ($request) {
-                return $query->where('num_baths', '>=', $request->num_baths);
-            })
-            // Filtro per metri quadrati (>=)
-            ->when($request->mq, function ($query) use ($request) {
-                return $query->where('mq', '>=', $request->mq);
-            })
-            // Filtro per prezzo (<=)
-            ->when($request->price, function ($query) use ($request) {
-                return $query->where('price', '<=', $request->price);
-            })
-            // Filtro per servizi selezionati (richiede che la proprietà abbia tutti i servizi selezionati)
-            ->when($request->filled('selectedServices') && is_array($request->selectedServices), function ($query) use ($request) {
-                foreach ($request->selectedServices as $serviceId) {
-                    $query->whereHas('services', function ($q) use ($serviceId) {
-                        $q->where('services.id', $serviceId);
+            ->when($request->type, fn($query) => $query->where('type', $request->type))
+            ->when($request->search, function($query) use ($request) {
+                if (!$request->filled(['latitude', 'longitude'])) {
+                    $searchTerm = $request->search;
+                    $query->where(function($q) use ($searchTerm) {
+                        $q->where('title', 'like', "%{$searchTerm}%")
+                          ->orWhere('address', 'like', "%{$searchTerm}%");
                     });
                 }
             })
-            ->orderByDesc('sponsored'); // Ordina per sponsor
+            ->when($request->num_rooms, fn($query) => $query->where('num_rooms', '>=', $request->num_rooms))
+            ->when($request->num_beds, fn($query) => $query->where('num_beds', '>=', $request->num_beds))
+            ->when($request->num_baths, fn($query) => $query->where('num_baths', '>=', $request->num_baths))
+            ->when($request->mq, fn($query) => $query->where('mq', '>=', $request->mq))
+            ->when($request->price, fn($query) => $query->where('price', '<=', $request->price))
+            ->when($request->filled('selectedServices') && is_array($request->selectedServices), function ($query) use ($request) {
+                foreach ($request->selectedServices as $serviceId) {
+                    $query->whereHas('services', fn($q) => $q->where('services.id', $serviceId));
+                }
+            })
+            ->orderByDesc('sponsored');
 
-        // Clona la query per calcolare i valori min e max sui risultati filtrati
+        // Filtro per distanza (latitudine, longitudine e raggio)
+        if ($request->filled(['latitude', 'longitude', 'radius'])) {
+            $latitude = $request->latitude;
+            $longitude = $request->longitude;
+            $radius = $request->radius;
+
+            $propertiesQuery->selectRaw(
+                "*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(`long`) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance",
+                [$latitude, $longitude, $latitude]
+            )
+            ->having('distance', '<=', $radius)
+            ->orderBy('distance', 'asc');
+        }
+
+        // Clona la query per calcolare minimi e massimi
         $propertiesForMinMax = clone $propertiesQuery;
-
-        // Esegui la paginazione sui risultati della query
         $properties = $propertiesQuery->paginate(24);
 
-        // Calcola i valori min e max, impostando valori predefiniti in caso di assenza di dati
         $minMaxValues = [
             'min_rooms' => $propertiesForMinMax->min('num_rooms') ?? 1,
             'max_rooms' => $propertiesForMinMax->max('num_rooms') ?? 10,
@@ -75,14 +70,33 @@ class PropertyController extends Controller
             'max_price' => $propertiesForMinMax->max('price') ?? 1000,
         ];
 
-        // Restituisci la risposta in formato JSON
         return response()->json([
             'success' => true,
             'results' => $properties,
             'types' => $types,
             'minMaxValues' => $minMaxValues,
         ]);
-    }    
+    }
+
+    // Metodo per autocompletamento
+    public function autocomplete(Request $request)
+    {
+        $query = $request->input('query', '');
+
+        if (strlen($query) > 2) {
+            $suggestions = Property::where('title', 'like', "%{$query}%")
+                ->orWhere('address', 'like', "%{$query}%")
+                ->limit(10)
+                ->pluck('title');
+
+            return response()->json([
+                'success' => true,
+                'suggestions' => $suggestions,
+            ]);
+        }
+
+        return response()->json(['success' => false, 'suggestions' => []]);
+    }
 
     public function show($slug)
     {
@@ -91,7 +105,6 @@ class PropertyController extends Controller
             ->first();
 
         if ($property) {
-            // Registra la visualizzazione solo se l'IP non ha già visto questa proprietà oggi
             $existingView = View::where('property_id', $property->id)
                 ->where('ip_address', request()->ip())
                 ->whereDate('created_at', today())
@@ -104,7 +117,6 @@ class PropertyController extends Controller
                 ]);
             }
 
-            // Verifica se è tra i preferiti
             $isFavorite = Favorite::where('property_id', $property->id)
                 ->where('ip_address', request()->ip())
                 ->exists();
@@ -113,7 +125,7 @@ class PropertyController extends Controller
                 'success' => true,
                 'results' => $property->toArray() + [
                     'is_favorite' => $isFavorite,
-                    'view_count' => View::where('property_id', $property->id)->count(), // Numero di visualizzazioni
+                    'view_count' => View::where('property_id', $property->id)->count(),
                 ]
             ]);
         }
@@ -124,18 +136,14 @@ class PropertyController extends Controller
     public function toggleFavorite(Request $request, Property $property)
     {
         $ip = $request->ip();
-
-        // Controlla se l'IP ha già aggiunto la proprietà ai preferiti
         $favorite = Favorite::where('property_id', $property->id)
             ->where('ip_address', $ip)
             ->first();
 
         if ($favorite) {
-            // Se esiste, rimuovilo
             $favorite->delete();
             return response()->json(['success' => true, 'favorited' => false]);
         } else {
-            // Altrimenti, aggiungi ai preferiti
             Favorite::create([
                 'property_id' => $property->id,
                 'ip_address' => $ip

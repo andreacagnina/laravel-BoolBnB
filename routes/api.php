@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Rotte per le proprietà
 Route::get('/properties', [PropertyController::class, 'index'])->name('properties');
 Route::get('/property/{slug}', [PropertyController::class, 'show'])->name('property');
+Route::get('/properties/autocomplete', [PropertyController::class, 'autocomplete']);
 
 // Rotte per i servizi
 Route::get('/services', [ServiceController::class, 'index']);
