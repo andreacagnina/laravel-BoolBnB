@@ -17,8 +17,8 @@ class ViewController extends Controller
             'total_properties' => $userProperties->count(),
             'total_sponsorships' => $userProperties->sum(fn($property) => $property->sponsors->count()),
             'total_sponsorship_cost' => $userProperties->sum(fn($property) => $property->sponsors->sum('price')),
-            'total_views' => $userProperties->sum('views_count'),
-            'total_favorites' => $userProperties->sum('favorites_count'),
+            'total_views' => $userProperties->sum(fn($property) => $property->views()->count()),
+            'total_favorites' => $userProperties->sum(fn($property) => $property->favorites()->count()),
             'total_messages' => $userProperties->sum(fn($property) => $property->messages()->withTrashed()->count()),
             'average_price' => $userProperties->avg('price'),
         ];
