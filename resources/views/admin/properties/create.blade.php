@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-3">
+    <div class="container">
         <h1>Add a New Property</h1>
         <form action="{{ route('admin.properties.store') }}" method="post" enctype="multipart/form-data"
             id="createPropertyForm">

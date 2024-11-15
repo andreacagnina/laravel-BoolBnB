@@ -2,8 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="my-4">Message Details</h1>
-
+        <h1>Message Details</h1>
         <div class="card">
             <div class="card-header">
                 Message from @if($message->first_name == null && $message->last_name == null)

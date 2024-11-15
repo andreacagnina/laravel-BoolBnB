@@ -29,11 +29,6 @@ Route::get('/properties', [HomeController::class, 'index'])->name('properties.in
 // Route per visualizzare i dettagli di una singola proprietà, utilizzando HomeController in Guest
 Route::get('/properties/{slug}', [HomeController::class, 'show'])->name('properties.show');
 
-// Route per la dashboard, accessibile solo agli utenti autenticati e verificati
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 // Route per l'area amministrativa, con prefisso e middleware
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
     Route::resource('properties', AdminPropertyController::class)->parameters([

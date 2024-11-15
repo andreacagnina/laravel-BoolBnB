@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-4">
+    <div class="container">
         <h1>Edit Property</h1>
         <form id="editPropertyForm" action="{{ route('admin.properties.update', ['property' => $property->slug]) }}"
             method="post" enctype="multipart/form-data">

@@ -1,0 +1,37 @@
+#aside {
+    background-color: rgb(58, 65, 62);
+    font-weight: bold;
+    flex-basis: 20px;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
+}
+
+#aside .item {
+    padding: 5px 5px;
+    font-size: 1em;
+    text-wrap: nowrap;
+}
+
+#aside a {
+    text-decoration: none;
+    color: white;
+    &:hover {
+        color: cornflowerblue;
+    }
+}
+
+.text{
+    display: none;
+}
+
+@media screen and (min-width: 992px) {
+    #aside {
+        flex-basis: 250px;
+        .text{
+display: inline;
+        }
+    }
+}

@@ -11,11 +11,17 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" class="d-flex wrapper">
         @include('partials.header')
-        <main>
-            @yield('content')
-        </main>
+        @guest
+        @else
+        <div class="container-fluid d-flex px-0">
+            @include('partials.sidebar')
+        @endguest
+            <main>
+                @yield('content')
+            </main>
+        </div>
     </div>
 
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.13.0/maps/maps-web.min.js"></script>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-4">
+    <div class="container">
         <h2 class="mb-4 text-center">Summary Statistics</h2>
 
         <!-- Statistiche sommarie -->

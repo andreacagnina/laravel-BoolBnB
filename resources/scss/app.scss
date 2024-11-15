@@ -5,11 +5,17 @@
 @import'./suggestion';
 @import './formValidation';
 @import './countdown';
+@import './sidebar';
 
 main {
     height: calc(100vh - 80px);
     margin-top: 80px;
     overflow: auto;
+
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+
 }
 
 label {
@@ -34,4 +40,14 @@ label {
 
 .cursor-pointer *:hover {
     cursor: pointer;
+}
+
+.wrapper {
+    flex-direction: column;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    flex-grow: 1;
 }
