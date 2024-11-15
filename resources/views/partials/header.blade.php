@@ -35,40 +35,11 @@
                             </li>
                         @endif
                     @else
-                        <li class="nav-item dropdown me-2">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name ?? Auth::user()->email }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-                                <a class="dropdown-item" href="{{ route('admin.properties.index') }}"><i
-                                        class="fa-solid fa-house me-2"></i>{{ __('My Properties') }}</a>
-                                <a class="dropdown-item" href="{{ route('admin.messages.index') }}"><i
-                                        class="fa-solid fa-envelope-open-text position-relative me-2">
-                                        @if ($unreadCount > 0)
-                                            <span
-                                                class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill">{{ $unreadCount }}</span>
-                                        @endif
-                                    </i>{{ __('Inbox') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('admin.sponsors.index') }}"><i
-                                        class="fa-solid fa-arrow-up-wide-short me-2"></i>{{ __('Advertisements') }}</a>
-                                <a class="dropdown-item"
-                                    href="{{ route('admin.views.index') }}"><i class="fa-solid fa-chart-pie me-2"></i>{{ __('Statistics') }}</a>
-
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                    <i class="fa-solid fa-right-from-bracket me-2"></i> {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item">
+                                    <p class="m-0"> {{ Auth::user()->name ?? Auth::user()->email }}</p>
+                                </li>
+                            </ul>
                     @endguest
                 </ul>
             </div>
