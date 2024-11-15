@@ -40,35 +40,35 @@
                                             <p><strong>Description:</strong> {{ Str::limit($property->description, 50) }}</p>
                                             <p>
                                                 <strong>Sponsored:</strong>
-                                                {!! $property->sponsored ? '<span class="text-success">&check;</span>' : '<span class="text-danger">&cross;</span>' !!}
+                                                <i class="ms-2 {{$property->sponsored ? 'fa-solid fa-check text-success' : 'fa-solid fa-x text-danger'}}"></i>
                                             </p>
                                             <p>
                                                 <strong>Available:</strong>
-                                                {!! $property->available ? '<span class="text-success">&check;</span>' : '<span class="text-danger">&cross;</span>' !!}
+                                                <i class="ms-2 {{$property->available ? 'fa-solid fa-check text-success' : 'fa-solid fa-x text-danger'}}"></i>
                                             </p>
                                         </div>
                                         <div class="card-footer d-flex justify-content-around">
                                             <a href="{{ route('admin.sponsors.property_show', ['property' => $property->slug]) }}"
-                                                class="btn btn-outline-success">
+                                                class="btn btn-success">
                                                 <i class="fas fa-money-bill"></i>
                                             </a>
                                             <a href="{{ route('admin.views.show', ['property' => $property->slug]) }}"
-                                                class="btn btn-outline-info">
+                                                class="btn btn-info">
                                                 <i class="fas fa-chart-pie"></i>
                                             </a>
                                             <a href="{{ route('admin.properties.show', ['property' => $property->slug]) }}"
-                                                class="btn btn-outline-primary">
+                                                class="btn btn-primary">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             <a href="{{ route('admin.properties.edit', ['property' => $property->slug]) }}"
-                                                class="btn btn-outline-warning">
+                                                class="btn btn-warning">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
                                             <form action="{{ route('admin.properties.destroy', ['property' => $property->slug]) }}"
                                                 method="post" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger delete">
+                                                <button type="submit" class="btn btn-danger delete">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </form>

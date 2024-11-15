@@ -25,8 +25,8 @@
                         @endif
                     @else
                             <ul class="navbar-nav me-auto">
-                                <li class="nav-item d-flex align-items-center">
-                                    <p class="m-0 me-2"> {{ Auth::user()->name ?? Auth::user()->email }}</p><i class="fa-solid fa-user"></i>
+                                <li class="nav-item d-flex align-items-baseline">
+                                    <p class="m-0 me-2"> {{ Auth::user()->name ?? Auth::user()->email }}</p><i class="fa-solid fa-user fa-xl"></i>
                                 </li>
                             </ul>
                     @endguest

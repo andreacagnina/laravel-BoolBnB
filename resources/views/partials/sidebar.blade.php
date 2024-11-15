@@ -1,4 +1,4 @@
-<section id="aside" class="d-flex">
+<section id="aside" class="d-flex rounded-end">
     <div class="mt-2">
         <div class="item">
             <a class="" href="{{ route('admin.properties.index') }}"><i

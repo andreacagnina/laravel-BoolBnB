@@ -22,7 +22,10 @@
                 @yield('content')
             </main>
         </div>
+
     </div>
+
+    
 
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.13.0/maps/maps-web.min.js"></script>
     <script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
