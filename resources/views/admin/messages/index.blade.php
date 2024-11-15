@@ -17,7 +17,7 @@
 
         <!-- Verifica se ci sono messaggi -->
         @if ($messages->isEmpty() || $messages->filter(fn($message) => $message->deleted_at === null)->isEmpty())
-            <p class="text-center">No new messages found.</p>
+            <p class="text-center">No messages found.</p>
         @else
             <!-- Tabella dei messaggi -->
             <div class="table-responsive">

@@ -1,6 +1,6 @@
 <header class="position-absolute w-100 z-1 top-0">
     <nav class="navbar navbar-expand-md navbar-light">
-        <div class="container-fluid-sm container-md">
+        <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="{{ url('http://localhost:5174/') }}">
                 <div>
                     <img class="logo" src="{{ asset('img/logo.png') }}" alt="Logo">
@@ -23,14 +23,8 @@
                                 <a class="nav-link fw-bold" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @endif
-                    @else
-                            <ul class="navbar-nav me-auto">
-                                <li class="nav-item d-flex align-items-baseline">
-                                    <p class="m-0 me-2"> {{ Auth::user()->name ?? Auth::user()->email }}</p><i class="fa-solid fa-user fa-xl"></i>
-                                </li>
-                            </ul>
-                    @endguest
-                </ul>
+                    </ul>
+@endguest
         </div>
     </nav>
 </header>

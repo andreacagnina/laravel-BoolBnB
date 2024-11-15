@@ -1,5 +1,8 @@
 <section id="aside" class="d-flex rounded-end">
     <div class="mt-2">
+        <div class="item border-bottom">
+            <i class="fa-solid fa-user fa-xl"></i><span class="text ms-3">👋 {{ Auth::user()->name ?? Auth::user()->email }}</span>
+        </div>
         <div class="item">
             <a class="" href="{{ route('admin.properties.index') }}"><i
                 class="fa-solid fa-house "></i><span class="text ms-3">{{ __('My Properties') }}</span></a>
@@ -25,6 +28,7 @@
         href="{{ route('admin.views.index') }}"><i class="fa-solid fa-chart-pie "></i><span class="text ms-3">{{ __('Statistics') }}</span></a>
     </div>
     </div>
+  
     <div class="item mb-2">
         <a class="" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
