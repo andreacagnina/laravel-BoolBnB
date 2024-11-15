@@ -8,6 +8,7 @@
 @import './formValidation';
 @import './countdown';
 @import './partials';
+@import './sidebar';
 
 body {
     background-color: $background-color;
@@ -19,6 +20,11 @@ main {
     height: calc(100vh - 80px);
     margin-top: 80px;
     overflow: auto;
+
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+
 }
 
 label {
@@ -89,4 +95,21 @@ label {
         background-color: $darkpink-color !important;
         color: $text-color !important;
     }
+}
+.wrapper {
+    flex-direction: column;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    flex-grow: 1;
+}
+
+
+.card-header {
+    height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

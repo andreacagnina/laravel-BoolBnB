@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-4">
-        <h2 class="mb-4 text-center">Summary Statistics</h2>
+    <div class="container">
+        <h1 class="text-center">Summary Statistics</h1>
 
         <!-- Statistiche sommarie -->
         <div class="row">

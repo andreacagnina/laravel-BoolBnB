@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-5">
+    <div class="container">
         <div class="card">
             <div class="card-header bg-primary text-white text-center">
                 <h2>{{ $property->title }}</h2>

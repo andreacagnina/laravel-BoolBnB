@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-4 .homapage-style">
+    {{-- <div class="container my-4">
         <div class="row mb-4 text-center">
             <div class="col-12">
                 <h1 class="display-4 fw-bold">Welcome to BoolBnB</h1>
@@ -155,5 +155,25 @@
                 <p>No properties found within the specified criteria.</p>
             @endforelse
         </div>
+    </div> --}}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="content">
+                    @guest
+                        <div class="text-center">
+                            <h1>Homepage, ricorda di loggarti</h1>
+                        </div>
+                    @else
+                        <div class="text-center">
+                            <h1>Bentornato {{ Auth::user()->name }}</h1>
+                        </div>
+                    @endguest
+                    <h2>Descrizione Gestionale</h2>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
+
