@@ -31,8 +31,8 @@
                         @endif
                     @else
                             <ul class="navbar-nav me-auto">
-                                <li class="nav-item">
-                                    <p class="m-0 me-2 d-inline"> {{ Auth::user()->name ?? Auth::user()->email }}</p><i class="fa-solid fa-user"></i>
+                                <li class="nav-item d-flex align-items-center">
+                                    <p class="m-0 me-2"> {{ Auth::user()->name ?? Auth::user()->email }}</p><i class="fa-solid fa-user"></i>
                                 </li>
                             </ul>
                     @endguest
