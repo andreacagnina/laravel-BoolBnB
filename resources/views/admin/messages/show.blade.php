@@ -6,13 +6,19 @@
 
         <div class="card">
             <div class="card-header">
-                Message from {{ $message->first_name }} {{ $message->last_name }}
+                Message from @if($message->first_name == null && $message->last_name == null)
+                <td>N/A</td>
+                @else
+                {{ $message->first_name }} {{ $message->last_name }}
+                @endif
             </div>
             <div class="card-body">
                 <h5 class="card-title">Details</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>First Name:</strong> {{ $message->first_name }}</li>
-                    <li class="list-group-item"><strong>Last Name:</strong> {{ $message->last_name }}</li>
+                    <li class="list-group-item"><strong>First Name:</strong> @if($message->first_name == null) N/A
+                        @else{{ $message->first_name }}@endif</li>
+                    <li class="list-group-item"><strong>Last Name:</strong> @if($message->last_name == null) N/A
+                        @else{{ $message->last_name }}@endif</li>
                     <li class="list-group-item"><strong>Email:</strong> <a
                             href="mailto:{{ $message->email }}">{{ $message->email }}</a> </li>
                     <li class="list-group-item"><strong>Message:</strong> {{ $message->message }}</li>
