@@ -17,9 +17,9 @@
                     @endif
 
                     @if ($properties->isNotEmpty())
-                        <div class="my-3 d-flex justify-content-between align-items-center flex-wrap">
-                            <h2>Uploaded Properties</h2>
-                            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary mt-2 mt-md-0">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <h1>My Properties</h1>
+                            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary my-2">
                                 Add a new Property
                             </a>
                         </div>

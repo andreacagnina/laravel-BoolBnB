@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4 text-center">Summary Statistics</h2>
+        <h1 class="text-center">Summary Statistics</h1>
 
         <!-- Statistiche sommarie -->
         <div class="row">

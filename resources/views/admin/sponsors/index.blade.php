@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container py-4">
+    <div class="container">
+        <h1 class="text-center">Advertisements</h1>
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 @if (session('success'))

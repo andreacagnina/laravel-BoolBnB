@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Messages</h1>
+        <h1 class="text-center">Messages</h1>
         @if (session('success'))
             <div class="row">
                 <div class="col-12">
@@ -21,7 +21,6 @@
         @else
             <!-- Tabella dei messaggi -->
             <div class="table-responsive">
-                <h2>Inbox</h2>
                 <table class="table table-bordered table-striped align-middle text-center table-sm">
                     <thead class="table-light">
                         <tr>
