@@ -37,10 +37,12 @@
                         @foreach ($messages->filter(fn($message) => $message->deleted_at === null) as $message)
                             <tr class="{{ $message->is_read ? 'fw-normal' : 'fw-bold' }}">
                                 <td>{{ $message->created_at->diffForHumans() }}</td>
+                                @if($message->first_name == null && $message->last_name == null)
+                                <td>N/A</td>
+                                @else
                                 <td>{{ $message->first_name }} {{ $message->last_name }}</td>
-                                {{-- <td>{{ $message->last_name }}</td> --}}
+                                @endif
                                 <td><a href="mailto:{{ $message->email }}">{{ $message->email }}</a></td>
-                                {{-- <td>{{ Str::limit($message->message, 50) }}</td> --}}
                                 <td>{{ $message->property->title ?? 'N/A' }}</td>
                                 <td>
                                     <!-- Mostra l'immagine della proprietà, se disponibile -->
