@@ -13,15 +13,30 @@ class PropertyController extends Controller
 {
     public function index(Request $request)
     {
+        // Validazione degli input
+        $validated = $request->validate([
+            'type' => 'nullable|string',
+            'search' => 'nullable|string',
+            'num_rooms' => 'nullable|integer|min:1',
+            'num_beds' => 'nullable|integer|min:1',
+            'num_baths' => 'nullable|integer|min:1',
+            'mq' => 'nullable|integer|min:20',
+            'price' => 'nullable|numeric|min:0',
+            'selectedServices' => 'nullable|array',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'radius' => 'nullable|numeric|min:1|max:200',
+        ]);
+
         $types = Property::select('type')->distinct()->get();
 
-        // Costruzione query con filtri dinamici
+        // Costruzione della query dinamica
         $propertiesQuery = Property::with('images', 'services')
             ->when($request->type, fn($query) => $query->where('type', $request->type))
-            ->when($request->search, function($query) use ($request) {
+            ->when($request->search, function ($query) use ($request) {
                 if (!$request->filled(['latitude', 'longitude'])) {
                     $searchTerm = $request->search;
-                    $query->where(function($q) use ($searchTerm) {
+                    $query->where(function ($q) use ($searchTerm) {
                         $q->where('title', 'like', "%{$searchTerm}%")
                           ->orWhere('address', 'like', "%{$searchTerm}%");
                     });
@@ -39,22 +54,23 @@ class PropertyController extends Controller
             })
             ->orderByDesc('sponsored');
 
-        // Filtro per distanza (latitudine, longitudine e raggio)
+        // Filtro per distanza
         if ($request->filled(['latitude', 'longitude', 'radius'])) {
             $latitude = $request->latitude;
             $longitude = $request->longitude;
             $radius = $request->radius;
 
-            $propertiesQuery->selectRaw(
-                "*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(`long`) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance",
+            $propertiesQuery->select('properties.*')->selectRaw(
+                "(6371 * acos(cos(radians(?)) * cos(radians(properties.lat)) * cos(radians(properties.long) - radians(?)) + sin(radians(?)) * sin(radians(properties.lat)))) AS distance",
                 [$latitude, $longitude, $latitude]
             )
             ->having('distance', '<=', $radius)
             ->orderBy('distance', 'asc');
         }
 
-        // Clona la query per calcolare minimi e massimi
+        // Clonazione della query per calcoli di min/max
         $propertiesForMinMax = clone $propertiesQuery;
+
         $properties = $propertiesQuery->paginate(24);
 
         $minMaxValues = [
@@ -72,13 +88,13 @@ class PropertyController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'Properties retrieved successfully.',
             'results' => $properties,
             'types' => $types,
             'minMaxValues' => $minMaxValues,
         ]);
     }
 
-    // Metodo per autocompletamento
     public function autocomplete(Request $request)
     {
         $query = $request->input('query', '');
@@ -91,11 +107,16 @@ class PropertyController extends Controller
 
             return response()->json([
                 'success' => true,
+                'message' => 'Suggestions retrieved successfully.',
                 'suggestions' => $suggestions,
             ]);
         }
 
-        return response()->json(['success' => false, 'suggestions' => []]);
+        return response()->json([
+            'success' => false,
+            'message' => 'Query too short.',
+            'suggestions' => []
+        ]);
     }
 
     public function show($slug)
@@ -123,6 +144,7 @@ class PropertyController extends Controller
 
             return response()->json([
                 'success' => true,
+                'message' => 'Property retrieved successfully.',
                 'results' => $property->toArray() + [
                     'is_favorite' => $isFavorite,
                     'view_count' => View::where('property_id', $property->id)->count(),
@@ -130,25 +152,30 @@ class PropertyController extends Controller
             ]);
         }
 
-        return response()->json(['success' => false]);
+        return response()->json([
+            'success' => false,
+            'message' => 'Property not found.'
+        ]);
     }
 
     public function toggleFavorite(Request $request, Property $property)
     {
         $ip = $request->ip();
-        $favorite = Favorite::where('property_id', $property->id)
-            ->where('ip_address', $ip)
-            ->first();
 
-        if ($favorite) {
+        $favorite = Favorite::updateOrCreate(
+            ['property_id' => $property->id, 'ip_address' => $ip],
+            []
+        );
+
+        $wasFavorited = $favorite->wasRecentlyCreated;
+
+        if (!$wasFavorited) {
             $favorite->delete();
-            return response()->json(['success' => true, 'favorited' => false]);
-        } else {
-            Favorite::create([
-                'property_id' => $property->id,
-                'ip_address' => $ip
-            ]);
-            return response()->json(['success' => true, 'favorited' => true]);
         }
+
+        return response()->json([
+            'success' => true,
+            'favorited' => $wasFavorited
+        ]);
     }
 }
