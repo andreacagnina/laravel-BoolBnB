@@ -100,18 +100,18 @@ class PropertyController extends Controller
             return abort(404, 'Property not found');
         }
 
-        $ipAddress = $request->ip();
-        $view = View::where('ip_address', $ipAddress)
-            ->where('property_id', $property->id)
-            ->latest('updated_at')
-            ->first();
+        // $ipAddress = $request->ip();
+        // $view = View::where('ip_address', $ipAddress)
+        //     ->where('property_id', $property->id)
+        //     ->latest('updated_at')
+        //     ->first();
 
-        if (!$view || $view->updated_at->diffInMinutes(now()) >= 1) {
-            View::create([
-                'ip_address' => $ipAddress,
-                'property_id' => $property->id,
-            ]);
-        }
+        // if (!$view || $view->updated_at->diffInMinutes(now()) >= 1) {
+        //     View::create([
+        //         'ip_address' => $ipAddress,
+        //         'property_id' => $property->id,
+        //     ]);
+        // }
 
         $sponsors = Sponsor::all();
         $services = Service::all();

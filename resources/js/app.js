@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
             const formattedNow = formatDateToDMY(now);
-            countdownElement.textContent = `${days}days ${hours}hours ${minutes}minutes ${seconds}seconds remaining`;
+            countdownElement.textContent = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds remaining`;
         }
 
         updateCountdown();

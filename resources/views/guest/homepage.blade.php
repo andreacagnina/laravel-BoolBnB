@@ -162,37 +162,50 @@
             <div class="col-12">
                 <div class="content">
                     @guest
-                        <section class="p-5 rounded text-center">
-                            <h1>Gestisci i tuoi immobili in modo semplice.</h1>
-                        </section>
-                
-                        <!-- Spiegazione Gestionale -->
-                        <section class="mt-2">
-                            <h2 class="mb-3">Cosa fa BoolBnB</h2>
-                            <p>BoolBnB è una piattaforma completa per la gestione di proprietà immobiliari. Permette ai proprietari di:</p>
-                            <ul class="list-group border-0">
-                                <li class="list-group-item">Registrare e gestire i propri immobili in modo semplice e veloce.</li>
-                                <li class="list-group-item">Sponsorizzare gli annunci per ottenere maggiore visibilità sulla piattaforma.</li>
-                                <li class="list-group-item">Monitorare le performance delle proprie proprietà tramite statistiche dettagliate.</li>
-                            </ul>
-                            <p class="mt-3">Gli utenti interessati possono facilmente cercare, visualizzare e contattare i proprietari per maggiori dettagli.</p>
-                        </section>
-                
-                        <!-- Gestisci i tuoi immobili -->
-                        <section class="mt-5">
-                            <h2 class="mb-3">Gestisci i tuoi immobili</h2>
-                            <p>Registra il tuo account e inserisci le tue proprietà. Sponsorizza i tuoi annunci per maggiore visibilità. Accedi alle statistiche per monitorare le performance.</p>
-                            <a href="/register" class="btn btn-primary">Inizia Ora</a>
+                    <section class="rounded text-center">
+                        <h2>Manage your properties with ease.</h2>
+                    </section>
+                    <!-- Management Explanation -->
+                    <section class="mt-4">
+                        <h2 class="mb-3">What BoolBnB Does</h2>
+                        <p>BoolBnB is a comprehensive platform for managing real estate properties. It allows owners to:</p>
+                        <ul class="list-group border-0">
+                            <li class="list-group-item">Register and manage their properties quickly and easily.</li>
+                            <li class="list-group-item">Sponsor listings to gain more visibility on the platform.</li>
+                            <li class="list-group-item">Monitor the performance of their properties through detailed statistics.</li>
+                        </ul>
+                        <p class="mt-3">Interested users can easily search, view, and contact owners for more details.</p>
+                    </section>
+
+                        <!-- Manage your properties -->
+                        <section class="">
+                            <h2 class="mb-3">Manage Your Properties</h2>
+                            <p>Register your account and list your properties. Sponsor your listings for more visibility. Access statistics to monitor performance.</p>
+                            <a href="/register" class="btn btn-primary">Get Started Now</a>
                         </section>
                     @else
-                        <div class="text-center">
-                            <h1>Bentornato {{ Auth::user()->name }}</h1>
-                        </div>
+                    @if(Auth::user()->name != null)
+                    <h1 class="text-center">Welcome Back {{ Auth::user()->name }}</h1>
+                    @else
+                    <h1 class="text-center">Welcome Back {{Auth::user()->email}}</h1>
+                    @endif
+                    <section class="rounded text-center">
+                        <h2>Manage your properties with ease.</h2>
+                    </section>
+                    <!-- Management Explanation -->
+                    <section class="mt-4">
+                        <h2 class="mb-3">Now with BoolBnB you can:</h2>
+                        
+                        <ul class="list-group border-0">
+                            <li class="list-group-item">Register and manage your properties quickly and easily.</li>
+                            <li class="list-group-item">Sponsor your listings to gain more visibility on the platform.</li>
+                            <li class="list-group-item">Monitor the performance of your properties through detailed statistics.</li>
+                        </ul>
+                        <p class="mt-3">Interested users can easily search, view, and contact owners for more details.</p>
+                    </section>
                     @endguest
-                    <h2>Descrizione Gestionale</h2>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
