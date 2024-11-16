@@ -38,7 +38,7 @@
                 <div class="card shadow-sm">
                     <div class="card-header text-center">
                         <h1>{{ $property->title }}</h1>
-                        <p class="lead text-muted">{{ $property->description }}</p>
+                        <p class="lead">{{ $property->description }}</p>
                     </div>
                     <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
                         class="card-img-top img-fluid" alt="{{ $property->title }}">
