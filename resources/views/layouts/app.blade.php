@@ -48,15 +48,6 @@
                 app.style.display = "block"; // Mostra il contenuto
             });
         });
-
-        // Integrazione con Turbolinks
-        document.addEventListener("turbolinks:request-start", function () {
-            document.getElementById("app").style.display = "none";
-        });
-
-        document.addEventListener("turbolinks:load", function () {
-            document.getElementById("app").style.display = "block";
-        });
     </script>
 </body>
 

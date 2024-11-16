@@ -11,7 +11,7 @@ return [
     ],
     [
         "name" => "Bed Linen",
-        "icon" => 'fa-sharp fa-regular fa-mattress-pillow'
+        "icon" => 'fa-sharp fa-solid fa-bed'
     ],
     [
         "name" => "Breakfast",

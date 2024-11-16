@@ -185,9 +185,9 @@
                         </section>
                     @else
                     @if(Auth::user()->name != null)
-                    <h1 class="text-center">Welcome Back {{ Auth::user()->name }}</h1>
+                    <h1 class="text-center">Welcome {{ Auth::user()->name }}</h1>
                     @else
-                    <h1 class="text-center">Welcome Back {{Auth::user()->email}}</h1>
+                    <h1 class="text-center">Welcome {{Auth::user()->email}}</h1>
                     @endif
                     <section class="rounded text-center">
                         <h2>Manage your properties with ease.</h2>
