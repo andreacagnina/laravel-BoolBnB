@@ -4,6 +4,9 @@ import '~icons/bootstrap-icons.scss';
 import JustValidate from 'just-validate';
 import * as bootstrap from 'bootstrap';
 import.meta.glob(['../img/**']);
+import Turbolinks from 'turbolinks'; // Importa Turbolinks
+
+Turbolinks.start(); // Avvia Turbolinks
 
 // Chiave API TomTom
 const TOMTOM_API_KEY = 'N4TIi8FzWNZv1sUqEUsREdKHYaG6HhSU';

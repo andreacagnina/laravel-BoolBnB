@@ -19,6 +19,7 @@
         "bootstrap-icons": "^1.11.3",
         "cors": "^2.8.5",
         "just-validate": "^4.3.0",
-        "parsleyjs": "^2.9.2"
+        "parsleyjs": "^2.9.2",
+        "turbolinks": "^5.2.0"
     }
 }
