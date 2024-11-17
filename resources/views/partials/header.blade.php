@@ -7,24 +7,19 @@
                 </div>
                 {{-- config('app.name', 'Laravel') --}}
             </a>
-
-            
- 
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ms-auto">
-                    <!-- Authentication Links -->
-                    @guest
+            <ul class="navbar-nav ms-auto d-flex flex-row">
+                <!-- Authentication Links -->
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    </li>
+                    @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link fw-bold" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link fw-bold ms-2" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link fw-bold" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    </ul>
-@endguest
+                    @endif
+                @endguest
+            </ul>            
         </div>
     </nav>
 </header>
