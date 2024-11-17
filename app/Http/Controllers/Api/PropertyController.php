@@ -11,6 +11,17 @@ use App\Models\Favorite;
 
 class PropertyController extends Controller
 {
+    /**
+     * Formatta il percorso delle immagini (per gestire URL completi e relativi).
+     */
+    private function formatImagePath($path)
+    {
+        if (filter_var($path, FILTER_VALIDATE_URL)) {
+            return $path; // Se è un URL completo, restituiscilo direttamente
+        }
+        return asset('storage/' . $path); // Altrimenti, aggiungi il prefisso dello storage
+    }
+
     public function index(Request $request)
     {
         // Validazione degli input
@@ -73,6 +84,20 @@ class PropertyController extends Controller
 
         $properties = $propertiesQuery->paginate(24);
 
+        // Formatta i percorsi delle immagini
+        $properties->getCollection()->transform(function ($property) {
+            $property->cover_image = $this->formatImagePath($property->cover_image);
+
+            if ($property->images) {
+                $property->images = $property->images->map(function ($image) {
+                    $image->path = $this->formatImagePath($image->path);
+                    return $image;
+                });
+            }
+
+            return $property;
+        });
+
         $minMaxValues = [
             'min_rooms' => $propertiesForMinMax->min('num_rooms') ?? 1,
             'max_rooms' => $propertiesForMinMax->max('num_rooms') ?? 10,
@@ -95,30 +120,6 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function autocomplete(Request $request)
-    {
-        $query = $request->input('query', '');
-
-        if (strlen($query) > 2) {
-            $suggestions = Property::where('title', 'like', "%{$query}%")
-                ->orWhere('address', 'like', "%{$query}%")
-                ->limit(10)
-                ->pluck('title');
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Suggestions retrieved successfully.',
-                'suggestions' => $suggestions,
-            ]);
-        }
-
-        return response()->json([
-            'success' => false,
-            'message' => 'Query too short.',
-            'suggestions' => []
-        ]);
-    }
-
     public function show($slug)
     {
         $property = Property::with('images', 'services')
@@ -126,6 +127,15 @@ class PropertyController extends Controller
             ->first();
 
         if ($property) {
+            $property->cover_image = $this->formatImagePath($property->cover_image);
+
+            if ($property->images) {
+                $property->images = $property->images->map(function ($image) {
+                    $image->path = $this->formatImagePath($image->path);
+                    return $image;
+                });
+            }
+
             $existingView = View::where('property_id', $property->id)
                 ->where('ip_address', request()->ip())
                 ->whereDate('created_at', today())
@@ -155,27 +165,6 @@ class PropertyController extends Controller
         return response()->json([
             'success' => false,
             'message' => 'Property not found.'
-        ]);
-    }
-
-    public function toggleFavorite(Request $request, Property $property)
-    {
-        $ip = $request->ip();
-
-        $favorite = Favorite::updateOrCreate(
-            ['property_id' => $property->id, 'ip_address' => $ip],
-            []
-        );
-
-        $wasFavorited = $favorite->wasRecentlyCreated;
-
-        if (!$wasFavorited) {
-            $favorite->delete();
-        }
-
-        return response()->json([
-            'success' => true,
-            'favorited' => $wasFavorited
         ]);
     }
 }
