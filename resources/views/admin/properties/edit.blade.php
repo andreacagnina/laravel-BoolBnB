@@ -53,20 +53,39 @@
                 </div>
             </div>
 
-            <!-- Third Row: Cover Image -->
-            <div class="row">
+            <!-- Cover Image -->
+            <div class="row mt-3">
                 <div class="col-md-12">
-                    <label for="cover_image" class="form-label">Cover Image:</label><br>
-                    @if ($property->cover_image && Storage::exists('public/' . $property->cover_image))
-                        <img class="img-thumbnail w-25 mb-2" src="{{ asset('storage/' . $property->cover_image) }}"
-                            alt="{{ $property->name }}">
-                    @endif
-                    <input type="file" name="cover_image" id="cover_image"
-                        class="form-control @error('cover_image') is-invalid @enderror">
-                    <div id="error-container-cover_image"></div>
-                    @error('cover_image')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <label for="cover_image" class="form-label">Cover Image:</label>
+                    <div id="cover-image-drop-zone" class="drop-zone">
+                        <div id="cover-image-preview" class="image-preview">
+                            @if ($property->cover_image)
+                                <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}" 
+                                    alt="Cover Image">
+                            @endif
+                        </div>
+                        <input type="file" name="cover_image" id="cover_image" class="d-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Images -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <label for="images" class="form-label">Additional Images:</label>
+                    <div id="image-drop-zone" class="drop-zone">
+                        <div id="additional-images-preview" class="image-preview">
+                            @foreach ($property->images as $image)
+                                <div class="position-relative">
+                                    <img src="{{ Str::startsWith($image->path, 'http') ? $image->path : asset('storage/' . $image->path) }}" 
+                                        alt="Additional Image">
+                                    <button type="button" class="btn btn-danger btn-sm position-absolute end-0"
+                                        onclick="removeImage('{{ $image->id }}')">&times;</button>
+                                </div>
+                            @endforeach
+                        </div>
+                        <input type="file" name="images[]" id="images" class="d-none" multiple>
+                    </div>
                 </div>
             </div>
 
@@ -224,4 +243,172 @@
             </div>
         </form>
     </div>
+
+    <style>
+        .drop-zone {
+            border: 2px dashed #6c757d;
+            border-radius: 8px;
+            background-color: #192033;
+            color: #fff;
+            text-align: start;
+            min-height: 120px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            padding-left: 10px;
+        }
+
+        .drop-zone img {
+            max-height: 100px;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: start;
+        }
+
+        .position-relative button {
+            top: -10px;
+            right: -10px;
+        }
+
+        .drop-zone input[type='file'] {
+            display: none;
+        }
+
+        .drop-zone.highlight {
+            border-color: #007bff;
+            background-color: #3a4a6b;
+        }
+    </style>
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Helper: Manage image preview
+            function handleImagePreview(inputElement, previewElement, dropZone, isSingle = false) {
+                const files = inputElement.files;
+
+                if (isSingle) {
+                    previewElement.innerHTML = '';
+                    if (files.length > 0) {
+                        const file = files[0];
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                const img = document.createElement('img');
+                                img.src = e.target.result;
+                                previewElement.appendChild(img);
+                            };
+                            reader.readAsDataURL(file);
+                            dropZone.classList.add('has-images');
+                        }
+                    }
+                } else {
+                    Array.from(files).forEach(file => {
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                const img = document.createElement('img');
+                                img.src = e.target.result;
+                                previewElement.appendChild(img);
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                    dropZone.classList.add('has-images');
+                }
+            }
+
+            function mergeFiles(existingInput, newFiles) {
+                const dataTransfer = new DataTransfer();
+                Array.from(existingInput.files).forEach(file => dataTransfer.items.add(file));
+                Array.from(newFiles).forEach(file => dataTransfer.items.add(file));
+                existingInput.files = dataTransfer.files;
+            }
+
+            // Cover Image Logic
+            const coverImageInput = document.getElementById('cover_image');
+            const coverImageDropZone = document.getElementById('cover-image-drop-zone');
+            const coverImagePreview = document.getElementById('cover-image-preview');
+
+            coverImageInput.addEventListener('change', function () {
+                handleImagePreview(coverImageInput, coverImagePreview, coverImageDropZone, true);
+            });
+
+            coverImageDropZone.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                coverImageDropZone.classList.add('highlight');
+            });
+
+            coverImageDropZone.addEventListener('dragleave', function () {
+                coverImageDropZone.classList.remove('highlight');
+            });
+
+            coverImageDropZone.addEventListener('drop', function (e) {
+                e.preventDefault();
+                coverImageDropZone.classList.remove('highlight');
+                coverImageInput.files = e.dataTransfer.files;
+                handleImagePreview(coverImageInput, coverImagePreview, coverImageDropZone, true);
+            });
+
+            coverImageDropZone.addEventListener('click', function () {
+                coverImageInput.click();
+            });
+
+            // Additional Images Logic
+            const additionalImagesInput = document.getElementById('images');
+            const additionalImageDropZone = document.getElementById('image-drop-zone');
+            const additionalImagePreview = document.getElementById('additional-images-preview');
+
+            additionalImagesInput.addEventListener('change', function () {
+                handleImagePreview(additionalImagesInput, additionalImagePreview, additionalImageDropZone, false);
+            });
+
+            additionalImageDropZone.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                additionalImageDropZone.classList.add('highlight');
+            });
+
+            additionalImageDropZone.addEventListener('dragleave', function () {
+                additionalImageDropZone.classList.remove('highlight');
+            });
+
+            additionalImageDropZone.addEventListener('drop', function (e) {
+                e.preventDefault();
+                additionalImageDropZone.classList.remove('highlight');
+                mergeFiles(additionalImagesInput, e.dataTransfer.files);
+                handleImagePreview(additionalImagesInput, additionalImagePreview, additionalImageDropZone, false);
+            });
+
+            additionalImageDropZone.addEventListener('click', function () {
+                additionalImagesInput.click();
+            });
+        });
+
+        function removeImage(imageId) {
+            const imageElement = document.querySelector(`button[onclick="removeImage('${imageId}')"]`).parentElement;
+            imageElement.remove();
+
+            let deleteInput = document.getElementById('deleted_images');
+            if (!deleteInput) {
+                deleteInput = document.createElement('input');
+                deleteInput.type = 'hidden';
+                deleteInput.name = 'deleted_images[]';
+                deleteInput.id = 'deleted_images';
+                document.getElementById('editPropertyForm').appendChild(deleteInput);
+            }
+            const currentValues = deleteInput.value ? JSON.parse(deleteInput.value) : [];
+            currentValues.push(imageId);
+            deleteInput.value = JSON.stringify(currentValues);
+        }
+    </script>
 @endsection

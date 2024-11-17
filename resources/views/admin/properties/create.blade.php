@@ -52,20 +52,39 @@
                 </div>
             </div>
 
-            <!-- Third Row: Cover Image -->
+            <!-- Immagine di Copertina con Drag-and-Drop -->
             <div class="row">
                 <div class="col-md-12">
-                    <label for="cover_image" class="form-label">Cover Image:</label>
-                    <input type="file" name="cover_image" id="cover_image"
-                        class="form-control @error('cover_image') is-invalid @enderror">
-                    <div id="error-container-cover_image"></div>
+                    <label for="cover_image" class="form-label">Immagine di Copertina:</label>
+                    <div id="cover-image-drop-zone" class="drop-zone">
+                        <span id="cover-drop-text">Trascina e rilascia un'immagine qui o clicca per caricare</span>
+                        <input type="file" name="cover_image" id="cover_image" 
+                            class="d-none @error('cover_image') is-invalid @enderror" accept="image/*">
+                        <div id="cover-image-preview" class="image-preview"></div>
+                    </div>
                     @error('cover_image')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
 
-            <!-- Fourth Row: Description -->
+            <!-- Immagini Aggiuntive con Drag-and-Drop -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <label for="images" class="form-label">Immagini Aggiuntive:</label>
+                    <div id="image-drop-zone" class="drop-zone">
+                        <span id="additional-drop-text">Trascina e rilascia immagini qui o clicca per caricare</span>
+                        <input type="file" name="images[]" id="images" 
+                            class="d-none @error('images.*') is-invalid @enderror" multiple accept="image/*">
+                        <div id="additional-images-preview" class="image-preview"></div>
+                    </div>
+                    @error('images.*')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Fifth Row: Description -->
             <div class="row">
                 <div class="col-md-12">
                     <label for="description" class="form-label">Description:</label>
@@ -78,7 +97,7 @@
                 </div>
             </div>
 
-            <!-- Fifth Row: Left and Right Columns -->
+            <!-- Sixth Row: Left and Right Columns -->
             <div class="row">
                 <!-- Left Column -->
                 <div class="col-md-6">
@@ -209,6 +228,63 @@
             </div>
         </form>
     </div>
+
+    <style>
+        /* Stile per la Drop Zone */
+        .drop-zone {
+            border: 2px dashed #6c757d;
+            border-radius: 8px;
+            background-color: #192033;
+            color: #fff;
+            text-align: center;
+            height: 120px; /* Altezza fissa della box */
+            position: relative;
+            overflow: hidden; /* Previene l'uscita delle immagini */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Evidenziazione durante il Drag */
+        .drop-zone.highlight {
+            border-color: #007bff;
+            background-color: #3a4a6b;
+        }
+
+        /* Contenitore delle Anteprime */
+        .image-preview {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            width: 100%;
+            height: 100%; /* Riempi l'altezza della box */
+            padding: 5px;
+            overflow-x: auto;
+        }
+
+        /* Stile per le Immagini Caricate */
+        .image-preview img {
+            height: 100%; /* Altezza pari alla box */
+            width: auto; /* Larghezza proporzionale */
+            object-fit: contain; /* Mantieni le proporzioni */
+            margin-right: 5px; /* Spazio tra le immagini */
+        }
+
+        /* Nascondi il testo quando ci sono immagini */
+        .drop-zone.has-images span {
+            display: none;
+        }
+
+        /* Posizionamento del Testo nella Drop Zone */
+        .drop-zone span {
+            position: absolute;
+            text-align: center;
+            color: white;
+            pointer-events: none;
+        }
+    </style>
 @endsection
 
 @section('scripts')
@@ -216,7 +292,108 @@
         document.addEventListener('DOMContentLoaded', function() {
             setupPropertyValidation('createPropertyForm');
         });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            function handleImagePreview(inputElement, previewElement, dropZone, isSingle = false) {
+                const files = inputElement.files;
+
+                if (isSingle) {
+                    // Per una singola immagine (Immagine di Copertina)
+                    previewElement.innerHTML = ''; // Svuota la preview precedente
+                    if (files.length > 0) {
+                        const file = files[0];
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                const img = document.createElement('img');
+                                img.src = e.target.result;
+                                previewElement.appendChild(img);
+                            };
+                            reader.readAsDataURL(file);
+                            dropZone.classList.add('has-images');
+                        }
+                    }
+                } else {
+                    // Per più immagini (Immagini Aggiuntive)
+                    Array.from(files).forEach(file => {
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                const img = document.createElement('img');
+                                img.src = e.target.result;
+                                previewElement.appendChild(img);
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                    dropZone.classList.add('has-images');
+                }
+            }
+
+            function mergeFiles(existingInput, newFiles) {
+                const dataTransfer = new DataTransfer();
+                Array.from(existingInput.files).forEach(file => dataTransfer.items.add(file));
+                Array.from(newFiles).forEach(file => dataTransfer.items.add(file));
+                existingInput.files = dataTransfer.files;
+            }
+
+            // Configura la Drop Zone per l'immagine di copertina
+            const coverImageInput = document.getElementById('cover_image');
+            const coverImageDropZone = document.getElementById('cover-image-drop-zone');
+            const coverImagePreview = document.getElementById('cover-image-preview');
+
+            coverImageInput.addEventListener('change', function () {
+                handleImagePreview(coverImageInput, coverImagePreview, coverImageDropZone, true);
+            });
+
+            coverImageDropZone.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                coverImageDropZone.classList.add('highlight');
+            });
+
+            coverImageDropZone.addEventListener('dragleave', function () {
+                coverImageDropZone.classList.remove('highlight');
+            });
+
+            coverImageDropZone.addEventListener('drop', function (e) {
+                e.preventDefault();
+                coverImageDropZone.classList.remove('highlight');
+                coverImageInput.files = e.dataTransfer.files;
+                handleImagePreview(coverImageInput, coverImagePreview, coverImageDropZone, true);
+            });
+
+            coverImageDropZone.addEventListener('click', function () {
+                coverImageInput.click();
+            });
+
+            // Configura la Drop Zone per le immagini aggiuntive
+            const additionalImagesInput = document.getElementById('images');
+            const additionalImageDropZone = document.getElementById('image-drop-zone');
+            const additionalImagePreview = document.getElementById('additional-images-preview');
+
+            additionalImagesInput.addEventListener('change', function () {
+                handleImagePreview(additionalImagesInput, additionalImagePreview, additionalImageDropZone, false);
+            });
+
+            additionalImageDropZone.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                additionalImageDropZone.classList.add('highlight');
+            });
+
+            additionalImageDropZone.addEventListener('dragleave', function () {
+                additionalImageDropZone.classList.remove('highlight');
+            });
+
+            additionalImageDropZone.addEventListener('drop', function (e) {
+                e.preventDefault();
+                additionalImageDropZone.classList.remove('highlight');
+                mergeFiles(additionalImagesInput, e.dataTransfer.files);
+                handleImagePreview(additionalImagesInput, additionalImagePreview, additionalImageDropZone, false);
+            });
+
+            additionalImageDropZone.addEventListener('click', function () {
+                additionalImagesInput.click();
+            });
+        });
     </script>
 @endsection
-
-

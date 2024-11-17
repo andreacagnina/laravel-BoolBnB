@@ -41,6 +41,8 @@ class StorePropertyRequest extends FormRequest
             'sponsors' => ['array',  'exists:sponsors,id'],
             'services' => ['required', 'array', 'min:1'],
             'services.*' => ['exists:services,id'],
+            'images' => ['nullable', 'array'], // Aggiunto per immagini multiple
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:4096'], // Aggiunto per validazione di ogni immagine
         ];
     }
     public function messages()
@@ -113,6 +115,11 @@ class StorePropertyRequest extends FormRequest
             'services.array' => 'The services must be an array of selected options.',
             'services.min' => 'You must select at least one service.',
             'services.*.exists' => 'One or more selected services do not exist. Please select valid services.',
+
+            'images.array' => 'The additional images field must be an array of files.',
+            'images.*.image' => 'Each file must be a valid image.',
+            'images.*.mimes' => 'Each image must be of type: jpeg, png, jpg, or gif.',
+            'images.*.max' => 'Each image must not exceed 4MB in size.',
         ];
     }
 }
