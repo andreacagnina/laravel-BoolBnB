@@ -20,19 +20,23 @@
 </head>
 
 <body>
-    <!-- Contenuto principale -->
     <div id="app" class="d-flex wrapper">
+        {{-- Include header --}}
         @include('partials.header')
-        @guest
-        @else
+    
+        {{-- Contenitore principale --}}
         <div class="container-fluid d-flex px-0">
-            @include('partials.sidebar')
-        @endguest
-            <main>
+            {{-- Sidebar visibile solo per utenti autenticati --}}
+            @auth
+                @include('partials.sidebar')
+            @endauth
+    
+            {{-- Contenuto principale --}}
+            <main class="px-md-2">
                 @yield('content')
             </main>
         </div>
-    </div>
+    </div>    
 
     <!-- Script esterni -->
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.13.0/maps/maps-web.min.js"></script>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="content">
@@ -17,16 +17,17 @@
                     @endif
 
                     @if ($properties->isNotEmpty())
-                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap mt-3">
                             <h1>My Properties</h1>
-                            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary my-2">
-                                Add a new Property
-                            </a>
+                            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary d-inline-flex align-items-center">
+                                <span class="d-none d-md-inline">Add a new Property</span>
+                                <span class="d-inline d-md-none"><i class="fa-solid fa-plus"></i></span>
+                            </a>                            
                         </div>
                         <div class="row">
                             {{-- Proprietà attive --}}
                             @foreach ($properties->where('deleted_at', null) as $property)
-                                <div class="col-12 col-md-6 col-lg-4 my-4">
+                                <div class="col-12 col-md-6 col-lg-4 col-xxl-3 my-4">
                                     <div class="card h-100">
                                         <div class="card-header cust text-center">
                                             <h5 class="fw-bold">{{ $property->title }}</h5>

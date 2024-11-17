@@ -9,15 +9,10 @@ use Carbon\Carbon;
 
 class MessageSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        $messages = collect(config('db_messages')); // Collezione di messaggi predefiniti
-        $totalMessages = $messages->count(); // Numero totale di messaggi disponibili
+        $messages = collect(config('db_messages'));
+        $totalMessages = $messages->count();
         $properties = DB::table('properties')->select('id', 'created_at')->get();
 
         if ($properties->isEmpty()) {
@@ -26,24 +21,16 @@ class MessageSeeder extends Seeder
         }
 
         foreach ($properties as $property) {
-            // Ottieni sponsorizzazioni per la proprietà
             $sponsorships = DB::table('property_sponsor')
                 ->where('property_id', $property->id)
                 ->get();
 
-            // Determina il numero massimo di messaggi da generare per questa proprietà
-            $baseCount = rand(1, 3); // Riduci il numero base di messaggi
-            $additionalCount = 0;
+            $baseCount = rand(1, 3);
+            $additionalCount = $sponsorships->isNotEmpty() ? rand(2, 5) : 0;
 
-            if ($sponsorships->isNotEmpty()) {
-                // Riduci l'impatto delle sponsorizzazioni per limitare i messaggi totali
-                $additionalCount = rand(2, 5); // Aggiungi pochi messaggi extra
-            }
-
-            $messageCount = min($baseCount + $additionalCount, $totalMessages); // Limita al totale disponibile
+            $messageCount = min($baseCount + $additionalCount, $totalMessages);
 
             for ($i = 0; $i < $messageCount; $i++) {
-                // Determina una data per il messaggio
                 $messageDate = null;
 
                 if ($sponsorships->isNotEmpty() && rand(1, 100) <= 50) {
@@ -55,20 +42,22 @@ class MessageSeeder extends Seeder
                         ->addSeconds(rand(0, Carbon::now()->diffInSeconds($property->created_at)));
                 }
 
-                // Prendi un messaggio casuale dal file di configurazione
-                $messageData = $messages->pop(); // Usa e rimuovi un messaggio dalla collezione
+                $messageData = $messages->pop();
 
-                // Se i messaggi sono esauriti, interrompi
                 if (!$messageData) {
                     break;
                 }
+
+                $isRead = $messageDate->lt(Carbon::now()->subMonth())
+                    ? true
+                    : rand(0, 1) === 1;
 
                 Message::create([
                     'first_name' => $messageData['first_name'],
                     'last_name' => $messageData['last_name'],
                     'email' => $messageData['email'],
                     'message' => $messageData['message'],
-                    'is_read' => $messageData['is_read'],
+                    'is_read' => $isRead,
                     'property_id' => $property->id,
                     'created_at' => $messageDate,
                     'updated_at' => $messageDate,
