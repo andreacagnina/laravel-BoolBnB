@@ -28,7 +28,7 @@
                             @foreach ($properties->where('deleted_at', null) as $property)
                                 <div class="col-12 col-md-6 col-lg-4 my-4">
                                     <div class="card h-100">
-                                        <div class="card-header text-center">
+                                        <div class="card-header cust text-center">
                                             <h5 class="fw-bold">{{ $property->title }}</h5>
                                         </div>
                                         <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"

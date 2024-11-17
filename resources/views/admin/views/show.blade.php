@@ -33,7 +33,7 @@
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-header text-center">
-                    <h1>{{ $property->title }}</h1>
+                    <h1 class="text-truncate" style="max-width: 100%;">{{ $property->title }}</h1>
                     <p class="lead text-muted">{{ $property->description }}</p>
                 </div>
                 <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"

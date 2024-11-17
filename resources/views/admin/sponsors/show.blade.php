@@ -22,7 +22,7 @@ $latestSponsor = $property->sponsors->sortByDesc('pivot.created_at')->first();
                 </h4>
                 <h4 class="sponsor-date">
                     End Sponsor Date:
-                    <span id="end-date">
+                    <span id="end-date" class="sponsor-count">
                         {{ $latestSponsor->pivot->end_date ? \Carbon\Carbon::parse($latestSponsor->pivot->end_date)->format('d-m-Y H:i:s') : 'N/A' }}
                     </span>
                 </h4>
