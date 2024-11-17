@@ -10,11 +10,6 @@ use Carbon\Carbon;
 
 class PropertySponsorSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $properties = config('db_properties');
@@ -23,18 +18,21 @@ class PropertySponsorSeeder extends Seeder
             $property = Property::where('title', $propertyConfig['title'])->first();
 
             if ($property && isset($propertyConfig['sponsors'])) {
-                $startDate = Carbon::now();
+                $existingSponsors = DB::table('property_sponsor')
+                    ->where('property_id', $property->id)
+                    ->orderBy('created_at', 'asc')
+                    ->get();
+
+                $lastEndDate = null;
 
                 foreach ($propertyConfig['sponsors'] as $sponsorId) {
                     $sponsor = Sponsor::find($sponsorId);
 
-                    $lastSponsor = DB::table('property_sponsor')
-                        ->where('property_id', $property->id)
-                        ->orderBy('end_date', 'desc')
-                        ->first();
-
-                    if ($lastSponsor) {
-                        $startDate = Carbon::parse($lastSponsor->end_date);
+                    if ($lastEndDate) {
+                        $startDate = $lastEndDate;
+                    } else {
+                        $randomStartDays = rand(0, 180);
+                        $startDate = Carbon::parse($property->created_at)->addDays($randomStartDays);
                     }
 
                     $endDate = $startDate->copy()->addHours($sponsor->duration);
@@ -47,7 +45,7 @@ class PropertySponsorSeeder extends Seeder
                         'end_date' => $endDate,
                     ]);
 
-                    $startDate = $endDate;
+                    $lastEndDate = $endDate;
                 }
             }
         }

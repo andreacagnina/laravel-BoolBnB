@@ -37,6 +37,7 @@
     <!-- Script esterni -->
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.13.0/maps/maps-web.min.js"></script>
     <script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         // Mostra il contenuto solo quando la pagina è completamente caricata
@@ -48,16 +49,10 @@
                 app.style.display = "block"; // Mostra il contenuto
             });
         });
-
-        // Integrazione con Turbolinks
-        document.addEventListener("turbolinks:request-start", function () {
-            document.getElementById("app").style.display = "none";
-        });
-
-        document.addEventListener("turbolinks:load", function () {
-            document.getElementById("app").style.display = "block";
-        });
     </script>
+
+    <!-- Scripts specifici per le viste -->
+    @yield('scripts')
 </body>
 
 </html>
