@@ -69,23 +69,38 @@ class PropertyController extends Controller
         $form_data = $request->validated();
         $form_data['slug'] = Property::generateSlug($form_data['title']);
         $form_data['user_id'] = Auth::id();
-
+    
+        // Salva la cover_image
         $form_data['cover_image'] = $request->hasFile('cover_image')
             ? Storage::put('cover_image', $request->file('cover_image'))
             : 'https://reviveyouthandfamily.org/wp-content/uploads/2016/11/house-placeholder.jpg';
-
+    
+        // Crea la proprietà
         $property = Property::create($form_data);
-
+    
+        // Associa sponsor (se presenti)
         if ($request->has('sponsors')) {
             $property->sponsors()->attach($request->sponsors);
         }
-
+    
+        // Associa servizi (se presenti)
         if ($request->has('services')) {
             $property->services()->attach($request->services);
         }
-
+    
+        // Gestisci immagini aggiuntive (se presenti)
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = Storage::put('property_images', $image); // Salva ogni immagine nella directory 'property_images'
+                Image::create([
+                    'property_id' => $property->id, // Collega l'immagine alla proprietà
+                    'path' => $path, // Percorso dell'immagine salvata
+                ]);
+            }
+        }
+    
         return redirect()->route('admin.properties.index')->with("success", "Announcement Created");
-    }
+    }    
 
     /**
      * Display the specified resource.
