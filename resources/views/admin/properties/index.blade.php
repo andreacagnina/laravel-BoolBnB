@@ -38,8 +38,8 @@
                                         <div class="card-body">
                                             <p><strong>Address:</strong> {{ Str::limit($property->address, 30) }} </p>
                                             <p><strong>Price:</strong> {{ number_format($property->price, 2, ',', '') }}&euro;</p>
-                                            <p><strong>Description:</strong> {{ Str::limit($property->description, 50) }}</p>
-                                            <p>
+                                            {{-- <p><strong>Description:</strong> {{ Str::limit($property->description, 50) }}</p>
+                                            <p> --}}
                                                 <strong>Sponsored:</strong>
                                                 <i class="ms-2 {{$property->sponsored ? 'fa-solid fa-check text-success' : 'fa-solid fa-x text-danger'}}"></i>
                                             </p>
