@@ -10,6 +10,7 @@
 @import './partials';
 @import './sidebar';
 
+
 body {
     background-color: $background-color;
     color: $text-color;
@@ -35,76 +36,6 @@ label {
     height: auto;
 }
 
-.border-active {
-    box-shadow: none !important;
-}
-
-.homepage-card:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cursor-pointer *:hover {
-    cursor: pointer;
-}
-
-.card{
-    border: none !important;
-    background-color: transparent !important;
-    color: $text-color !important;
-}
-
-.card-header{
-    background-color: transparent !important;
-    color: $text-color !important;
-}
-.card-body{
-    background-color: transparent !important;
-    color: $text-color !important;
-}
-
-.bg-success{
-    background-color: $yellow-color !important;
-    color: $background-color !important;
-}
-
-.table,
-.table thead,
-.table tbody,
-.table td,
-.table th {
-    background-color: transparent !important;
-    border-color: $darkblue-color !important;
-    color: $text-color !important;
-}
-
-.list-group-item{
-    background-color: transparent !important;
-    color: $text-color !important;
-    border-color: $darkblue-color !important;
-}
-
-.btn-custom{
-    background: linear-gradient(45deg, $darkpink-color, $pink-color) !important;
-    color: $background-color !important;
-    border: none !important;
-
-    &:hover{
-        background-color: $darkpink-color !important;
-        color: $text-color !important;
-    }
-}
-.wrapper {
-    flex-direction: column;
-    height: 100vh;
-}
-
-.container {
-    width: 100%;
-    flex-grow: 1;
-}
-
-
 .card-header.cust {
     height: 73px;
     display: flex;
@@ -112,6 +43,80 @@ label {
     justify-content: center;
 }
 
-.card  {
-    border: 1px solid $darkblue-color !important;
-}
+
+
+
+// .border-active {
+//     box-shadow: none !important;
+// }
+
+// .homepage-card:hover {
+//     transform: scale(1.05);
+//     transition: transform 0.3s ease, box-shadow 0.3s ease;
+// }
+
+// .cursor-pointer *:hover {
+//     cursor: pointer;
+// }
+
+// .card{
+//     border: none !important;
+//     background-color: transparent !important;
+//     color: $text-color !important;
+// }
+
+// .card-header{
+//     background-color: transparent !important;
+//     color: $text-color !important;
+// }
+// .card-body{
+//     background-color: transparent !important;
+//     color: $text-color !important;
+// }
+
+// .bg-success{
+//     background-color: $yellow-color !important;
+//     color: $background-color !important;
+// }
+
+// .table,
+// .table thead,
+// .table tbody,
+// .table td,
+// .table th {
+//     background-color: transparent !important;
+//     border-color: $darkblue-color !important;
+//     color: $text-color !important;
+// }
+
+// .list-group-item{
+//     background-color: transparent !important;
+//     color: $text-color !important;
+//     border-color: $darkblue-color !important;
+// }
+
+// .btn-custom{
+//     background: linear-gradient(45deg, $darkpink-color, $pink-color) !important;
+//     color: $background-color !important;
+//     border: none !important;
+
+//     &:hover{
+//         background-color: $darkpink-color !important;
+//         color: $text-color !important;
+//     }
+// }
+// .wrapper {
+//     flex-direction: column;
+//     height: 100vh;
+// }
+
+// .container {
+//     width: 100%;
+//     flex-grow: 1;
+// }
+
+
+
+// .card  {
+//     border: 1px solid $darkblue-color !important;
+// }

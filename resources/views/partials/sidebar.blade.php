@@ -1,4 +1,4 @@
-<section id="aside" class="d-flex rounded-top">
+<section id="aside" class="d-flex">
 	<div class="mt-2">
 		<div class="item border-bottom my-3">
 			<i class="fa-solid fa-user fa-xl"></i>
