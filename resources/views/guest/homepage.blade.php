@@ -162,18 +162,18 @@
                 <div class="content">
                     @guest
                     <!-- Hero Section -->
-                    <section class="hero-section text-center p-5 rounded shadow-sm" style=" color: white;">
+                    <section class="hero-section text-center p-5 rounded" style=" color: white;">
                         <h1 class="display-4 fw-bold mb-3 text-primary">Welcome to BoolBnB</h1>
                         <p class="lead mb-4">Your all-in-one platform to simplify property management, boost visibility, and track performance.</p>
                         <a href="/register" class="btn btn-primary btn-lg">Get Started Now</a>
                     </section>
 
                     <!-- Features Section -->
-                    <section class="mt-5">
+                    <section class="mt-2">
                         <h2 class="mb-4 text-center" style="color: #f8f9fa;">What BoolBnB Does</h2>
                         <div class="row gy-4">
                             <div class="col-md-4 col-12 text-center">
-                                <div class="card border-0 shadow-sm h-100">
+                                <div class="card border-0 h-100">
                                     <div class="card-body">
                                         <i class="bi bi-house-door-fill display-3 text-primary mb-3"></i>
                                         <h5 class="card-title">Easy Property Management</h5>
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 col-12 text-center">
-                                <div class="card border-0 shadow-sm h-100">
+                                <div class="card border-0 h-100">
                                     <div class="card-body">
                                         <i class="bi bi-megaphone-fill display-3 text-primary mb-3"></i>
                                         <h5 class="card-title">Boost Visibility</h5>
@@ -191,7 +191,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 col-12 text-center">
-                                <div class="card border-0 shadow-sm h-100">
+                                <div class="card border-0 h-100">
                                     <div class="card-body">
                                         <i class="bi bi-bar-chart-fill display-3 text-primary mb-3"></i>
                                         <h5 class="card-title">Detailed Analytics</h5>
@@ -203,7 +203,7 @@
                     </section>
                     @else
                     <!-- Welcome Section -->
-                    <section class="hero-section text-center p-5 rounded shadow-sm" style="color: white;">
+                    <section class="hero-section mt-5 text-center rounded" style="color: white;">
                         @if(Auth::user()->name != null)
                         <h1 class="display-4 fw-bold mb-3 text-primary">Welcome, {{ Auth::user()->name }}!</h1>
                         @else
@@ -217,7 +217,7 @@
                     </section>
 
                     <!-- Features Section -->
-                    <section class="mt-5">
+                    <section class="my-4">
                         <h2 class="mb-4 text-center" style="color: #f8f9fa;">What BoolBnB Offers</h2>
                         <div class="row gy-4">
                             <div class="col-md-4 col-12 text-center">
