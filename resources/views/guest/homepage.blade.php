@@ -162,8 +162,8 @@
                 <div class="content">
                     @guest
                     <!-- Hero Section -->
-                    <section class="hero-section text-center p-5 rounded shadow-sm" style="background: linear-gradient(135deg, #1c1c2d, #282846); color: white;">
-                        <h1 class="display-4 fw-bold mb-3">Welcome to BoolBnB</h1>
+                    <section class="hero-section text-center p-5 rounded shadow-sm" style=" color: white;">
+                        <h1 class="display-4 fw-bold mb-3 text-primary">Welcome to BoolBnB</h1>
                         <p class="lead mb-4">Your all-in-one platform to simplify property management, boost visibility, and track performance.</p>
                         <a href="/register" class="btn btn-primary btn-lg">Get Started Now</a>
                     </section>
@@ -203,16 +203,16 @@
                     </section>
                     @else
                     <!-- Welcome Section -->
-                    <section class="hero-section text-center p-5 rounded shadow-sm" style="background: linear-gradient(135deg, #1c1c2d, #282846); color: white;">
+                    <section class="hero-section text-center p-5 rounded shadow-sm" style="color: white;">
                         @if(Auth::user()->name != null)
-                        <h1 class="display-4 fw-bold mb-3">Welcome, {{ Auth::user()->name }}!</h1>
+                        <h1 class="display-4 fw-bold mb-3 text-primary">Welcome, {{ Auth::user()->name }}!</h1>
                         @else
-                        <h1 class="display-4 fw-bold mb-3">Welcome, {{ Auth::user()->email }}!</h1>
+                        <h1 class="display-4 fw-bold mb-3 text-primary">Welcome, {{ Auth::user()->email }}!</h1>
                         @endif
                         <p class="lead mb-4">Manage your properties with ease and maximize your success.</p>
                         <div class="d-flex flex-wrap justify-content-center gap-3">
                             <a href="{{ route('admin.properties.create') }}" class="btn btn-success btn-lg">Add a New Property</a>
-                            <a href="{{ route('admin.sponsors.index') }}" class="btn btn-warning btn-lg">View Statistics</a>
+                            <a href="{{ route('admin.views.index') }}" class="btn btn-warning btn-lg">View Statistics</a>
                         </div>
                     </section>
 
