@@ -32,7 +32,7 @@
                     </thead>
                     <tbody>
                         @foreach ($messages->filter(fn($message) => $message->deleted_at === null) as $message)
-                            <tr class="{{ $message->is_read ? '' : 'unread' }}">
+                            <tr class="message-row {{ $message->is_read ? '' : 'unread' }}" data-href="{{ route('admin.messages.show', $message->id) }}">
                                 <td class="position-relative">
                                     @if (!$message->is_read)
                                         <span class="unread-dot"></span>
@@ -40,7 +40,7 @@
                                     {{ $message->created_at->diffForHumans() }}
                                 </td>
                                 <td>{{ $message->first_name ?? 'N/A' }} {{ $message->last_name ?? '' }}</td>
-                                <td><a href="mailto:{{ $message->email }}">{{ $message->email }}</a></td>
+                                <td>{{ $message->email }}</td>
                                 <td>{{ $message->property->title ?? 'N/A' }}</td>
                                 <td>
                                     @if (!empty($message->property->cover_image))
@@ -51,7 +51,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center flex-wrap gap-2">
-                                        <a href="{{ route('admin.messages.show', $message->id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('admin.messages.show', $message->id) }}" class="btn btn-primary btn-sm btn-search">
                                             <i class="fa-solid fa-magnifying-glass"></i>
                                         </a>
                                         <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST" class="d-inline">
@@ -120,6 +120,32 @@
                 width: 8px;
                 height: 8px;
             }
+
+            /* Nasconde il bottone della ricerca */
+            .btn-search {
+                display: none;
+            }
+
+            .unread-dot {
+            top: 7px;
+            left: 2px;
+            }
         }
     </style>
+
+    <script>
+        // Rendi la riga cliccabile
+        document.querySelectorAll('.message-row').forEach(row => {
+            row.addEventListener('click', () => {
+                window.location.href = row.dataset.href;
+            });
+        });
+
+        // Evita che il click sui pulsanti interni venga intercettato dalla riga
+        document.querySelectorAll('.btn-search, .delete').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+        });
+    </script>
 @endsection

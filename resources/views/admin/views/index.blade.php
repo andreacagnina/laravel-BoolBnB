@@ -49,23 +49,22 @@
 
     <!-- Grafici -->
     <div class="row mt-5">
-        <!-- Monthly Interactions e Interactions Distribution nella stessa riga -->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6 col-sm-12 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-header text-center">
                     <h5>Monthly Interactions (Aggregated)</h5>
                 </div>
-                <div class="card-body">
+                <div class="card-body chart-container">
                     <canvas id="monthlyBarChart"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6 col-sm-12 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-header text-center">
                     <h5>Interactions Distribution</h5>
                 </div>
-                <div class="card-body d-flex justify-content-center">
+                <div class="card-body chart-container">
                     <canvas id="interactionDoughnutChart"></canvas>
                 </div>
             </div>
@@ -73,23 +72,22 @@
     </div>
 
     <div class="row mt-4">
-        <!-- Property Types Distribution e Sponsorships vs Views nella stessa riga -->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6 col-sm-12 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-header text-center">
                     <h5>Property Types Distribution</h5>
                 </div>
-                <div class="card-body d-flex justify-content-center">
+                <div class="card-body chart-container">
                     <canvas id="propertyTypePieChart"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6 col-sm-12 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-header text-center">
                     <h5>Sponsorships vs Views</h5>
                 </div>
-                <div class="card-body">
+                <div class="card-body chart-container">
                     <canvas id="sponsorsVsViewsChart"></canvas>
                 </div>
             </div>
@@ -102,11 +100,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
     const monthlyData = @json($monthlyData);
-    const propertyTypes = @json($propertyTypes); // Aggiunto per il grafico a torta
+    const propertyTypes = @json($propertyTypes);
 
-    // Grafico a barre mensile
+    // Monthly Interactions Chart
     new Chart(document.getElementById('monthlyBarChart').getContext('2d'), {
         type: 'bar',
         data: {
@@ -118,30 +115,56 @@
                 { label: 'Sponsorships', data: Object.values(monthlyData.sponsors), backgroundColor: 'rgba(255, 99, 132, 0.5)' }
             ]
         },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
     });
 
-    // Grafico a ciambella
-    const totalInteractions = [
-        Object.values(monthlyData.views).reduce((a, b) => a + b, 0),
-        Object.values(monthlyData.messages).reduce((a, b) => a + b, 0),
-        Object.values(monthlyData.favorites).reduce((a, b) => a + b, 0),
-        Object.values(monthlyData.sponsors).reduce((a, b) => a + b, 0)
-    ];
-
+    // Interactions Distribution Doughnut Chart
     new Chart(document.getElementById('interactionDoughnutChart').getContext('2d'), {
         type: 'doughnut',
         data: {
             labels: ['Views', 'Messages', 'Favorites', 'Sponsorships'],
             datasets: [{
-                data: totalInteractions,
+                data: [
+                    Object.values(monthlyData.views).reduce((a, b) => a + b, 0),
+                    Object.values(monthlyData.messages).reduce((a, b) => a + b, 0),
+                    Object.values(monthlyData.favorites).reduce((a, b) => a + b, 0),
+                    Object.values(monthlyData.sponsors).reduce((a, b) => a + b, 0)
+                ],
                 backgroundColor: ['rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 'rgba(255, 99, 132, 0.5)']
             }]
         },
-        options: { responsive: true, maintainAspectRatio: false }
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
     });
 
-    // Sponsorships vs Views (combinato)
+    // Property Types Pie Chart
+    new Chart(document.getElementById('propertyTypePieChart').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: Object.keys(propertyTypes),
+            datasets: [{
+                data: Object.values(propertyTypes),
+                backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 99, 132, 0.5)']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Sponsorships vs Views Combined Chart
     new Chart(document.getElementById('sponsorsVsViewsChart').getContext('2d'), {
         type: 'bar',
         data: {
@@ -170,24 +193,27 @@
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: {
-                    beginAtZero: true
-                }
+                y: { beginAtZero: true }
             }
         }
     });
-
-    // Grafico a torta per i tipi di proprietà
-    new Chart(document.getElementById('propertyTypePieChart').getContext('2d'), {
-        type: 'pie',
-        data: {
-            labels: Object.keys(propertyTypes),
-            datasets: [{
-                data: Object.values(propertyTypes),
-                backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 99, 132, 0.5)']
-            }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-    });
 </script>
+@endsection
+
+@section('styles')
+<style>
+    .chart-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 300px;
+        max-height: 500px;
+    }
+
+    canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+</style>
 @endsection

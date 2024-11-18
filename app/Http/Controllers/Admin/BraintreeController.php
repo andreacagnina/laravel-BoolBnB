@@ -28,16 +28,13 @@ class BraintreeController extends Controller
     public function checkout(Request $request)
     {
         try {
-            // Recupera i dati necessari
             $nonce = $request->payment_method_nonce;
             $propertySlug = $request->property_slug;
             $sponsorId = $request->sponsor_id;
-
-            // Trova la proprietà e lo sponsor selezionati
+    
             $property = Property::where('slug', $propertySlug)->firstOrFail();
             $sponsor = Sponsor::findOrFail($sponsorId);
-
-            // Effettua la transazione con Braintree
+    
             $result = $this->gateway->transaction()->sale([
                 'amount' => $sponsor->price,
                 'paymentMethodNonce' => $nonce,
@@ -45,48 +42,50 @@ class BraintreeController extends Controller
                     'submitForSettlement' => true
                 ]
             ]);
-
+    
             if ($result->success) {
-                // Determina la data di inizio della nuova sponsorizzazione
+                // Verifica la sponsorizzazione precedente
                 $lastSponsorPivot = $property->sponsors()
                     ->withPivot('end_date')
                     ->orderByPivot('created_at', 'desc')
                     ->first();
-
-                if ($lastSponsorPivot && $lastSponsorPivot->pivot->end_date) {
+    
+                $now = Carbon::now();
+    
+                if ($lastSponsorPivot && $lastSponsorPivot->pivot->end_date > $now) {
+                    // Sponsorizzazione attiva, inizia dopo la fine
                     $startDate = Carbon::parse($lastSponsorPivot->pivot->end_date);
                 } else {
-                    $startDate = now();
+                    // Nessuna sponsorizzazione attiva, inizia ora
+                    $startDate = $now;
                 }
-
-                // Calcola la data di fine della sponsorizzazione
+    
+                // Calcola la data di fine
                 $endDate = $startDate->copy()->addHours($sponsor->duration);
-
-                // Associa lo sponsor alla proprietà con le date specificate
+    
+                // Associa lo sponsor
                 $property->sponsors()->attach($sponsorId, [
                     'created_at' => $startDate,
                     'updated_at' => now(),
                     'end_date' => $endDate
                 ]);
-
-                // Imposta il campo `sponsored` a true
+    
+                // Aggiorna lo stato sponsorizzato
                 $property->sponsored = true;
                 $property->save();
-
-                // Reindirizza alla pagina di conferma con un messaggio di successo
+    
                 return redirect()->route('admin.sponsors.show', $property->slug)
                     ->with('success', 'Sponsorship added successfully!');
             } else {
-                // Logga il fallimento della transazione per il debug
                 Log::error('Braintree transaction failed:', ['message' => $result->message]);
                 return back()->withErrors('Payment failed: ' . $result->message);
             }
         } catch (\Exception $e) {
-            // Gestisci eventuali eccezioni e logga l'errore
             Log::error('Exception during Braintree checkout:', ['error' => $e->getMessage()]);
             return back()->withErrors('An error occurred during the transaction. Please try again.');
         }
     }
+    
     public function token()
     {
         try {
