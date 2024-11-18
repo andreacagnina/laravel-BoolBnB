@@ -94,7 +94,7 @@
 
                     <div id="dropin-container" class="mt-4 d-none"></div>
 
-                    <div class="d-flex justify-content-between align-items-center mt-4 gap-3">
+                    <div class="d-flex justify-content-end mt-4 gap-3">
                         <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary">Back to Properties</a>
                         <button type="button" id="pay-button" class="btn btn-primary" disabled>
                             <i class="bi bi-credit-card"></i> Pay with Braintree
