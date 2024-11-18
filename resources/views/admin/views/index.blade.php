@@ -112,10 +112,10 @@
         data: {
             labels: months,
             datasets: [
-                { label: 'Views', data: Object.values(monthlyData.views), backgroundColor: 'rgba(75, 192, 192, 0.5)' },
-                { label: 'Messages', data: Object.values(monthlyData.messages), backgroundColor: 'rgba(153, 102, 255, 0.5)' },
-                { label: 'Favorites', data: Object.values(monthlyData.favorites), backgroundColor: 'rgba(255, 159, 64, 0.5)' },
-                { label: 'Sponsorships', data: Object.values(monthlyData.sponsors), backgroundColor: 'rgba(255, 99, 132, 0.5)' }
+                { label: 'Views', data: Object.values(monthlyData.views), backgroundColor: 'rgb(207, 244, 252,1)' },
+                { label: 'Messages', data: Object.values(monthlyData.messages), backgroundColor: 'rgb(226, 227, 229,1)' },
+                { label: 'Favorites', data: Object.values(monthlyData.favorites), backgroundColor: 'rgb(248, 215, 218,1)' },
+                { label: 'Sponsorships', data: Object.values(monthlyData.sponsors), backgroundColor: 'rgb(255, 243, 205,1)' }
             ]
         },
         options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
@@ -135,7 +135,7 @@
             labels: ['Views', 'Messages', 'Favorites', 'Sponsorships'],
             datasets: [{
                 data: totalInteractions,
-                backgroundColor: ['rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 'rgba(255, 99, 132, 0.5)']
+                backgroundColor: ['rgb(207, 244, 252,1)', 'rgb(226, 227, 229,1)', 'rgb(248, 215, 218,1)', 'rgb(255, 243, 205,1)']
             }]
         },
         options: { responsive: true, maintainAspectRatio: false }
@@ -151,8 +151,8 @@
                     type: 'bar',
                     label: 'Sponsorships',
                     data: Object.values(monthlyData.sponsors),
-                    backgroundColor: 'rgba(153, 102, 255, 0.5)',
-                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgb(209, 231, 221,1)',
+                    borderColor: 'rgb(55, 167, 90)',
                     borderWidth: 1
                 },
                 {
@@ -160,7 +160,7 @@
                     label: 'Views',
                     data: Object.values(monthlyData.views),
                     borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    backgroundColor: 'rgb(207, 244, 252,1)',
                     fill: true,
                     tension: 0.4
                 }
@@ -184,7 +184,7 @@
             labels: Object.keys(propertyTypes),
             datasets: [{
                 data: Object.values(propertyTypes),
-                backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 99, 132, 0.5)']
+                backgroundColor: ['rgba(54, 162, 235, 1)','rgb(234, 66, 54)', 'rgba(255, 206, 86, 1)', 'rgb(207, 244, 252,1)', 'rgb(226, 227, 229,1)','rgb(55, 167, 90)', 'rgb(255, 243, 205,1)']
             }]
         },
         options: { responsive: true, maintainAspectRatio: false }

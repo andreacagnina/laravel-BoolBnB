@@ -46,7 +46,7 @@
                     <p class="card-text"><strong>Location:</strong> {{ $property->address }}</p>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ route('admin.properties.show', $property) }}" class="btn btn-outline-primary">
+                    <a href="{{ route('admin.properties.show', $property) }}" class="btn btn-primary">
                         View Full Details
                     </a>
                     <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary">Back to list</a>
@@ -178,15 +178,15 @@
                         type: 'bar',
                         label: barLabel,
                         data: barData,
-                        backgroundColor: 'rgba(153, 102, 255, 0.5)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgb(255, 243, 205,0.5)',
+                        borderColor: 'rgb(255, 243, 205,0.5)',
                     },
                     {
                         type: 'line',
                         label: lineLabel,
                         data: lineData,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgb(207, 244, 252, 1)',
+                        backgroundColor: 'rgb(207, 244, 252, 1)',
                         fill: true,
                         tension: 0.4
                     }
@@ -213,10 +213,10 @@
     );
 
     document.addEventListener('DOMContentLoaded', () => {
-        createBarChart(document.getElementById('viewsChart').getContext('2d'), 'Views', Object.values(monthlyData.views), 'rgba(75, 192, 192, 0.5)', 'rgba(75, 192, 192, 1)');
-        createBarChart(document.getElementById('messagesChart').getContext('2d'), 'Messages', Object.values(monthlyData.messages), 'rgba(153, 102, 255, 0.5)', 'rgba(153, 102, 255, 1)');
-        createBarChart(document.getElementById('favoritesChart').getContext('2d'), 'Favorites', Object.values(monthlyData.favorites), 'rgba(255, 159, 64, 0.5)', 'rgba(255, 159, 64, 1)');
-        createBarChart(document.getElementById('sponsorsChart').getContext('2d'), 'Sponsorships', Object.values(monthlyData.sponsors), 'rgba(255, 99, 132, 0.5)', 'rgba(255, 99, 132, 1)');
+        createBarChart(document.getElementById('viewsChart').getContext('2d'), 'Views', Object.values(monthlyData.views), 'rgb(207, 244, 252,1)', 'rgb(207, 244, 252, 1)');
+        createBarChart(document.getElementById('messagesChart').getContext('2d'), 'Messages', Object.values(monthlyData.messages), 'rgb(209, 231, 221, 1)', 'rgb(209, 231, 221, 1)');
+        createBarChart(document.getElementById('favoritesChart').getContext('2d'), 'Favorites', Object.values(monthlyData.favorites), 'rgb(248, 215, 218,1)', 'rgb(248, 215, 218,1)');
+        createBarChart(document.getElementById('sponsorsChart').getContext('2d'), 'Sponsorships', Object.values(monthlyData.sponsors), 'rgb(255, 243, 205,1)', 'rgb(255, 243, 205,1)');
 
         const totalInteractions = [
             Object.values(monthlyData.views).reduce((a, b) => a + b, 0),
@@ -229,7 +229,7 @@
             document.getElementById('interactionDistributionChart').getContext('2d'),
             ['Views', 'Messages', 'Favorites', 'Sponsorships'],
             totalInteractions,
-            ['rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 'rgba(255, 99, 132, 0.5)']
+            ['rgb(207, 244, 252, 1)', 'rgb(209, 231, 221, 1)', 'rgb(248, 215, 218,1)', 'rgb(255, 243, 205,1)']
         );
 
         const sponsorsData = Object.values(monthlyData.sponsors);
