@@ -211,8 +211,8 @@
                         @endif
                         <p class="lead mb-4">Manage your properties with ease and maximize your success.</p>
                         <div class="d-flex flex-wrap justify-content-center gap-3">
-                            <a href="/properties/create" class="btn btn-success btn-lg">Add a New Property</a>
-                            <a href="/statistics" class="btn btn-warning btn-lg">View Statistics</a>
+                            <a href="{{ route('admin.properties.create') }}" class="btn btn-success btn-lg">Add a New Property</a>
+                            <a href="{{ route('admin.views.index') }}" class="btn btn-warning btn-lg">View Statistics</a>
                         </div>
                     </section>
 

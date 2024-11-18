@@ -500,10 +500,10 @@ document.addEventListener('DOMContentLoaded', function () {
     payButton.disabled = true;
 
     // Aggiungi la classe di "loading" al pulsante durante il caricamento
-    function setLoadingState(isLoading) {
-        payButton.disabled = isLoading;
-        payButton.textContent = isLoading ? "Loading..." : "Pay with Braintree";
-    }
+    // function setLoadingState(isLoading) {
+    //     payButton.disabled = isLoading;
+    //     payButton.textContent = isLoading ? "Loading..." : "Pay with Braintree";
+    // }
 
     // Abilita il pulsante solo quando viene selezionata un'opzione valida
     sponsorSelect.addEventListener('change', function () {
@@ -520,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Funzione per ottenere il token Braintree
     function fetchBraintreeToken() {
-        setLoadingState(true);
+        // setLoadingState(true);
 
         fetch("/admin/braintree/token")
             .then(function (response) {
@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     authorization: data.token,
                     container: '#dropin-container'
                 }, function (createErr, instance) {
-                    setLoadingState(false);
+                    // setLoadingState(false);
 
                     if (createErr) {
                         console.error('Errore nella creazione di Braintree Drop-in:', createErr);
@@ -539,12 +539,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
 
                     payButton.addEventListener('click', function () {
-                        setLoadingState(true);
+                        // setLoadingState(true);
 
                         instance.requestPaymentMethod(function (err, payload) {
                             if (err) {
                                 console.error('Errore nella richiesta del metodo di pagamento:', err);
-                                setLoadingState(false);
+                                // setLoadingState(false);
                                 return;
                             }
 
@@ -559,7 +559,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(function (error) {
                 console.error('Errore nel recupero del token Braintree:', error);
-                setLoadingState(false);
+                // setLoadingState(false);
             });
     }
 

@@ -52,7 +52,7 @@ $latestSponsor = $property->sponsors->sortByDesc('pivot.created_at')->first();
                     @endforeach
                 </select>
             </div>
-            <div id="dropin-container" class="d-none"></div>
+            <div id="dropin-container" class="d-none mb-2"></div>
             <div class="text-end d-flex justify-content-end align-items-center gap-2">
                 <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary">Go Back</a>
                 <button type="button" id="pay-button" class="btn btn-primary px-4">Pay with Braintree</button>

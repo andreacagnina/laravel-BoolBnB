@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="card">
+        <div class="card border-0">
             <div class="card-header bg-cust text-white text-center">
                 <h2>{{ $property->title }}</h2>
             </div>
