@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container mb-3">
         <h1>Edit Property</h1>
         <form id="editPropertyForm" action="{{ route('admin.properties.update', ['property' => $property->slug]) }}"
             method="post" enctype="multipart/form-data">
@@ -183,8 +183,8 @@
                 <div class="col-12">
                     <label class="form-label">Services:</label>
                     <div class="row">
-                        @foreach ($services->chunk(ceil($services->count() / 3)) as $serviceChunk)
-                            <div class="col-md-4">
+                        @foreach ($services->chunk(ceil($services->count() / 24)) as $serviceChunk)
+                            <div class="col-6 col-md-4">
                                 @foreach ($serviceChunk as $service)
                                     <div class="form-check d-flex align-items-center gap-3 mb-3 cursor-pointer">
                                         @if ($errors->any())

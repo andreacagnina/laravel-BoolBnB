@@ -18,8 +18,8 @@
 #aside a {
     text-decoration: none;
     color: white;
-    &:hover {
-        color: cornflowerblue;
+    span:hover {
+        color:$pink-color
     }
 }
 

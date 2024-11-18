@@ -57,7 +57,8 @@
                         </div>
 
                         <!-- Mappa -->
-                        <div id="map" class="rounded mt-3" style="width: 100%; height: 300px;">
+                        <h4 class="my-4">Map</h4>
+                        <div id="map" class="rounded mt-3" style="width: 99%; height: 300px;">
                         </div>
                         <input type="hidden" id="lat" value="{{ $property->lat }}">
                         <input type="hidden" id="long" value="{{ $property->long }}">
@@ -65,7 +66,7 @@
 
                     <!-- Colonna Informazioni -->
                     <div class="col-lg-6">
-                        <h4 class="mb-4">Property Information</h4>
+                        <h4 class="my-4">Property Information</h4>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Description:</strong> {{ $property->description }}</li>
                             <li class="list-group-item"><strong>Address:</strong> {{ $property->address }}</li>

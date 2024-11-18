@@ -33,7 +33,7 @@
                                             <h5 class="fw-bold">{{ $property->title }}</h5>
                                         </div>
                                         <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}"
-                                            alt="{{ $property->name }}" class="card-img-top p-0 rounded "
+                                            alt="{{ $property->name }}" class=" p-0 "
                                             style="height: 200px; object-fit: cover;">
                                         <div class="card-body">
                                             <p><strong>Address:</strong> {{ $property->address }}</p>
