@@ -69,6 +69,10 @@
                         </div>
                         <input type="file" name="cover_image" id="cover_image" class="d-none">
                     </div>
+                    <!-- Error Message for Cover Image -->
+                    @error('cover_image')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
@@ -88,6 +92,9 @@
                         </div>
                         <input type="file" name="images[]" id="images" class="d-none" multiple>
                     </div>
+                    @error('images.*')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
