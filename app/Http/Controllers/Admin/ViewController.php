@@ -36,8 +36,17 @@ class ViewController extends Controller
             ->map(fn($properties) => $properties->count())
             ->toArray();
     
-        return view('admin.views.index', compact('stats', 'monthlyData', 'propertyTypes'));
-    }    
+        // Calcola le interazioni totali
+        $totalInteractions = [
+            array_sum($monthlyData['views']),
+            array_sum($monthlyData['messages']),
+            array_sum($monthlyData['favorites']),
+            array_sum($monthlyData['sponsors']),
+        ];
+    
+        // Passa le variabili alla view
+        return view('admin.views.index', compact('stats', 'monthlyData', 'propertyTypes', 'totalInteractions'));
+    }       
 
     public function show(Property $property)
     {

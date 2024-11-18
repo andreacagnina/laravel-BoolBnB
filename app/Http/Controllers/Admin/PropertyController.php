@@ -98,6 +98,18 @@ class PropertyController extends Controller
                 ]);
             }
         }
+
+        // Gestisci immagini cancellate
+        if ($request->has('deleted_images')) {
+            $deletedImages = json_decode($request->input('deleted_images'), true); // Decodifica il valore JSON passato dal form
+            foreach ($deletedImages as $imageId) {
+                $image = Image::find($imageId);
+                if ($image) {
+                    Storage::delete($image->path); // Rimuove il file fisico dallo storage
+                    $image->delete(); // Rimuove il record dal database
+                }
+            }
+        }        
     
         return redirect()->route('admin.properties.index')->with("success", "Announcement Created");
     }    
@@ -171,33 +183,68 @@ class PropertyController extends Controller
         if ($property->trashed() || $property->user_id !== Auth::id()) {
             return abort(404, 'Property not found');
         }
-
+    
         $form_data = $request->validated();
         $form_data['slug'] = Property::generateSlug($form_data['title']);
-
+    
+        // Aggiorna l'immagine di copertina
         if ($request->hasFile('cover_image') && $request->file('cover_image')->isValid()) {
             if (!Str::startsWith($property->cover_image, 'https')) {
-                Storage::delete($property->cover_image);
+                Storage::delete($property->cover_image); // Rimuove la vecchia immagine se presente
             }
             $form_data['cover_image'] = Storage::put('cover_image', $request->file('cover_image'));
         }
-
+    
+        // Aggiorna la proprietà
         $property->update($form_data);
-
+    
+        // Aggiorna sponsor
         if ($request->has('sponsors')) {
             $property->sponsors()->sync($request->sponsors);
         } else {
             $property->sponsors()->sync([]);
         }
-
+    
+        // Aggiorna servizi
         if ($request->has('services')) {
             $property->services()->sync($request->services);
         } else {
             $property->services()->sync([]);
         }
-
+    
+        // Aggiungi nuove immagini
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = Storage::put('property_images', $image);
+                Image::create([
+                    'property_id' => $property->id,
+                    'path' => $path,
+                ]);
+            }
+        }
+    
+        // Elimina immagini rimosse
+        if ($request->has('deleted_images')) {
+            $deletedImagesRaw = $request->input('deleted_images');
+        
+            // Converti in array
+            $deletedImages = is_array($deletedImagesRaw) ? $deletedImagesRaw : explode(',', $deletedImagesRaw);
+        
+            foreach ($deletedImages as $imageId) {
+                $image = Image::find($imageId);
+        
+                if ($image) {
+                    // Elimina il file fisico solo se non è un URL remoto
+                    if (!Str::startsWith($image->path, 'http')) {
+                        Storage::delete($image->path);
+                    }
+                    $image->delete(); // Rimuovi il record dal database
+                }
+            }
+        }        
+    
         return redirect()->route('admin.properties.index')->with("success", 'Announcement Modified');
-    }
+    }    
 
     /**
      * Remove the specified resource from storage.
