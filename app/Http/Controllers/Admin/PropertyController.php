@@ -258,9 +258,9 @@ class PropertyController extends Controller
             return abort(404, 'Not Found');
         }
 
-        if (!Str::startsWith($property->cover_image, 'https')) {
-            Storage::delete($property->cover_image);
-        }
+        // if (!Str::startsWith($property->cover_image, 'https')) {
+        //     Storage::delete($property->cover_image);
+        // }
         $property->delete();
 
         return redirect()->route("admin.properties.index")->with("success", 'Announcement canceled');
