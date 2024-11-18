@@ -112,20 +112,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Grafico a ciambella -->
-    <div class="row mt-5">
-        <div class="col-md-8 mx-auto">
-            <div class="card shadow-sm">
-                <div class="card-header text-center">
-                    <h5>Interactions Distribution</h5>
-                </div>
-                <div class="card-body d-flex justify-content-center">
-                    <canvas id="interactionDistributionChart" width="400" height="400"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
 
@@ -136,8 +122,14 @@
 
     const monthlyData = @json($monthlyData);
 
-    // Funzioni per grafici
+    // Calcola i limiti per le scale
+    const calculateMaxScale = (data) => {
+        const max = Math.max(...data);
+        return max + Math.ceil(max * 0.1); // Aggiungi un margine del 10% al valore massimo
+    };
+
     const createBarChart = (ctx, label, data, backgroundColor, borderColor) => {
+        const maxScale = calculateMaxScale(data);
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -150,25 +142,24 @@
                     borderWidth: 1,
                 }]
             },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
-        });
-    };
-
-    const createDoughnutChart = (ctx, labels, data, colors) => {
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: data,
-                    backgroundColor: colors,
-                }]
-            },
-            options: { responsive: true }
+            options: { 
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { 
+                    y: { 
+                        beginAtZero: true,
+                        max: maxScale,
+                        ticks: {
+                            stepSize: Math.ceil(maxScale / 10) // Imposta step proporzionali
+                        }
+                    } 
+                } 
+            }
         });
     };
 
     const createCombinedChart = (ctx, barLabel, lineLabel, barData, lineData) => {
+        const maxScale = Math.max(calculateMaxScale(barData), calculateMaxScale(lineData));
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -194,57 +185,46 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        max: maxScale,
+                        ticks: {
+                            stepSize: Math.ceil(maxScale / 10)
+                        }
                     }
                 }
             }
         });
     };
 
-    // Creazione grafico combinato (sponsorships vs views mensili)
-    createCombinedChart(
-        document.getElementById('sponsorsVsViewsChart').getContext('2d'),
-        'Sponsorships',
-        'Views',
-        Object.values(monthlyData.sponsors),
-        Object.values(monthlyData.views) // Usando le views mensili, non cumulative
-    );
-
+    // Creazione grafici
     document.addEventListener('DOMContentLoaded', () => {
         createBarChart(document.getElementById('viewsChart').getContext('2d'), 'Views', Object.values(monthlyData.views), 'rgb(207, 244, 252,1)', 'rgb(207, 244, 252, 1)');
         createBarChart(document.getElementById('messagesChart').getContext('2d'), 'Messages', Object.values(monthlyData.messages), 'rgb(209, 231, 221, 1)', 'rgb(209, 231, 221, 1)');
         createBarChart(document.getElementById('favoritesChart').getContext('2d'), 'Favorites', Object.values(monthlyData.favorites), 'rgb(248, 215, 218,1)', 'rgb(248, 215, 218,1)');
         createBarChart(document.getElementById('sponsorsChart').getContext('2d'), 'Sponsorships', Object.values(monthlyData.sponsors), 'rgb(255, 243, 205,1)', 'rgb(255, 243, 205,1)');
-
-        const totalInteractions = [
-            Object.values(monthlyData.views).reduce((a, b) => a + b, 0),
-            Object.values(monthlyData.messages).reduce((a, b) => a + b, 0),
-            Object.values(monthlyData.favorites).reduce((a, b) => a + b, 0),
-            Object.values(monthlyData.sponsors).reduce((a, b) => a + b, 0)
-        ];
-
-        createDoughnutChart(
-            document.getElementById('interactionDistributionChart').getContext('2d'),
-            ['Views', 'Messages', 'Favorites', 'Sponsorships'],
-            totalInteractions,
-            ['rgb(207, 244, 252, 1)', 'rgb(209, 231, 221, 1)', 'rgb(248, 215, 218,1)', 'rgb(255, 243, 205,1)']
-        );
-
-        const sponsorsData = Object.values(monthlyData.sponsors);
-        const cumulativeViews = Object.values(monthlyData.views).reduce((acc, val) => {
-            acc.push((acc.slice(-1)[0] || 0) + val);
-            return acc;
-        }, []);
-
         createCombinedChart(
-            document.getElementById('sponsorsImpactChart').getContext('2d'),
-            'Monthly Sponsorships',
-            'Cumulative Views',
-            sponsorsData,
-            cumulativeViews
+            document.getElementById('sponsorsVsViewsChart').getContext('2d'),
+            'Sponsorships',
+            'Views',
+            Object.values(monthlyData.sponsors),
+            Object.values(monthlyData.views)
         );
     });
 </script>
+
+<style>
+    /* Altezze minime per grafici */
+    canvas {
+        min-height: 250px; /* Per dispositivi mobili */
+    }
+
+    @media (min-width: 768px) {
+        canvas {
+            min-height: 300px; /* Per desktop */
+        }
+    }
+</style>
 @endsection
