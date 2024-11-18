@@ -21,7 +21,7 @@ return [
         'type' => 'apartment',
         'floor' => 3,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [2, 1, 2, 2, 1],
         'user_id' => 2,
         'services' => [3, 8, 15, 18, 21]
@@ -47,7 +47,7 @@ return [
         'type' => 'cabin',
         'floor' => 0,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [3, 3, 2, 3, 2, 1, 2, 1, 2, 1, 2],
         'user_id' => 1,
         'services' => [7, 10, 12, 20, 24]
@@ -73,7 +73,7 @@ return [
         'type' => 'apartment',
         'floor' => 12,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [2, 1, 1, 2, 2, 3, 1, 1, 2, 2, 1, 1, 3, 1, 3],
         'user_id' => 3,
         'services' => [2, 6, 9, 14, 22, 23]
@@ -99,7 +99,7 @@ return [
         'type' => 'ski-in/out',
         'floor' => 1,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [1, 1, 1, 1, 2],
         'user_id' => 2,
         'services' => [1, 4, 16, 18, 21]
@@ -125,7 +125,7 @@ return [
         'type' => 'tree-house',
         'floor' => 1,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [3, 3],
         'user_id' => 1,
         'services' => [3, 8, 10, 11, 19]
@@ -151,7 +151,7 @@ return [
         'type' => 'mansion',
         'floor' => 1,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [3, 1, 2, 3, 1, 1, 2, 2, 3, 3, 1, 3, 3],
         'user_id' => 2,
         'services' => [5, 14, 16, 20, 24]
@@ -177,7 +177,7 @@ return [
         'type' => 'dome',
         'floor' => 0,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [2, 1, 1, 2, 1, 2],
         'user_id' => 3,
         'services' => [6, 7, 15, 21]
@@ -203,7 +203,7 @@ return [
         'type' => 'castle',
         'floor' => 3,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [2, 2, 3, 2, 1, 2, 1, 3],
         'user_id' => 1,
         'services' => [1, 10, 13, 17, 22]
@@ -229,7 +229,7 @@ return [
         'type' => 'mansion',
         'floor' => 1,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [1, 1, 2],
         'user_id' => 1,
         'services' => [2, 5, 9, 14]
@@ -255,7 +255,7 @@ return [
         'type' => 'beach',
         'floor' => 0,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [1, 3, 3, 3, 2, 1, 2, 2, 1, 1, 2, 1, 1, 3, 2],
         'user_id' => 2,
         'services' => [6, 14, 18, 22]
@@ -281,7 +281,7 @@ return [
         'type' => 'tree-house',
         'floor' => 1,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [1, 2, 2, 3, 3, 3, 3, 1, 1, 2, 2, 1, 2, 2],
         'user_id' => 2,
         'services' => [7, 12, 15, 17]
@@ -307,7 +307,7 @@ return [
         'type' => 'apartment',
         'floor' => 10,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [3],
         'user_id' => 3,
         'services' => [4, 6, 9, 13, 24]
@@ -333,7 +333,7 @@ return [
         'type' => 'cabin',
         'floor' => 0,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [1, 1, 2, 3, 2, 2, 3, 1, 1, 3, 1, 1, 2, 2, 2, 1, 1, 1, 2, 2],
         'user_id' => 2,
         'services' => [5, 11, 14, 20]
@@ -359,7 +359,7 @@ return [
         'type' => 'dome',
         'floor' => 0,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [2, 1, 2, 2, 2, 1, 2, 2],
         'user_id' => 3,
         'services' => [8, 12, 15, 19, 23]
@@ -385,7 +385,7 @@ return [
         'type' => 'apartment',
         'floor' => 4,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [1, 3, 2, 3, 1, 3, 2, 3, 1, 3, 2, 3],
         'user_id' => 1,
         'services' => [3, 7, 11, 18]
@@ -411,7 +411,7 @@ return [
         'type' => 'castle',
         'floor' => 3,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [3, 3, 1, 1, 1, 2],
         'user_id' => 2,
         'services' => [4, 9, 13, 16, 21]
@@ -437,7 +437,7 @@ return [
         'type' => 'tree-house',
         'floor' => 1,
         'available' => true,
-        'sponsored' => true,
+        'sponsored' => false,
         'sponsors' => [2, 2, 2, 1, 3, 3, 2, 2, 3, 2, 3],
         'user_id' => 1,
         'services' => [5, 8, 15, 22]
