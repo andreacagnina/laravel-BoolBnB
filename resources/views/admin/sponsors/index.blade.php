@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container mb-3">
         <h1 class="text-center mb-3 mb-md-5 fw-bold">Sponsor Your Property</h1>
 
         <div class="row justify-content-center">
@@ -18,19 +18,18 @@
                     <label for="property-dropdown" class="form-label fw-semibold">Select a Property:</label>
                     <div class="dropdown">
                         <button 
-                            class="btn btn-outline-primary dropdown-toggle w-100 text-start" 
+                            class="btn btn-light dropdown-toggle w-100 text-start" 
                             type="button" 
                             id="property-dropdown" 
                             data-bs-toggle="dropdown" 
                             aria-expanded="false">
                             <span id="selected-property-title">-- Select a Property --</span>
                         </button>
-                        <p class="fw-semibold mt-4">Select a Sponsor:</p>
                         <ul class="dropdown-menu w-100" 
-                            aria-labelledby="property-dropdown" 
-                            id="property-list" 
-                            style="max-height: 300px; overflow-y: auto; background-color: #f8f9fa;">
-                            @foreach ($properties as $property)
+                        aria-labelledby="property-dropdown" 
+                        id="property-list" 
+                        style="max-height: 300px; overflow-y: auto; background-color: #f8f9fa;">
+                        @foreach ($properties as $property)
                                 <li>
                                     <a 
                                         class="dropdown-item d-flex align-items-center property-option px-1" 
@@ -39,10 +38,10 @@
                                         data-cover="{{ $property->cover_image }}" 
                                         data-description="{{ $property->description }}">
                                         <img 
-                                            src="{{ filter_var($property->cover_image, FILTER_VALIDATE_URL) ? $property->cover_image : asset('storage/' . $property->cover_image) }}" 
-                                            alt="Property Cover" 
-                                            class="me-1 me-md-3 rounded" 
-                                            style="width: 50px; height: 50px; object-fit: cover;">                                    
+                                        src="{{ filter_var($property->cover_image, FILTER_VALIDATE_URL) ? $property->cover_image : asset('storage/' . $property->cover_image) }}" 
+                                        alt="Property Cover" 
+                                        class="me-1 me-md-3 rounded" 
+                                        style="width: 50px; height: 50px; object-fit: cover;">                                    
                                         <span>{{ $property->title }}</span>
                                     </a>
                                 </li>
@@ -50,9 +49,9 @@
                         </ul>
                     </div>
                 </div>
-
+                
                 <!-- Informazioni sulla proprietà selezionata -->
-                <div id="property-info" class="mb-4 d-none">
+                <div id="property-info" class="mb-3 d-none">
                     <div class="card shadow-sm">
                         <div class="row g-0">
                             <div class="col-md-4">
@@ -67,8 +66,9 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <!-- Sponsor Cards -->
+                <p class="fw-semibold mt-4">Select a Sponsor:</p>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     @foreach ($sponsors as $sponsor)
                         <div class="col">
@@ -95,7 +95,7 @@
                     <div id="dropin-container" class="mt-4 d-none"></div>
 
                     <div class="d-flex justify-content-between align-items-center mt-4 gap-3">
-                        <a href="{{ route('admin.properties.index') }}" class="btn btn-outline-secondary">Back to Properties</a>
+                        <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary">Back to Properties</a>
                         <button type="button" id="pay-button" class="btn btn-primary" disabled>
                             <i class="bi bi-credit-card"></i> Pay with Braintree
                         </button>
