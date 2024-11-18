@@ -29,7 +29,7 @@ $latestSponsor = $property->sponsors->sortByDesc('pivot.created_at')->first();
                 <div id="countdown" class="countdown"></div>
             </div>
         @else
-            <p>No active sponsorships available for this property.</p>
+            <h1 class="text-center">No active sponsorships available for this property.</h1>
         @endif
         <!-- Aggiungi una nuova sponsorizzazione -->
         <h4 class="mt-5 mb-3 text-center fw-bold">Add a New Sponsorship</h4>
