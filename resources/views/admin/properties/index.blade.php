@@ -80,8 +80,8 @@
 
                             {{-- Proprietà eliminate --}}
                             @foreach ($properties->where('deleted_at', '!=', null) as $property)
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <div class="card h-100" style="position: relative; border-radius: 5px;">
+                                <div class="col-12 col-md-6 col-lg-4 mb-4 gy-3">
+                                    <div class="card h-100 " style="position: relative; border-radius: 5px;">
                                         <!-- La parte sopra oscurata -->
                                         <div style="background: rgba(0, 0, 0, 0.4); border-radius: 5px 5px 0 0;">
                                             <div class="card-header text-center">
@@ -113,9 +113,9 @@
                             @endforeach
                         </div>
                     @else
-                        <div class="my-3 d-flex justify-content-between align-items-center">
-                            <h2>You haven't uploaded any properties yet</h2>
-                            <a href="{{ route('admin.properties.create') }}" class="btn btn-primary">Add a new Property</a>
+                        <div class="my-3 ">
+                                <a href="{{ route('admin.properties.create') }}" class="btn btn-primary">Add a new Property</a>
+                                <h2 class="mt-3">You haven't uploaded any properties yet</h2>
                         </div>
                     @endif
                 </div>

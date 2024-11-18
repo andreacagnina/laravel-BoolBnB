@@ -169,7 +169,7 @@
                         type: 'bar',
                         label: barLabel,
                         data: barData,
-                        backgroundColor: 'rgb(255, 243, 205,0.5)',
+                        backgroundColor: 'rgb(255, 243, 205,0.7)',
                         borderColor: 'rgb(255, 243, 205,0.5)',
                     },
                     {
