@@ -43,6 +43,10 @@ class UpdatePropertyRequest extends FormRequest
             'sponsors.*' => ['integer', Rule::exists('sponsors', 'id')],
             'services' => ['required', 'array', 'min:1'],
             'services.*' => ['integer', Rule::exists('services', 'id')],
+            'images' => ['nullable', 'array'], 
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:4096'],
+            'deleted_images' => ['nullable'],
+            'deleted_images.*' => ['integer', Rule::exists('images', 'id')],
         ];
     }
     public function messages()
@@ -116,6 +120,14 @@ class UpdatePropertyRequest extends FormRequest
             'services.min' => 'You must select at least one service.',
             'services.*.exists' => 'One or more selected services do not exist in the database.',
 
+            'images.array' => 'The images field must be an array.',
+            'images.*.image' => 'Each uploaded file must be a valid image.',
+            'images.*.mimes' => 'Each image must be of type: jpeg, png, jpg, gif.',
+            'images.*.max' => 'Each image cannot exceed 4MB.',
+
+            'deleted_images.array' => 'The deleted images field must be an array.',
+            'deleted_images.*.integer' => 'Each item in the deleted images field must be a valid integer.',
+            'deleted_images.*.exists' => 'One or more of the selected images for deletion do not exist.',
         ];
     }
 }

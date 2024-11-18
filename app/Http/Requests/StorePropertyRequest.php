@@ -32,8 +32,8 @@ class StorePropertyRequest extends FormRequest
             'num_baths' => ['required', 'integer', 'min:0', 'max:5'],
             'mq' => ['required', 'integer', 'min:10', 'max:5000'],
             'address' => ['required', 'string', 'min:2', 'max:100'],
-            'lat' => ['nullable', 'numeric', 'between:-90,90'],
-            'long' => ['nullable', 'numeric', 'between:-180,180'],
+            'lat' => ['required', 'numeric', 'between:-90,90'],
+            'long' => ['required', 'numeric', 'between:-180,180'],
             'price' => ['required', 'numeric', 'min:10', 'max:999999.99'],
             'type' => ['required', 'string', 'in:mansion,ski-in/out,tree-house,apartment,dome,cave,cabin,lake,beach,castle'],
             'floor' => ['required', 'integer'],
@@ -116,10 +116,10 @@ class StorePropertyRequest extends FormRequest
             'services.min' => 'You must select at least one service.',
             'services.*.exists' => 'One or more selected services do not exist. Please select valid services.',
 
-            'images.array' => 'The additional images field must be an array of files.',
-            'images.*.image' => 'Each file must be a valid image.',
-            'images.*.mimes' => 'Each image must be of type: jpeg, png, jpg, or gif.',
-            'images.*.max' => 'Each image must not exceed 4MB in size.',
+            'images.array' => 'The images field must be an array.',
+            'images.*.image' => 'Each uploaded file must be a valid image.',
+            'images.*.mimes' => 'Each image must be of type: jpeg, png, jpg, gif.',
+            'images.*.max' => 'Each image cannot exceed 4MB.',
         ];
     }
 }

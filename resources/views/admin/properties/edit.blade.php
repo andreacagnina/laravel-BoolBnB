@@ -58,10 +58,13 @@
                 <div class="col-md-12">
                     <label for="cover_image" class="form-label">Cover Image:</label>
                     <div id="cover-image-drop-zone" class="drop-zone">
-                        <div id="cover-image-preview" class="image-preview">
+                        <div id="cover-image-preview" class="image-preview position-relative">
                             @if ($property->cover_image)
-                                <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}" 
-                                    alt="Cover Image">
+                                <div class="position-relative">
+                                    <img src="{{ Str::startsWith($property->cover_image, 'http') ? $property->cover_image : asset('storage/' . $property->cover_image) }}" 
+                                        alt="Cover Image">
+                                        <button type="button" class="delete-btn" onclick="removeCoverImage(event)">&times;</button>                                  
+                                </div>
                             @endif
                         </div>
                         <input type="file" name="cover_image" id="cover_image" class="d-none">
@@ -79,8 +82,7 @@
                                 <div class="position-relative">
                                     <img src="{{ Str::startsWith($image->path, 'http') ? $image->path : asset('storage/' . $image->path) }}" 
                                         alt="Additional Image">
-                                    <button type="button" class="btn btn-danger btn-sm position-absolute end-0"
-                                        onclick="removeImage('{{ $image->id }}')">&times;</button>
+                                        <button type="button" class="delete-btn" onclick="removeImage('{{ $image->id }}', event)">&times;</button>                                  
                                 </div>
                             @endforeach
                         </div>
@@ -264,7 +266,6 @@
         .drop-zone img {
             max-height: 100px;
             border-radius: 8px;
-            margin-right: 10px;
         }
 
         .image-preview {
@@ -274,11 +275,6 @@
             justify-content: start;
         }
 
-        .position-relative button {
-            top: -10px;
-            right: -10px;
-        }
-
         .drop-zone input[type='file'] {
             display: none;
         }
@@ -286,6 +282,29 @@
         .drop-zone.highlight {
             border-color: #007bff;
             background-color: #3a4a6b;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 10; /* Portalo in primo piano */
+            font-size: 12px; /* Riduci la dimensione del font */
+            width: 20px;
+            height: 20px;
+            padding: 0; /* Rimuovi il padding interno */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%; /* Rendi il bottone rotondo */
+            background-color: #dc3545; /* Rosso per indicare eliminazione */
+            color: #fff; /* Bianco per il testo */
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333; /* Colore più scuro al passaggio del mouse */
         }
     </style>
 @endsection
@@ -394,21 +413,55 @@
             });
         });
 
-        function removeImage(imageId) {
-            const imageElement = document.querySelector(`button[onclick="removeImage('${imageId}')"]`).parentElement;
+        function removeImage(imageId, event) {
+            // Impedisci il comportamento di default e il bubbling dell'evento
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            // Trova l'elemento immagine da rimuovere
+            const imageElement = document.querySelector(`button[onclick="removeImage('${imageId}', event)"]`).parentElement;
             imageElement.remove();
 
+            // Gestisci il campo nascosto per le immagini eliminate
             let deleteInput = document.getElementById('deleted_images');
             if (!deleteInput) {
                 deleteInput = document.createElement('input');
                 deleteInput.type = 'hidden';
-                deleteInput.name = 'deleted_images[]';
+                deleteInput.name = 'deleted_images';
                 deleteInput.id = 'deleted_images';
                 document.getElementById('editPropertyForm').appendChild(deleteInput);
             }
-            const currentValues = deleteInput.value ? JSON.parse(deleteInput.value) : [];
-            currentValues.push(imageId);
-            deleteInput.value = JSON.stringify(currentValues);
+
+            const currentValues = deleteInput.value ? deleteInput.value.split(',') : [];
+            if (!currentValues.includes(imageId.toString())) {
+                currentValues.push(imageId.toString());
+            }
+            deleteInput.value = currentValues.join(',');
+        }
+
+        function removeCoverImage(event) {
+            // Impedisci il comportamento di default e il bubbling dell'evento
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            // Rimuovi l'anteprima dell'immagine di copertina
+            const coverImagePreview = document.getElementById('cover-image-preview');
+            coverImagePreview.innerHTML = ''; // Rimuove l'immagine dalla visualizzazione
+
+            // Aggiungi un campo nascosto per segnalare la rimozione dell'immagine di copertina
+            let deleteCoverInput = document.getElementById('deleted_cover_image');
+            if (!deleteCoverInput) {
+                deleteCoverInput = document.createElement('input');
+                deleteCoverInput.type = 'hidden';
+                deleteCoverInput.name = 'deleted_cover_image';
+                deleteCoverInput.id = 'deleted_cover_image';
+                document.getElementById('editPropertyForm').appendChild(deleteCoverInput);
+            }
+            deleteCoverInput.value = 'true';
         }
     </script>
 @endsection

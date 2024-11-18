@@ -100,7 +100,7 @@
     </div>
 
     <!-- Grafico Combinato -->
-    <div class="row mt-5">
+    <div class="row my-3">
         <div class="col-md-12">
             <div class="card shadow-sm">
                 <div class="card-header text-center">
@@ -218,7 +218,7 @@
 <style>
     /* Altezze minime per grafici */
     canvas {
-        min-height: 250px; /* Per dispositivi mobili */
+        min-height: 200px; /* Per dispositivi mobili */
     }
 
     @media (min-width: 768px) {
