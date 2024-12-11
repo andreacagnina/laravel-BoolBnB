@@ -1,4 +1,4 @@
-BoolBnB
+BoolBnB:
 
 BoolBnB è una web app progettata per la gestione e la ricerca di appartamenti in affitto. La piattaforma permette ai proprietari di immobili di pubblicare le loro proprietà e di sponsorizzarle per ottenere maggiore visibilità, mentre gli utenti interessati possono esplorare e inviare richieste senza necessità di registrazione.
 Caratteristiche
