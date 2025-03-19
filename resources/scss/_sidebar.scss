@@ -1,0 +1,37 @@
+#aside {
+    background-color: rgba(37, 80, 141, 0.808);
+    font-weight: bold;
+    flex-basis: 50px;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
+}
+
+#aside .item {
+    padding: 5px 5px;
+    font-size: 1em;
+    text-wrap: nowrap;
+}
+
+#aside a {
+    text-decoration: none;
+    color: white;
+    span:hover {
+        color:$pink-color
+    }
+}
+
+.text{
+    display: none;
+}
+
+@media screen and (min-width: 992px) {
+    #aside {
+        flex-basis: 200px;
+        .text{
+display: inline;
+        }
+    }
+}

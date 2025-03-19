@@ -17,8 +17,12 @@ return new class extends Migration
             $table->unsignedBigInteger('property_id');
             $table->foreign('property_id')->references('id')->on('properties')->cascadeOnDelete();
 
-            $table->unsignedBigInteger('sponsor_id');
-            $table->foreign('sponsor_id')->references('id')->on('services')->cascadeOnDelete();
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('id')->on('services')->cascadeOnDelete();
+
+            $table->timestamps();
+
+            $table->unique(['property_id', 'service_id']);
         });
     }
 

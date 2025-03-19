@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; // Aggiungi SoftDeletes
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Property extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes; // Usa SoftDeletes
+
     protected $fillable = [
         'title',
         'slug',
@@ -18,8 +21,6 @@ class Property extends Model
         'num_beds',
         'num_baths',
         'mq',
-        'zip',
-        'city',
         'address',
         'lat',
         'long',
@@ -28,13 +29,47 @@ class Property extends Model
         'floor',
         'available',
         'sponsored',
+        'user_id'
     ];
+
+    // Append custom attributes to the model's array form
+    protected $appends = ['cover_image_url'];
+
+    // Cast price to float and deleted_at to datetime
+    protected $casts = [
+        'price' => 'float',
+        'deleted_at' => 'datetime', // Cast deleted_at come datetime
+    ];
+
+    // Accessor for the cover image URL
+    public function getCoverImageUrlAttribute()
+    {
+        if (Str::startsWith($this->cover_image, 'http')) {
+            return $this->cover_image;
+        }
+        return asset('storage/' . $this->cover_image);
+    }
 
     public static function generateSlug($name)
     {
         return Str::slug($name, '-');
     }
 
+    public function checkSponsorshipStatus()
+    {
+        $now = Carbon::now();
+
+        // Check if there's at least one sponsor with a future end_date
+        $hasActiveSponsor = $this->sponsors()
+            ->wherePivot('end_date', '>', $now)
+            ->exists();
+
+        // Update the sponsored status based on active sponsors
+        $this->sponsored = $hasActiveSponsor;
+        $this->save();
+    }
+
+    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -42,22 +77,30 @@ class Property extends Model
 
     public function sponsors()
     {
-        return $this->belongsToMany(Sponsor::class);
+        return $this->belongsToMany(Sponsor::class)->withPivot('end_date')->withTimestamps();
     }
+
     public function services()
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsToMany(Service::class)->withTimestamps();
     }
+
     public function views()
     {
         return $this->hasMany(View::class);
     }
+
     public function images()
     {
         return $this->hasMany(Image::class);
     }
+
     public function messages()
     {
         return $this->hasMany(Message::class);
+    }
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
     }
 }

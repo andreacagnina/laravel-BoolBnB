@@ -1,4 +1,30 @@
+@import './partials';
+
+header {
+    height: 80px;
+    background-color: $background-color;
+    color: $text-color;
+    flex-basis: 80px;
+}
+
 .logo {
-    width: 50px;
+    width: 80px;
     aspect-ratio: 1 \ 1;
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+        transition: transform 0.3s ease-in-out;
+    }
+}
+
+.navbar {
+    background-color: $background-color;
+    color: $text-color;
+    --bs-navbar-active-color: $yellow-color !important ;
+    .nav-link{
+        color: $text-color;
+        &:hover {
+            color: $yellow-color;
+        }
+    }
 }

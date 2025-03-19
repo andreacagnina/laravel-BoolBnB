@@ -1,4 +1,55 @@
 @import '~bootstrap/scss/bootstrap';
 @import '@fortawesome/fontawesome-free/css/all.css';
+@import url('https://fonts.googleapis.com/css2?family=Macondo&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
 
 @import './header';
+@import'./suggestion';
+@import './formValidation';
+@import './countdown';
+@import './partials';
+@import './sidebar';
+
+
+body {
+    background-color: $background-color;
+    color: $text-color;
+    font-family: "Titillium Web", sans-serif;
+}
+
+main {
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+    overflow: auto;
+    overflow-y: auto;
+    flex-grow: 1;
+
+}
+
+label {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.w_100 {
+    width: 100px;
+    height: auto;
+}
+
+.card-header.cust {
+    height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+.bg-cust {
+    background-color: rgba(37, 80, 141, 0.808);
+}
+
+.bg-yellow {
+    background-color: $yellow-color
+}

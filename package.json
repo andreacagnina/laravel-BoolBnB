@@ -16,6 +16,11 @@
         "@fortawesome/fontawesome-free": "^6.6.0",
         "@popperjs/core": "^2.11.8",
         "bootstrap": "^5.3.3",
-        "bootstrap-icons": "^1.11.3"
+        "bootstrap-icons": "^1.11.3",
+        "chart.js": "^4.4.6",
+        "cors": "^2.8.5",
+        "just-validate": "^4.3.0",
+        "parsleyjs": "^2.9.2",
+        "turbolinks": "^5.2.0"
     }
 }

@@ -4,17 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; // Importa il trait SoftDeletes
 
 class Message extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes; // Usa il trait SoftDeletes
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'message',
+        'is_read',
         'property_id',
     ];
+
+    // Definisci la colonna per le soft delete
+    protected $dates = ['deleted_at'];
+
     public function property()
     {
         return $this->belongsTo(Property::class);
